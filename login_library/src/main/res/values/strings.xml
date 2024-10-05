@@ -1,0 +1,9 @@
+<resources>
+    <string name="please_input_phone">请输入手机号码</string>
+    <string name="please_input_phone1">请输入手机号码或用户名</string>
+    <string name="please_input_translate">验证码</string>
+    <string name="please_input_translate1">验证码</string>
+    <string name="send_interval">已发送 %1$ds</string>
+    <string name="get_yzm">发送验证码</string>
+    <string name="please_input_phone2">请输入密码\n</string>
+</resources>

@@ -1,0 +1,92 @@
+[versions]
+aabresguardPlugin = "0.1.10"
+androidStartup = "1.1.0"
+dialog = "3.2.4"
+logger = "2.2.0"
+minSdk = "26"
+mmkv = "1.3.3"
+plugin = "0.1.0-rc3"
+rxbinding = "4.0.0"
+targetSdk = "34"
+compileSdk = "34"
+agp = "8.3.0"
+agps = "3.3.0"
+kotlin = "1.9.0"
+coreKtx = "1.10.1"
+bytedance = "0.1.6"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+koin = "3.1.4"
+arouter-api = "1.5.2"
+arouter-compiler = "1.5.2"
+retrofit = "2.9.0"
+gson = "2.9.0"
+rxandroid = "2.1.1"
+rxjava = "2.2.21"
+lifecycle = "2.5.1"
+okhttp = "4.10.0"
+coroutines = "1.6.4"
+glide = "4.13.0"
+design = "1.7.0"
+flexbox = "3.0.0"
+androidx-paging = "3.1.1"
+exo = "2.18.2"
+activity = "1.8.0"
+constraintlayout = "2.1.4"
+navigationFragmentKtx = "2.6.0"
+navigationUiKtx = "2.6.0"
+lifecycleViewmodelCompose = "2.7.0"
+room_version = "2.6.1"
+
+[libraries]
+aabresguard-plugin = { module = "com.bytedance.android:aabresguard-plugin", version.ref = "aabresguardPlugin" }
+android-startup = { module = "io.github.idisfkj:android-startup", version.ref = "androidStartup" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+dialog = { module = "com.kongzue.dialog_v3x:dialog", version.ref = "dialog" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+logger = { module = "com.orhanobut:logger", version.ref = "logger" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+arouter-api = { module = "com.alibaba:arouter-api", version.ref = "arouter-api" }
+arouter-compiler = { module = "com.alibaba:arouter-compiler", version.ref = "arouter-compiler" }
+mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv" }
+plugin = { module = "io.github.goldfish07.reschiper:plugin", version.ref = "plugin" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofit-rxjava = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
+
+rxbinding = { module = "com.jakewharton.rxbinding4:rxbinding", version.ref = "rxbinding" }
+rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
+kotlinx-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide-okhttp = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
+androidx-design = { module = "com.google.android.material:material", version.ref = "design" }
+androidx-flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
+androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging" }
+exo-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exo" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+gradleLibrary = { id = "org.greenrobot", version.ref = "agps" }
+
+

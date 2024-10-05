@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewModel"  type="com.cn.datalibrary.viewmodel.FormViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_query"
+            android:onClick="@{viewModel.onClickQuery}"
+            android:paddingHorizontal="19dp"
+            android:paddingVertical="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="18dp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:text="查询"
+            android:textSize="10dp"
+            app:shape="rectangle"
+            app:shape_solidDisabledColor="#061848"
+            app:shape_radius="2dp"
+            app:shape_solidColor="#4369F1" />
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_end_date"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="7dp"
+            android:minWidth="95dp"
+            android:layout_width="99dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_query"
+            android:layout_marginRight="18dp"
+            android:textColor="#606060"
+            android:gravity="center"
+            android:onClick="@{viewModel.onClickEndTime}"
+            android:text="@{viewModel.dataHistoryBase.endTime}"
+            android:textSize="11dp"
+            app:shape="rectangle"
+            app:shape_radius="2dp"
+            app:shape_solidColor="#061848"
+            app:shape_strokeColor="#1B56A5"
+            app:shape_strokeWidth="0.33dp" />
+        <TextView
+            android:id="@+id/tv_segmentation"
+            android:textColor="#606060"
+            android:text="至"
+            android:textSize="11dp"
+            android:layout_marginHorizontal="7dp"
+            app:layout_constraintTop_toTopOf="@+id/tv_end_date"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_end_date"
+            app:layout_constraintRight_toLeftOf="@+id/tv_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_start_date"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="7dp"
+            android:minWidth="95dp"
+            android:onClick="@{viewModel.onClickStartTime}"
+
+            android:layout_width="99dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_segmentation"
+            android:layout_marginRight="7dp"
+            android:textColor="#606060"
+            android:gravity="center"
+            android:text="@{viewModel.dataHistoryBase.startTime}"
+            android:textSize="11dp"
+            app:shape="rectangle"
+            app:shape_radius="2dp"
+            app:shape_solidColor="#061848"
+            app:shape_strokeColor="#1B56A5"
+            app:shape_strokeWidth="0.33dp" />
+        <TextView
+            android:id="@+id/tv_data_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日期范围："
+            android:layout_marginRight="16dp"
+            app:layout_constraintTop_toTopOf="@+id/tv_start_date"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_start_date"
+            app:layout_constraintRight_toLeftOf="@+id/tv_start_date"
+            android:textColor="#ffffffff"
+            android:textSize="11sp"
+            />
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_end_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

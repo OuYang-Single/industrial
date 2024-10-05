@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ffffff">#ffffff</color>
+    <color name="f44336">#fe9b1c</color>
+    <color name="ffda90">#FFFFFF</color>
+    <color name="cb9a63">#FE8400</color>
+    <color name="login_translate_color_2">#CCCCCC</color>
+    <color name="login_translate_color_1">#FE8400</color>
+    <color name="clorl_c">#F5F5F5</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="privacy_color">#FE8400</color>
+</resources>

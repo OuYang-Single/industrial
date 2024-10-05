@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_solidColor="#00FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.hjq.shape.layout.ShapeRelativeLayout
+        app:shape="rectangle"
+        app:shape_radius="20dp"
+        app:shape_solidColor="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.hjq.shape.layout.ShapeRelativeLayout
+            app:shape="rectangle"
+            android:id="@+id/sp_bg"
+            app:shape_topLeftRadius="20dp"
+            app:shape_topRightRadius="20dp"
+            app:shape_startColor="#FF7E54"
+            app:shape_endColor="#FF393B"
+            android:layout_width="match_parent"
+            android:layout_height="234dp">
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                app:shape="rectangle"
+                android:orientation="vertical"
+                app:shape_radius="180dp"
+                app:shape_solidColor="@android:color/transparent"
+                app:shape_strokeColor="#fff"
+                app:shape_strokeWidth="3dp"
+                app:shape_textPressedColor="@android:color/white" >
+                <ImageView
+                    android:src="@mipmap/ic_ddac"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="认证失败"
+                    android:textColor="#ffeeeeee"
+                    android:textSize="13sp"
+                    />
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+            <ImageView
+                android:id="@+id/img_top"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/ic_fail_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.hjq.shape.layout.ShapeRelativeLayout>
+
+        <TextView
+            android:id="@+id/tvds"
+            android:layout_below="@+id/sp_bg"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="39dp"
+            android:layout_height="wrap_content"
+            android:text="抱歉，您的实名认证未通过！"
+            android:textColor="#ff333333"
+            android:textSize="22sp"
+            />
+        <TextView
+
+            android:id="@+id/tvd"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="44dp"
+            android:layout_below="@+id/tvds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="身份证识别错误！\n身份证与人脸识别不匹配  ！"
+            android:textColor="#ff000000"
+            android:textSize="14sp"
+            />
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_below="@+id/tvd"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="17dp"
+            android:layout_marginTop="46dp"
+            android:layout_width="178dp"
+            android:text="重新认证"
+            android:id="@+id/tv_right"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_angle="121"
+            app:shape_endColor="#FF383B"
+            app:shape_radius="36dp"
+            app:shape_startColor="#FF383B"
+            android:layout_height="46dp"/>
+    </com.hjq.shape.layout.ShapeRelativeLayout>
+
+</LinearLayout>
+
+

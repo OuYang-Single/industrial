@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SampleThemes" parent="Theme.MaterialComponents.Light.NoActionBar">
+        //修改状态栏为透明
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        //修改状态栏为暗色风格，则文字为亮色
+        <item name="android:windowLightStatusBar">false</item>
+
+        //修改导航栏为非半透明
+        <item name="android:windowTranslucentNavigation">false</item>
+        //修改导航栏为透明
+        <item name="android:navigationBarColor">#0C0E11</item>
+        //修改导航栏忽略对比度不够的问题
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+
+
+    <style name="SampleTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        //修改状态栏为透明
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        //修改状态栏为暗色风格，则文字为亮色
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        //修改导航栏为非半透明
+        <item name="android:windowTranslucentNavigation">false</item>
+        //修改导航栏为透明
+        <item name="android:navigationBarColor">#0C0E11</item>
+        //修改导航栏忽略对比度不够的问题
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+
+</resources>

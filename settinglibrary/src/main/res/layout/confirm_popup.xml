@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape="rectangle"
+    app:shape_radius="12dp"
+    app:shape_solidColor="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tv_title"
+        android:textColor="#000000"
+        android:layout_marginTop="20dp"
+        android:text="提示"
+        android:textSize="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/edit_name"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_title"
+        android:inputType="numberDecimal"
+        android:layout_marginHorizontal="9dp"
+        android:gravity="center"
+        android:text=""
+        android:typeface="normal"
+        android:textColorHint="#ff909090"
+        android:textColor="#ff909090"
+        android:textSize="12sp"
+        android:background="@null"
+        android:layout_toRightOf="@+id/tv_pid_i"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/st_preservation"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/edit_name"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:layout_marginLeft="11dp"
+        app:shape="rectangle"
+        android:text="确  定"
+        android:textColor="#ffffffff"
+        android:textSize="9sp"
+        app:shape_radius="3dp"
+        app:shape_solidColor="#3465FF"/>
+    <ImageView
+        android:id="@+id/img_close"
+        android:src="@mipmap/ic_close"
+        android:layout_alignParentEnd="true"
+        android:layout_width="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:padding="12dp"
+        android:layout_height="40dp"/>
+
+
+</com.hjq.shape.layout.ShapeRelativeLayout>

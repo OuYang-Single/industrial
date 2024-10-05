@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Library</string>
+
+    <string name="titlebar_search_hint">Search</string>
+    <string name="total">全部</string>
+    <string name="text_empty">No data!</string>
+    <string name="text_retry">Something went wrong!\n\nTap to retry</string>
+    <string name="tip">提示</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+    <string name="brvah_loading">正在加载中...</string>
+    <string name="register_tip"></string>
+    <string name="all_free">验证码登录</string>
+    <string name="login_by_wx">账号登录</string>
+    <string name="login_by_zh">账号登录\u3000</string>
+    <string name="login_by_phone">验证码登录</string>
+    <string name="input_course_search">搜索</string>
+    <string name="reserved">已预约</string>
+    <string name="free_reserve">免费预约</string>
+    <string name="to_reserve">去预约</string>
+    <string name="finished">已结束</string>
+    <string name="living">直播中</string>
+    <string name="person_num">%1$d人次</string>
+    <string name="hotspot_top3">热门课程 . Top3</string>
+    <string name="hotlive_top3">热门直播 . Top3</string>
+    <string name="top_list">榜单</string>
+    <string name="look_more">查看更多</string>
+    <string name="to_playback">去回看</string>
+    <string name="btn_text_send">发送</string>
+    <string name="recording_start">按住 说话</string>
+    <string name="recording_end">松开 结束</string>
+    <string name="recording_cancel">松开手指，取消发送</string>
+    <string name="recording_cancel_notice">手指上滑，取消发送</string>
+    <string-array name="meter">
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="meter1">
+        <item>0</item>
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+        <item>80</item>
+        <item>100</item>
+        <item>120</item>
+        <item>140</item>
+        <item>160</item>
+        <item>180</item>
+        <item>200</item>
+    </string-array>
+    <string-array name="meter2">
+        <item>0</item>
+        <item>6</item>
+        <item>12</item>
+        <item>18</item>
+        <item>24</item>
+        <item>30</item>
+        <item>36</item>
+        <item>42</item>
+        <item>48</item>
+        <item>54</item>
+        <item>60</item>
+    </string-array>
+    <string name="editor_default_font_size">16</string>
+    <string name="editor_select_color">选择颜色</string>
+    <string name="editor_select_font_size">选择字号</string>
+    <string name="editor_cancel">取消</string>
+
+    <!-- 文字大小 1-7 -->
+    <string-array name="editor_font_size_arr">
+        <item>10</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>24</item>
+        <item>32</item>
+        <item>48</item>
+    </string-array>
+
+    <!-- 素材菜单标题 -->
+    <string name="editor_materials_img">素材库图片</string>
+    <string name="editor_materials_video">素材库视频</string>
+    <string name="editor_materials_txt">素材库文字</string>
+    <string name="editor_local_img">本地图片</string>
+    <string name="editor_local_video">本地视频</string>
+    <string name="to_expand_hint">显示更多</string>
+    <string name="to_shrink_hint">收起</string>
+    <string name="please_wait">请稍后...</string>
+</resources>

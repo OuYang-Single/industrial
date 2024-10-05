@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="outsideBlue">#00FFFFFF</color>
+<color name="insideBlue">#00FFFFFF</color>
+<color name="leftRights">#AFF178</color>
+<color name="insideCircles">#79B546</color>
+
+</resources>

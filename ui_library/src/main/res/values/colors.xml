@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_color">#FF654F</color>
+    <color name="main_color_1">#2A2659</color>
+    <color name="white">#FFFFFF</color>
+    <color name="roman">#E35B4D</color>
+    <color name="mine_shaft">#333333</color>
+    <color name="color_main_tsd">#666666</color>
+    <color name="gallery">#EFEFEF</color>
+    <color name="martini_alpha_27">#44999999</color>
+    <color name="color555454">#555454</color>
+    <color name="color909090">#909090</color>
+    <color name="colorF9DA47">#F9DA47</color>
+    <color name="color666666">#666666</color>
+    <color name="colorECECEC">#ECECEC</color>
+    <color name="colorF2F2F2">#F2F2F2</color>
+    <color name="color99ff654f">#99ff654f</color>
+    <color name="colorFF5743">#FF5743</color>
+    <color name="colorDDDDDD">#DDDDDD</color>
+    <color name="colorF66C5E">#2A2659</color>
+    <color name="colorFFAC21">#FFAC21</color>
+    <color name="colorFFDEDA">#FFDEDA</color>
+    <color name="colorB6B6B6">#B6B6B6</color>
+    <color name="color585858">#585858</color>
+    <color name="color4C4C4C">#4C4C4C</color>
+    <color name="color646B9D">#646B9D</color>
+    <color name="colorEFF1FF">#EFF1FF</color>
+    <color name="colorAllZero">#00000000</color>
+    <color name="color66Zero">#66000000</color>
+    <color name="color99Zero">#99000000</color>
+    <color name="colorFFEAE7">#ffeae7</color>
+    <color name="colorA8A8A8">#A8A8A8</color>
+    <color name="hi_bottom_bg">#E01F1F</color>
+    <color name="privacy_color">#E01F1F</color>
+    <color name="hi_tabtop_selected_color">@android:color/holo_red_dark</color>
+    <color name="keyboard_white">#FFFFFF</color>
+    <color name="keyboard_black">#000000</color>
+    <color name="keyboard_split_line">#CFCFCF</color>
+    <color name="keyboard_emoticons_bar_item_select">#D9D9D9</color>
+    <color name="keyboard_emoticons_bar_item_normal">#FFFFFF</color>
+    <color name="keyboard_edit_text_hint">#808080</color>
+    <color name="keyboard_edit_text_hint_1">#999999</color>
+    <color name="keyboard_edit_text_hint_2">#FE8400</color>
+
+    <color name="_ffffff">#ffffff</color>
+    <color name="_222222">#222222</color>
+    <color name="_68696e">#68696e</color>
+    <color name="_f9f9f9">#f9f9f9</color>
+    <color name="_d8d8d8">#d8d8d8</color>
+    <color name="_f0f0f0">#f0f0f0</color>
+    <color name="_cfcfcf">#cfcfcf</color>
+
+    <!-- 编辑器文字颜色 -->
+    <integer-array name="editor_font_color">
+        <item>@color/picker_black</item>
+        <item>@color/picker_red</item>
+        <item>@color/picker_pink</item>
+        <item>@color/picker_purple</item>
+        <item>@color/picker_deep_purple</item>
+        <item>@color/picker_indigo</item>
+        <item>@color/picker_blue</item>
+        <item>@color/picker_light_blue</item>
+        <item>@color/picker_cyan</item>
+        <item>@color/picker_teal</item>
+        <item>@color/picker_green</item>
+        <item>@color/picker_light_green</item>
+        <item>@color/picker_lime</item>
+        <item>@color/picker_yellow</item>
+        <item>@color/picker_amber</item>
+        <item>@color/picker_orange</item>
+        <item>@color/picker_deep_orange</item>
+        <item>@color/picker_brown</item>
+        <item>@color/picker_grey</item>
+        <item>@color/picker_blue_grey</item>
+    </integer-array>
+
+    <color name="picker_black">#000000</color>
+    <color name="picker_red">#DD1F08</color>
+    <color name="picker_pink">#EB1E60</color>
+    <color name="picker_purple">#9C19B1</color>
+    <color name="picker_deep_purple">#6632B8</color>
+    <color name="picker_indigo">#3D4DB6</color>
+    <color name="picker_blue">#3493F5</color>
+    <color name="picker_light_blue">#34A6F6</color>
+    <color name="picker_cyan">#2CBBD4</color>
+    <color name="picker_teal">#199587</color>
+    <color name="picker_green">#45AF49</color>
+    <color name="picker_light_green">#88C441</color>
+    <color name="picker_lime">#CCDD1E</color>
+    <color name="picker_yellow">#FBEC13</color>
+    <color name="picker_amber">#FBC000</color>
+    <color name="picker_orange">#FB9800</color>
+    <color name="picker_deep_orange">#FF5404</color>
+    <color name="picker_brown">#795547</color>
+    <color name="picker_grey">#9D9D9D</color>
+    <color name="picker_blue_grey">#5D7B8B</color>
+    <color name="_2C2C2C">#2C2C2C</color>
+    <color name="_DCDCDC">#DCDCDC</color>
+    <color name="_FE8400">#FE8400</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="GREEN">#FF00FF00</color>
+    <color name="RED">#FFFF0000</color>
+    <color name="PointerColor">#C9DEEE</color>
+    <color name="Yellow">#FFFFFF00</color>
+
+    <color name="series_not_end">#fffec500</color>
+    <color name="sienna">#ffa0522d</color>
+    <color name="silver">#ffc0c0c0</color>
+    <color name="skyblue">#AFF178</color>
+    <color name="slateblue">#ff6a5acd</color>
+    <color name="slategray">#ff708090</color>
+    <color name="slategrey">#ff708090</color>
+    <color name="textColor">#666666</color>
+    <color name="shadow">#dfdfdf</color>
+    <color name="scale">#5BAFFF</color>
+    <color name="scales">#005BAFFF</color>
+    <color name="leftRight">#AFF178</color>
+    <color name="rightRight">#AFF178</color>
+    <color name="outsideBlue">#2690f8</color>
+    <color name="insideBlue">#58ade5</color>
+    <color name="insideCircle">#000000</color>
+</resources>

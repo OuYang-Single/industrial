@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.hjq.shape.layout.ShapeRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape="rectangle"
+    app:shape_radius="6dp"
+    app:shape_solidColor="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您确定要注销账号吗？"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="102dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="取消"
+            android:id="@+id/tv_left"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_endColor="#fff"
+            app:shape_bottomLeftRadius="4dp"
+            app:shape_startColor="#fff"
+            android:layout_height="48dp"/>
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="确定"
+            android:id="@+id/tv_right"
+            android:textColor="#fff"
+            android:textSize="16dp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_endColor="#FE8400"
+            app:shape_bottomRightRadius="4dp"
+            app:shape_startColor="#FE8400"
+            android:layout_height="48dp"/>
+    </LinearLayout>
+
+
+</com.hjq.shape.layout.ShapeRelativeLayout>
+

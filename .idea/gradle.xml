@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common_library" />
+            <option value="$PROJECT_DIR$/datalibrary" />
+            <option value="$PROJECT_DIR$/inlet_library" />
+            <option value="$PROJECT_DIR$/login_library" />
+            <option value="$PROJECT_DIR$/main_library" />
+            <option value="$PROJECT_DIR$/mylibrary" />
+            <option value="$PROJECT_DIR$/phoneApp" />
+            <option value="$PROJECT_DIR$/phoneApp_Library" />
+            <option value="$PROJECT_DIR$/service_library" />
+            <option value="$PROJECT_DIR$/settinglibrary" />
+            <option value="$PROJECT_DIR$/ui_library" />
+            <option value="$PROJECT_DIR$/web_library" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

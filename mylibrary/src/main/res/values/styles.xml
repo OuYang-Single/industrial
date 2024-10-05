@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MySwitchCompat" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#FE8400</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorSwitchThumbNormal">#fff</item>
+    </style>
+</resources>

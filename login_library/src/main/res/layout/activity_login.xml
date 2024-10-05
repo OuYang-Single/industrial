@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewModel"  type="com.ijcsj.login_library.viewmodel.LogInViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+
+            android:background="@mipmap/ic_bg_log_in"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="317dp"/>
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@mipmap/ic_tv_log_in_title"
+            android:id="@+id/title"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="112dp"
+            android:textColor="#CCFFEB3B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <com.hjq.shape.layout.ShapeRelativeLayout
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_marginTop="39dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_height="300dp"
+            android:gravity="center"
+            app:shape_radius="20dp"
+            app:shape="rectangle"
+            app:shape_endColor="#fff"
+            app:shape_startColor="#fff" >
+
+
+        </com.hjq.shape.layout.ShapeRelativeLayout>
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:layout_marginTop="39dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_width="match_parent"
+            app:shape_topRightRadius="20dp"
+            app:shape_topLeftRadius="20dp"
+            app:shape_endColor="@color/f44336"
+            app:shape_startColor="@color/f44336"
+            android:layout_height="20dp"/>
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:id="@+id/sll_c"
+            android:layout_marginTop="39dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_width="match_parent"
+            app:shape_topRightRadius="20dp"
+            app:shape_topLeftRadius="20dp"
+            android:layout_height="60dp">
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                binding:selected_code="@{viewModel.logInBean.type}"
+                binding:onClickCommand="@{viewModel.onCodeClick}"
+                android:orientation="vertical"
+                app:shape_topRightRadius="20dp"
+                app:shape_topLeftRadius="20dp"
+                app:shape="rectangle"
+                app:shape_endColor="#fff"
+                app:shape_startColor="#fff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="验证码登录"
+                    android:textColor="@{viewModel.logInBean.type?@color/ffda90:@color/cb9a63}"
+                    android:textSize="18dp" />
+
+                <com.hjq.shape.layout.ShapeRelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="3dp"
+                    android:gravity="center"
+                    app:shape_radius="20dp"
+                    app:shape="rectangle"
+                    android:visibility="@{viewModel.logInBean.type?View.INVISIBLE:View.VISIBLE}"
+                    app:shape_endColor="#FE8400"
+                    app:shape_startColor="#FE8400">
+                </com.hjq.shape.layout.ShapeRelativeLayout>
+            </com.hjq.shape.layout.ShapeLinearLayout>
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                binding:onClickCommand="@{viewModel.onPasswordClick}"
+                binding:selected_password="@{viewModel.logInBean.type}"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:shape_topRightRadius="20dp"
+                app:shape_bottomLeftRadius="20dp"
+                app:shape="rectangle"
+                app:shape_endColor="@color/f44336"
+                app:shape_startColor="@color/f44336"
+                android:focusable="true">
+                <TextView
+                    android:textColor="@{viewModel.logInBean.type?@color/cb9a63:@color/ffda90}"
+                    android:textSize="18dp"
+                    android:text="账号登录"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.hjq.shape.layout.ShapeRelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="3dp"
+                    android:gravity="center"
+                    app:shape_radius="20dp"
+                    app:shape="rectangle"
+                    android:visibility="@{viewModel.logInBean.type?View.VISIBLE:View.INVISIBLE}"
+                    app:shape_endColor="#FE8400"
+                    app:shape_startColor="#FE8400">
+                </com.hjq.shape.layout.ShapeRelativeLayout>
+            </com.hjq.shape.layout.ShapeLinearLayout>
+        </com.hjq.shape.layout.ShapeLinearLayout>
+        <LinearLayout
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/sll_c"
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                binding:selected_code_s="@{viewModel.logInBean.type}"
+                app:shape_endColor="@color/ffffff"
+                app:shape_startColor="@color/ffffff"
+                android:layout_height="20dp"/>
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                binding:selected_password_s="@{viewModel.logInBean.type}"
+                app:shape_endColor="@color/f44336"
+                app:shape_startColor="@color/f44336"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:id="@+id/login_rg"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/sll_c"
+            android:layout_width="match_parent"
+            app:shape_topRightRadius="20dp"
+            app:shape_topLeftRadius="20dp"
+            app:shape_endColor="#fff"
+            app:shape_startColor="#fff"
+            android:layout_height="60dp">
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:id="@+id/sll_phone"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/login_rg"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_radius="10dp"
+            app:shape_endColor="#F7FAFC"
+            app:shape_startColor="#F7FAFC"
+            app:shape_strokeColor="#00FE8400"
+            app:shape_strokeWidth="1dp" >
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:text="@={viewModel.logInBean.phone}"
+                android:layout_marginEnd="33dp"
+                android:background="@null"
+                android:hint="@{viewModel.logInBean.type?@string/please_input_phone1:@string/please_input_phone}"
+                android:importantForAutofill="no"
+                android:maxLines="1"
+                android:textColor="#202020"
+                android:textColorHint="#CCCCCC"
+                android:textSize="16dp"/>
+        </com.hjq.shape.layout.ShapeLinearLayout>
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:visibility="@{viewModel.logInBean.type?View.INVISIBLE:View.VISIBLE}"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/sll_phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_radius="10dp"
+            app:shape_endColor="#F7FAFC"
+            app:shape_startColor="#F7FAFC"
+            app:shape_strokeColor="#00FE8400"
+            app:shape_strokeWidth="1dp" >
+
+
+            <EditText
+                android:layout_marginStart="24dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="33dp"
+                android:background="@null"
+                android:importantForAutofill="no"
+                android:id="@+id/ed_code"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:hint="@{viewModel.logInBean.translateTextColor?@string/please_input_translate1:@string/please_input_translate}"
+                android:maxLines="1"
+                android:text="@={viewModel.logInBean.translate}"
+                android:textColor="#202020"
+                android:textColorHint="#CCCCCC"
+                android:textSize="14dp"/>
+
+            <com.hjq.shape.view.ShapeTextView
+                android:textColor="@{viewModel.logInBean.translateTextColor?@color/login_translate_color_2:@color/login_translate_color_1}"
+                android:text="@{viewModel.logInBean.translateHint}"
+                android:layout_marginEnd="6dp"
+                android:gravity="center"
+                android:textSize="16dp"
+                binding:onClickCommand="@{viewModel.onSendCodeClick}"
+                binding:selected_send_code="@{viewModel.logInBean.translateTextColor}"
+                android:layout_marginVertical="6dp"
+                android:layout_width="114dp"
+                android:layout_height="match_parent"
+                app:shape="rectangle"
+                app:shape_endColor="#fff"
+                app:shape_radius="10dp"
+                app:shape_startColor="#fff"/>
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:visibility="@{viewModel.logInBean.type?View.VISIBLE:View.INVISIBLE}"
+            android:layout_marginHorizontal="32dp"
+            android:id="@+id/sll_passwoed"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/sll_phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            app:shape="rectangle"
+            app:shape_radius="10dp"
+            app:shape_endColor="#F7FAFC"
+            app:shape_startColor="#F7FAFC"
+            app:shape_strokeColor="#00FE8400"
+            app:shape_strokeWidth="1dp" >
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/ed_password"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="33dp"
+                android:background="@null"
+                android:hint="@string/please_input_phone2"
+                android:onTextChanged="@{viewModel.onTextChanged}"
+                android:beforeTextChanged="@{viewModel.beforeTextChanged}"
+                android:afterTextChanged="@{viewModel.afterTextChanged}"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
+                android:maxLines="1"
+                android:text="@={viewModel.logInBean.password}"
+                android:textColor="#202020"
+                android:textColorHint="#CCCCCC"
+                android:textSize="14dp"/>
+            <ImageView
+                binding:onClickCommand="@{viewModel.onClickPassword}"
+                android:layout_marginEnd="24dp"
+                android:src="@{viewModel.logInBean.passwordDisplay?@drawable/icon_login_close1:@drawable/icon_login_close}"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/shapeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="31dp"
+            android:layout_marginTop="59dp"
+            android:gravity="center"
+            binding:onClickCommand="@{viewModel.onClickLogin}"
+            android:text="登录"
+            android:textColor="#fff"
+            android:textSize="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/sll_passwoed"
+            app:shape="rectangle"
+            app:shape_endColor="#FE8400"
+            app:shape_radius="15dp"
+            app:shape_startColor="#FE8400" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginHorizontal="30dp"
+            android:gravity="center_horizontal"
+            binding:onClickCommand="@{viewModel.onClickPrivacy}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <ImageView
+                android:id="@+id/img_privacy"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:src="@{viewModel.logInBean.privacy?@drawable/icon_login_privacy2:@drawable/icon_login_privacy1}" />
+
+            <TextView
+                android:id="@+id/tv_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:text=""
+                android:textColor="#000000" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

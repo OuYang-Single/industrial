@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.AboutLittleGooseActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.FaceActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.RealNameActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.FeedbackActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.DeviceActivity"
+            android:exported="false" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name="com.ijcsj.mylibrary.ui.FaceSuccessActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

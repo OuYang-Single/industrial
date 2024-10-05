@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingLeanbackLauncher" >
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application>
+        <activity
+            android:exported="true"
+            android:theme="@style/Theme.Gosling"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
+            android:name=".ui.MainActivity" >
+
+        </activity>
+        <activity
+            android:exported="true"
+            android:theme="@style/Theme.Gosling"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:name=".ui.PhoneMainActivity" >
+
+        </activity>
+        <activity
+            android:name=".ui.IntroduceActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Gosling"
+            tools:ignore="DiscouragedApi" />
+
+    </application>
+
+</manifest>

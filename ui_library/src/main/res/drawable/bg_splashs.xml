@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/bg_ffeae7_3_c" />
+
+
+    <item android:gravity="center">
+        <bitmap
+            android:gravity="center_horizontal|top"
+            android:src="@mipmap/ic_clg" />
+    </item>
+
+
+
+
+
+
+
+
+</layer-list>
+

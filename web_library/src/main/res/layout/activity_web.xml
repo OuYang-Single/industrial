@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel"  type="com.ijcsj.web_library.viewmodel.WebViewModel"/>
+    </data>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_height="match_parent">
+
+        <com.ijcsj.ui_library.widget.CommonTitleBar
+            android:id="@+id/top_bar_ac"
+            app:showBottomLine="false"
+            app:centerTextSize="18dp"
+            app:centerTextColor="#000000"
+            app:titleBarColor="#FFFFFF"
+            app:statusBarColor="#00FFFFFF"
+            app:statusBarMode="dark"
+            app:leftType="textView"
+            app:leftDrawable="@mipmap/fanhui_icon_left"
+            app:centerType="textView"
+            app:centerText=""
+            app:titleBarHeight="88dp"
+            app:fillStatusBar="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/callMeasure"
+            android:layout_marginTop="88dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

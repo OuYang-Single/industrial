@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tvcommon_sp16">6dp</dimen>
+    <dimen name="tvcommon_px1">1dp</dimen>
+
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+
+    <style name="TabStyle">
+
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabUnboundedRipple">false</item>
+        <item name="tabBackground">@color/white</item>
+        <item name="tabSelectedTextColor">#34C3FF</item>
+        <item name="tabIndicatorColor">#34C3FF</item>
+        <item name="tabTextColor">@color/white</item>
+    </style>
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">12dp</item> <!-- 设置你想要的字体大小 -->
+    </style>
+</resources>
