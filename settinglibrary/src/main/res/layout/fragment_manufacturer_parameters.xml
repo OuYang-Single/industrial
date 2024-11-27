@@ -61,13 +61,14 @@
                     />
 
                 <ImageView
+                    android:visibility="invisible"
                     android:id="@+id/img_temperature_mode_arrow"
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/ic_right_arrows"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"/>
                 <TextView
                     android:id="@+id/tv_mode_name"
                     android:layout_marginRight="6dp"
@@ -107,8 +108,8 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/ic_right_arrows"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"/>
                 <TextView
                     android:id="@+id/tv_filling_time"
                     android:layout_marginRight="6dp"
@@ -157,8 +158,8 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/ic_right_arrows"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"/>
                 <TextView
                     android:id="@+id/tv_delay_pump_start_time"
                     android:layout_marginRight="6dp"

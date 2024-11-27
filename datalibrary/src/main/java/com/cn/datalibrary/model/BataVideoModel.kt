@@ -62,7 +62,7 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         list[3]=datr3
         datr5.value=(it.data[6].toFloat()/(10).toFloat()).toString()+" bar"
         list[5]=datr5
-        datr7.value=(it.data[6].toFloat()/(10).toFloat()).toString()+" bar"
+        datr7.value=(it.data[7].toFloat()/(10).toFloat()).toString()+" bar"
         list[6]=datr7
     }
 

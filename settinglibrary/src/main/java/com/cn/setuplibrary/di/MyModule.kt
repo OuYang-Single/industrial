@@ -5,6 +5,7 @@ import com.cn.setuplibrary.model.SettingMainModel
 import com.cn.setuplibrary.viewmodel.SettingMainViewModel
 import com.cn.setuplibrary.api.ApiRepository
 import com.cn.setuplibrary.api.RequestService
+import com.cn.setuplibrary.bean.DebuggingSettingsBean
 import com.cn.setuplibrary.bean.EngineeringBean
 import com.cn.setuplibrary.bean.ManufactorBean
 import com.cn.setuplibrary.bean.PasswordBean
@@ -55,7 +56,7 @@ var SettingModule =module {
         ChangeProjectPasswordViewModel(get(),get())
     }
     viewModel {
-        ManufacturerDebuggingViewModel(get())
+        ManufacturerDebuggingViewModel(get(),get())
     }
 
     viewModel {
@@ -86,6 +87,7 @@ var SettingModule =module {
     single { ManufactorBean() }
     single { EngineeringBean() }
     single { SettingUserBean() }
+    single { DebuggingSettingsBean() }
     single { get<Retrofit>().create(RequestService::class.java) }
 
     single { ApiRepository(get()) }

@@ -111,6 +111,12 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
         if (TextUtils.isEmpty(ad)){
             ShuJuMMkV.getInstances()?.putString(a.TIME,DateUtil.formatTime(DateUtil.getCurrentTime(), "yyyyMMddHHmm"))
         }
+        Log.w("fragment_main","onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.w("fragment_main","onPause")
     }
 
      fun updateTime() {

@@ -21,6 +21,7 @@ class OutputVideoModel  (private val repository: ApiRepository,var gson: Gson) :
         var projectBase6= DataTitle("增压泵 :",false)
         var projectBase7= DataTitle("加热器 :",false)
         var projectBase8= DataTitle("故障报警 :",false)
+
         projectBaseList.add(projectBase1)
         projectBaseList.add(projectBase2)
         projectBaseList.add(projectBase3)

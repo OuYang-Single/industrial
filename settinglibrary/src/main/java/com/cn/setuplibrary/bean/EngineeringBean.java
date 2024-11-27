@@ -24,7 +24,15 @@ public class EngineeringBean  extends BaseObservable {
     private String coolingTimeOut="请选择";
     private String coalCompensation="请选择";
     private String coalReturnCompensation="请选择";
-
+    private String returnPressureDifference="请选择";
+    private String highPressureDeviation="请选择";
+    private String lowPressureDeviation="请选择";
+    private String minimumInletPressure="请选择";
+    private String maximumReturnWaterPressure="请选择";
+    private String minimumPumpPressure="请选择";
+    private String minimumFlowValue="请选择";
+    private String minimumTrafficDelayTime="请选择";
+    private String  ipAddress="请选择";
 
     @Bindable
     public String getPinP() {
@@ -179,5 +187,86 @@ public class EngineeringBean  extends BaseObservable {
     public void setCoalReturnCompensation(String coalReturnCompensation) {
         this.coalReturnCompensation = coalReturnCompensation;
         notifyPropertyChanged(BR.coalReturnCompensation);
+    }
+    @Bindable
+    public String getReturnPressureDifference() {
+        return returnPressureDifference;
+    }
+
+    public void setReturnPressureDifference(String returnPressureDifference) {
+        this.returnPressureDifference = returnPressureDifference;
+        notifyPropertyChanged(BR.returnPressureDifference);
+    }
+    @Bindable
+    public String getHighPressureDeviation() {
+        return highPressureDeviation;
+    }
+
+    public void setHighPressureDeviation(String highPressureDeviation) {
+        this.highPressureDeviation = highPressureDeviation;
+        notifyPropertyChanged(BR.highPressureDeviation);
+    }
+    @Bindable
+    public String getLowPressureDeviation() {
+        return lowPressureDeviation;
+    }
+
+    public void setLowPressureDeviation(String lowPressureDeviation) {
+        this.lowPressureDeviation = lowPressureDeviation;
+        notifyPropertyChanged(BR.lowPressureDeviation);
+    }
+    @Bindable
+    public String getMinimumInletPressure() {
+        return minimumInletPressure;
+    }
+
+    public void setMinimumInletPressure(String minimumInletPressure) {
+        this.minimumInletPressure = minimumInletPressure;
+        notifyPropertyChanged(BR.minimumInletPressure);
+    }
+    @Bindable
+    public String getMaximumReturnWaterPressure() {
+        return maximumReturnWaterPressure;
+    }
+
+    public void setMaximumReturnWaterPressure(String maximumReturnWaterPressure) {
+        this.maximumReturnWaterPressure = maximumReturnWaterPressure;
+        notifyPropertyChanged(BR.maximumReturnWaterPressure);
+    }
+    @Bindable
+    public String getMinimumPumpPressure() {
+        return minimumPumpPressure;
+    }
+
+    public void setMinimumPumpPressure(String minimumPumpPressure) {
+        this.minimumPumpPressure = minimumPumpPressure;
+        notifyPropertyChanged(BR.minimumPumpPressure);
+    }
+    @Bindable
+    public String getMinimumFlowValue() {
+        return minimumFlowValue;
+    }
+
+    public void setMinimumFlowValue(String minimumFlowValue) {
+        this.minimumFlowValue = minimumFlowValue;
+        notifyPropertyChanged(BR.minimumFlowValue);
+    }
+    @Bindable
+    public String getMinimumTrafficDelayTime() {
+        return minimumTrafficDelayTime;
+    }
+
+    public void setMinimumTrafficDelayTime(String minimumTrafficDelayTime) {
+        this.minimumTrafficDelayTime = minimumTrafficDelayTime;
+        notifyPropertyChanged(BR.minimumTrafficDelayTime);
+    }
+    @Bindable
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+        notifyPropertyChanged(BR.ipAddress);
     }
 }

@@ -113,6 +113,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
                         CAN_103()
                         CAN_105()
                         CAN_108()
+                        CAN_106()
                         LiveDataBus.get().with("onClickBut1", Boolean::class.java ).postValue(true)
                     }
                 })).show()

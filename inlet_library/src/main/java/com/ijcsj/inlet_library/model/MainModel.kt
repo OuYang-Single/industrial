@@ -161,6 +161,10 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                             list.add(getString(i))
                             ints++;
                         }
+                    }else if (projectBaseList[i]==2){
+                        list.add(getStrings(i))
+                    }else if (projectBaseList[i]==3){
+                        list.add(getStrings2(i))
                     }
                     headerd[i.toString()]=projectBaseList[i].toString()
                 }
@@ -184,6 +188,44 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                                HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getString(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
                            }
                      }
+                    }else if (projectBaseList[i]==2){
+                        var a1=   ShuJuMMkV.getInstances()?.getString("addHistoryBase$i")
+                        var value=    headers[i.toString()]
+                        if (value!=null){
+                            if (value!=projectBaseList[i].toString()){
+                                HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                            }
+                        }else{
+                            Log.w("CAN_101", "addHistoryBase$i  $a1  ${projectBaseList[i]}")
+                            if (!TextUtils.isEmpty(a1)){
+                                if (a1!=projectBaseList[i].toString()){
+                                    Log.w("CAN_101", "addHistoryBase$i a1!=projectBaseList[i].toString() $a1")
+                                    HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                                }
+                            }else{
+                                Log.w("CAN_101", "addHistoryBase$i -----a1 $a1")
+                                HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                            }
+                        }
+                    }else if (projectBaseList[i]==3){
+                        var a1=   ShuJuMMkV.getInstances()?.getString("addHistoryBase$i")
+                        var value=    headers[i.toString()]
+                        if (value!=null){
+                            if (value!=projectBaseList[i].toString()){
+                                HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings2(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                            }
+                        }else{
+                            Log.w("CAN_101", "addHistoryBase$i  $a1  ${projectBaseList[i]}")
+                            if (!TextUtils.isEmpty(a1)){
+                                if (a1!=projectBaseList[i].toString()){
+                                    Log.w("CAN_101", "addHistoryBase$i a1!=projectBaseList[i].toString() $a1")
+                                    HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings2(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                                }
+                            }else{
+                                Log.w("CAN_101", "addHistoryBase$i -----a1 $a1")
+                                HistoryBaseDatabase.getDatabase(it).historyBaseDao().insertAll(   HistoryBase("1",getStrings2(i),DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH"),"未处理",Date(System.currentTimeMillis())))
+                            }
+                        }
                     }else{
                         updateHistoryBase(it,getString(i))
                     }
@@ -198,24 +240,56 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
 
     private fun getString(int: Int):String{
       return  when(int){
-                0->"进水压力"
-                1->"回水压力"
-                2->"出媒压力"
-                3->"始流温度"
-                4->"回流温度"
-                5->"冷却器温度"
-                6->"流量状态"
-                7->"L1相电流状态"
-                8->"L2相电流状态"
-                9->"L3相电流状态"
-                10->"填充水状态"
-                11->"24V电压状态"
-                12->"水泵压力状态"
-                13->"冷却超时状态"
-                14->"加热超时状态"
-                15->"回媒压力"
+                0->"进水压力状态错误"
+                1->"回水压力状态错误"
+                2->"出媒压力状态错误"
+                3->"始流温度状态错误"
+                4->"回流温度状态错误"
+                5->"冷却器温度状态错误"
+                6->"流量状态错误"
+                7->"三相电L1相错误"
+                8->"三相电L2相错误"
+                9->"三相电L3相错误"
+                10->"填充水状态错误"
+                11->"24V电压状态错误"
+                12->"水泵状态错误"
+                13->"冷却超时"
+                14->"加热超时"
+                15->"回媒压力状态错误"
                 else -> {""}
       }
+    }
+    private fun getStrings(int: Int):String{
+        return  when(int){
+            0->"进水压力达到最大"
+            1->"回水压力达到最大"
+            2->"出媒压力达到最大"
+            3->"参考温度过高"
+            4->"回流温度达到最大"
+            5->"冷却器温度达到最大"
+            6->"流量信号异常"
+            7->"L1相电流达到最大"
+            8->"L2相电流达到最大"
+            9->"L3相电流达到最大"
+            15->"回媒压力达到最大"
+            else -> {""}
+        }
+    }
+    private fun getStrings2(int: Int):String{
+        return  when(int){
+            0->"进水压力达到最小"
+            1->"回水压力达到最小"
+            2->"出媒压力达到最小"
+            3->"参考温度过低"
+            4->"出回流温差大"
+            5->"冷却器温度达到最小"
+            6->"流量达到最小"
+            7->"L1相电流达到最小"
+            8->"L2相电流达到最小"
+            9->"L3相电流达到最小"
+            15->"回媒压力达到最小"
+            else -> {""}
+        }
     }
      private fun  updateHistoryBase(context: Context, last_reason:String) {
         var dateList1=   HistoryBaseDatabase.getDatabase(context).historyBaseDao().getHistoryBaseWithSameData(last_reason,"未处理")

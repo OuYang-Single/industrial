@@ -6,9 +6,9 @@ import androidx.databinding.Bindable;
 import com.ijcsj.stUplibrary.BR;
 
 public class ManufactorBean extends BaseObservable {
-    private String typeMachine;
-    private String temperatureUpperLimit;
-    private String temperatureOffline;
+    private String typeMachine="A2";
+    private String temperatureUpperLimit="160℃";
+    private String temperatureOffline="50℃";
     private String activationDate;
     private String activationCode;
     @Bindable

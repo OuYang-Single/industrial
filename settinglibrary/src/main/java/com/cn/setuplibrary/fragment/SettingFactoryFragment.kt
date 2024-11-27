@@ -22,6 +22,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
     override fun onBinding() {
         viewDataBinding?.viewModel=viewModel
     }
+    var boolean=false;
 
     override fun onAgainCreate() {
         observe()
@@ -35,6 +36,8 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
         // 监听页面切换事件
         viewDataBinding?.viewPage2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                var ad=   adapter2?.fragmentList?.get(position) as MvvmBaseFragment<*, *>
+                ad?.onAgainCreates()
                 // 获取当前页面和下一个页面的视图
                 when (position){
                     0->{
@@ -68,8 +71,9 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                     4->{
                         var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
                         if (isEngineeringLogOn==false){
+                            boolean=true;
                             ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",2).navigation()
-                            viewDataBinding?.viewPage2?.currentItem=0
+                        //    viewDataBinding?.viewPage2?.currentItem=0
                         }else{
                             viewDataBinding?.tv1?.visibility= View.INVISIBLE
                             viewDataBinding?.tv2?.visibility= View.INVISIBLE
@@ -87,6 +91,14 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
 
     override fun onAgainCreates() {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (boolean){
+            boolean=false;
+            viewDataBinding?.viewPage2?.currentItem=0
+        }
     }
     override fun onPause() {
         super.onPause()

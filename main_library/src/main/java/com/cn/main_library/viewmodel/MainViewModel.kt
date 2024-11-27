@@ -99,7 +99,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         mainBase.isHeat=data3
         mainBase.isMoisturizing=data4
         mainBase.isBurial=data2
-        var data5=  Hexs. getBitByByte(it.data[0],0,3)
+        var data5=  Hexs. getBitByByte(it.data[1],0,3)
         var stringData=   when(data5){
             0->{
                "待机状态"
@@ -174,14 +174,14 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         var valueData2=false;
         var valueData3=false;
         for (i in 0 until data.size) {
-           if (data[i]==1){
-               if (getString(i)=="回流温度"){
+           if (data[i]>=1){
+               if (i==4){
                    valueData1=true;
                }
-               if (getString(i)=="回媒压力"){
+               if (i==15){
                    valueData2=true;
                }
-               if (getString(i)=="流量状态"){
+               if (i==6){
                    valueData3=true;
                }
            }
@@ -192,27 +192,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         mainBase.isWarn2=valueData2
         mainBase.isWarn3=valueData3
     }
-    private fun getString(int: Int):String{
-        return  when(int){
-            0->"进水压力"
-            1->"回水压力"
-            2->"出媒压力"
-            3->"始流温度"
-            4->"回流温度"
-            5->"冷却器温度"
-            6->"流量状态"
-            7->"L1相电流状态"
-            8->"L2相电流状态"
-            9->"L3相电流状态"
-            10->"填充水状态"
-            11->"24V电压状态"
-            12->"水泵压力状态"
-            13->"冷却超时状态"
-            14->"加热超时状态"
-            15->"回媒压力"
-            else -> {""}
-        }
-    }
+
     var onSwitchClick=  BindingCommand<BindingAction>{
         Logger.w("onPasswordClick");
         var bytes2=ByteArray(8)
@@ -297,6 +277,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     @JvmStatic
     @BindingAdapter(value = ["setPercent"])
     fun DashboardView.setPercent(circleUrl: Int) {
+
        this.setPercent(circleUrl)
       }
 

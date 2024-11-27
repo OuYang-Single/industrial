@@ -41,6 +41,17 @@ public class a {
     public static String  COAL_COMPENSATION="coal_compensation";
     public static String  COAL_RETURN_COMPENSATION="coal_Return_Compensation";
     public static String  TIME="TIME";
+    public static String  INLETVALVE_1="InletValve_1";
+    public static String  INLETVALVE_2="InletValve_2";
+    public static String  INLETVALVE_3="InletValve_3";
+    public static String  INLETVALVE_4="InletValve_4";
+    public static String  INLETVALVE_5="InletValve_5";
+    public static String  INLETVALVE_6="InletValve_6";
+    public static String  INLETVALVE_7="InletValve_7";
+    public static String  INLETVALVE_8="InletValve_8";
+    public static String  INLETVALVE_9="InletValve_9";
+    public static String  INLETVALVE_11="InletValve_11";
+    public static String  INLETVALVE_12="InletValve_12";
     public static String ms2DateOnlyDay(long _ms){
         Date date = new Date(_ms);
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());

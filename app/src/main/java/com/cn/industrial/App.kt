@@ -7,22 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
-import com.ijcsj.common_library.bean.HistoryBase
-import com.ijcsj.common_library.bean.HistoryBaseDatabase
-import com.ijcsj.common_library.bean.TemperatureBase
-import com.ijcsj.common_library.bean.TemperatureBaseDatabase
 import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.util.ActivityManager
-import com.ijcsj.common_library.util.DateUtil
 import com.ijcsj.common_library.util.LiveDataBus
 import com.orhanobut.logger.Logger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.Calendar
 
 
 class App : Application() {
@@ -34,8 +22,8 @@ class App : Application() {
         socketcan= Socketcan();
         Socketcan.fd=Socketcan.OpenCan("can0")
         LiveDataBus.get().with("Socketcan_Data", Socketcan::class.java ).postValue(socketcan)
-        socketcan?.timeLoop()
-
+        socketcan?.timeLoop(this)
+        Logger.w("App onCreate ${ Socketcan.fd}");
         registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Logger.w("App $activity");

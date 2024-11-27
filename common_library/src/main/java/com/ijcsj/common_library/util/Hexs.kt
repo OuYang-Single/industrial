@@ -1,5 +1,6 @@
 package com.ijcsj.common_library.util
 
+import okhttp3.internal.and
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
@@ -211,7 +212,7 @@ object Hexs {
     /**
      * 获取字节在内存中多位的值,采用字符取值方式(包含endIndex位)
      */
-    fun getBitByByte(b: Byte, begIndex: Int, endIndex: Int): Int? {
+   /* fun getBitByByte(b: Byte, begIndex: Int, endIndex: Int): Int? {
         if (begIndex >= 8 || endIndex >= 8 || begIndex >= endIndex) {
             return null
         }
@@ -219,9 +220,28 @@ object Hexs {
         val binStr = byteToBin(b)
         `val` = binStr.substring(begIndex, endIndex + 1).toInt(2)
         return `val`
+    }*/
+
+   /* fun getBitByByte(data: Byte, startBit: Int, endBit: Int): Int {
+        // 将整数转换为二进制字符串
+        // 将整数转换为二进制字符串
+        var mask = (1 shl endBit - startBit + 1) - 1
+        mask = mask shl startBit
+
+        // 使用掩码提取位
+
+        // 使用掩码提取位
+        val result: Int = data and mask shr startBit
+        return result
+    }*/
+    fun getBitByByte(b: Byte, startBit: Int, endBit: Int): Int {
+        // 创建一个掩码，用于提取指定范围的位
+   /*     var mask = (1 shl endBit - startBit + 1) - 1
+        mask = mask shl startBit*/
+
+        // 使用掩码提取位
+        return TestByteToBin.extractBits(b,startBit,endBit)
     }
-
-
     fun intToByte4B(n: Int): ByteArray? {
         val b = ByteArray(4)
         b[0] = (n shr 24 and 0xff).toByte() //数据组起始位,存放内存起始位, 即:高字节在前

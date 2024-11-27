@@ -6,7 +6,7 @@
 
 #include <zconf.h>
 #include <string.h>
-
+#include <cstdlib> // 引入system函数
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_ijcsj_common_1library_can_Socketcan_OpenCan(JNIEnv *env, jclass clazz, jstring canx) {

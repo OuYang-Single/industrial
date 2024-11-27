@@ -22,7 +22,7 @@ public class CanSocketTest {
     public static void miscTests() throws IOException {
 	final CanSocket.CanId id = new CanSocket.CanId(0x30001).setEFFSFF();
 	try (final CanSocket s = new CanSocket(CanSocket.Mode.RAW)) {
-	    final CanSocket.CanInterface canif = new CanSocket.CanInterface(s, "slcan0");
+	    final CanSocket.CanInterface canif = new CanSocket.CanInterface(s, "can0");
 	    s.bind(canif);
 	    s.send(new CanSocket.CanFrame(canif, id, new byte[] {0,
 		(byte) 0x91}));

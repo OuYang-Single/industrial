@@ -40,6 +40,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         engineerIngBean.fillingTime=ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")+" s"
         engineerIngBean.pumpJammingTime=ShuJuMMkV.getInstances()?.getString(a.DELAY_PUMP_START_TIME,"10")+" S"
         engineerIngBean.emptyingTime=ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")+" S"
+        engineerIngBean.ipAddress= ShuJuMMkV.getInstances()?.getString(a.IP_ADDRESS,"0")+" S"
         engineerIngBean.coolingTemperature=ShuJuMMkV.getInstances()?.getString(a.COOLING_TEMPERATURE,"60")+" S"
         engineerIngBean.highDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_DEVIATION,"50")!!.toFloat()/10.toFloat()).toString()+" ℃"
         engineerIngBean.lowDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_DEVIATION,"50")!!.toFloat()/10.toFloat()).toString()+" ℃"
@@ -49,6 +50,14 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         engineerIngBean.coolingTimeOut= ShuJuMMkV.getInstances()?.getString(a.COOLING_TIMEOUT,"120")+" min"
 
         engineerIngBean.exhaustPressure= ( ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.returnPressureDifference= ( ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.highPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.lowPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumInletPressure= (  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.maximumReturnWaterPressure= (ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumPumpPressure= ( ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumFlowValue= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")!!.toFloat()/10.toFloat()).toString()+" L/min"
+        engineerIngBean.minimumTrafficDelayTime= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_12,"0")).toString()+" S"
 
         engineerIngBean.coalCompensation= (ShuJuMMkV.getInstances()?.getString(a.COAL_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" 度"
         engineerIngBean.coalReturnCompensation= ( ShuJuMMkV.getInstances()?.getString(a.COAL_RETURN_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" 度"
@@ -155,6 +164,55 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
 
 
     }
+
+    var onIpAddressClick=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("$i s")
+        }
+
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
+                    var d5=  ShuJuMMkV.getInstances()?.getString(a.COOLING_TEMPERATURE,"60")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.DELAY_PUMP_START_TIME,"10")
+                    var d11=  Hexs.  hex2LowHighByte(d1!!.toLong())
+                    bytes2[0]= (d0!!.toInt() and 0xff).toByte()
+                    bytes2[1]=d11[0]
+                    bytes2[2]=d11[1]
+                    bytes2[3]=  (d4!!.toInt() and 0xff).toByte()
+                    bytes2[4]= (d3!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (int!!.toInt()and 0xff ).toByte()
+                    bytes2[6]= (d5!!.toInt()and 0xff).toByte()
+                    bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        ShuJuMMkV.getInstances()?.putString(a.IP_ADDRESS,int.toString())
+                        engineerIngBean.ipAddress=string
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+
     var onClickPumpJammingTime=  BindingCommand<BindingAction>{
         var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
         if (isEngineeringLogOn==false){
@@ -623,6 +681,348 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     if (ta>0){
                         engineerIngBean.exhaustPressure=string
                         ShuJuMMkV.getInstances()?.putString(a.EXHAUST_PRESSURE,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickReturnPressureDifference=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")
+                    var d5=  ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(int!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (d3!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (d4!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (d5!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (d6!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.returnPressureDifference=string
+                        ShuJuMMkV.getInstances()?.putString(a. RETURN_PRESSURE_DIFFERENCE,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickHighPressureDeviation=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")
+                    var d5=  ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(int!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (d3!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (d4!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (d5!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (d6!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.highPressureDeviation=string
+                        ShuJuMMkV.getInstances()?.putString(a. HIGH_PRESSURE_DEVIATION,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickLowPressureDeviation=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")
+                    var d5=  ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(d3!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (int!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (d4!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (d5!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (d6!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.lowPressureDeviation=string
+                        ShuJuMMkV.getInstances()?.putString(a. LOW_PRESSURE_DEVIATION,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickMinimumInletPressure=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")
+                    var d5=  ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(d3!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (d4!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (int!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (d5!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (d6!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.minimumInletPressure=string
+                        ShuJuMMkV.getInstances()?.putString(a. MINIMUM_INLET_PRESSURE,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickMaximumReturnWaterPressure=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")
+                    var d5=    ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(d3!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (d4!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (d5!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (int!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (d6!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.maximumReturnWaterPressure=string
+                        ShuJuMMkV.getInstances()?.putString(a. MAXIMUM_RETURN_WATER_PRESSURE,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickMinimumPumpPressure=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d1=  ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")
+                    var d3=  ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")
+                    var d4=  ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")
+                    var d5=    ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")
+                    var d6=  ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
+                    bytes2[0]=(d1!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[2]=(d3!!.toInt()and 0xff).toByte()
+                    bytes2[3]=  (d4!!.toInt()and 0xff).toByte()
+                    bytes2[4]= (d5!!.toInt()and 0xff).toByte()
+                    bytes2[5]= (d6!!.toInt() and 0xff).toByte()
+                    bytes2[6]= (int.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.minimumPumpPressure=string
+                        ShuJuMMkV.getInstances()?.putString(a.  MINIMUM_PUMP_PRESSURE,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickMinimumFlowValue=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } L/min")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_12,"0")
+
+                    bytes2[0]=(int.toInt()and 0xff).toByte()
+                    bytes2[1]=(d2!!.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_107,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.minimumFlowValue=string
+                        ShuJuMMkV.getInstances()?.putString(a.  INLETVALVE_11,  int.toString())
+                    }else{
+                        _message.postValue("发送失败，请重试")
+                    }
+                    basePopupView?.dismiss()
+                }
+            }))).show()
+    }
+    var  onClickMinimumTrafficDelayTime=  BindingCommand<BindingAction>{
+        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        if (isEngineeringLogOn==false){
+            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+            return@BindingCommand
+        }
+        var list= mutableListOf<String>()
+        for (i in 0 until 256) {
+            list.add("${(i.toFloat()).toString() } S")
+        }
+        basePopupView=XPopup.Builder(it.context)
+            .enableDrag(false)
+            .autoDismiss(false)
+            .dismissOnTouchOutside(false)
+            .positionByWindowCenter(true)
+            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
+                StyleAdapter.OnClickListeners{
+                override fun onClick(string: String?,int: Int) {
+                    var bytes2=ByteArray(8)
+                    var d2=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")
+
+                    bytes2[0]=(d2!!.toInt()and 0xff).toByte()
+                    bytes2[1]=(int.toInt()and 0xff).toByte()
+
+                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_107,bytes2)
+                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
+                    if (ta>0){
+                        engineerIngBean.minimumTrafficDelayTime=string
+                        ShuJuMMkV.getInstances()?.putString(a.  INLETVALVE_12,  int.toString())
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
