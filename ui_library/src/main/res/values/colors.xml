@@ -122,4 +122,14 @@
     <color name="outsideBlue">#2690f8</color>
     <color name="insideBlue">#58ade5</color>
     <color name="insideCircle">#000000</color>
+
+    <color name="history_color">#000B2F</color>
+    <color name="history_color_s">#00FFFFFF</color>
+    <color name="button_text_on">#FFFFFF</color>
+    <color name="button_text_off">#999999</color>
+    <color name="color_00000000">#00FFFFFF</color>
+    <color name="x_grid_color">#00FFFFFF</color>
+    <color name="white_60alpha">#7C7C7C</color>
+    <color name="color_979797">#FFFFFF</color>
+    <color name="circleColors">#FFFFFF</color>
 </resources>

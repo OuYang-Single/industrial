@@ -43,6 +43,20 @@
             android:layout_height="wrap_content">
             <com.hjq.shape.view.ShapeTextView
                 android:layout_width="80dp"
+                binding:onClickCommand="@{viewModel.onClickBut3}"
+                android:id="@+id/tv_but_3"
+                android:layout_marginRight="11dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                app:shape="rectangle"
+                android:visibility="gone"
+                android:text="日志导出"
+                android:textColor="#ffffffff"
+                android:textSize="9sp"
+                app:shape_radius="3dp"
+                app:shape_solidColor="#03A9F4"/>
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="80dp"
                 binding:onClickCommand="@{viewModel.onClickBut1}"
                 android:id="@+id/tv_but_1"
                 android:layout_height="20dp"

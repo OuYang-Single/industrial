@@ -1,10 +1,13 @@
 package com.cn.setuplibrary.di
 
 import com.cn.setuplibrary.adapter.DataTitleAdapter
+import com.cn.setuplibrary.adapter.HistoryAdapterBgs
+import com.cn.setuplibrary.adapter.OperationAdapter
 import com.cn.setuplibrary.model.SettingMainModel
 import com.cn.setuplibrary.viewmodel.SettingMainViewModel
 import com.cn.setuplibrary.api.ApiRepository
 import com.cn.setuplibrary.api.RequestService
+import com.cn.setuplibrary.bean.DataBase
 import com.cn.setuplibrary.bean.DebuggingSettingsBean
 import com.cn.setuplibrary.bean.EngineeringBean
 import com.cn.setuplibrary.bean.ManufactorBean
@@ -66,7 +69,7 @@ var SettingModule =module {
         ManufacturerUpgradeViewModel(get())
     }
     viewModel {
-        OperationLogViewModel(get())
+        OperationLogViewModel(get(),get (),get(),get())
     }
     viewModel {
         FactoryChangesPasswordViewModel(get())
@@ -83,7 +86,10 @@ var SettingModule =module {
     single { OperationLogModel(get()) }
     single { FactoryChangesPasswordModel(get()) }
     single { DataTitleAdapter() }
+    single { OperationAdapter() }
+    single { HistoryAdapterBgs() }
     single { PasswordBean() }
+    single {  DataBase() }
     single { ManufactorBean() }
     single { EngineeringBean() }
     single { SettingUserBean() }

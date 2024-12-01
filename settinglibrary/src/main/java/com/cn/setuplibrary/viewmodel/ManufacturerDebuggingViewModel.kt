@@ -105,7 +105,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.inletValve=string
@@ -155,7 +155,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.waterOutletValve=string
@@ -205,7 +205,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.waterPumpValve=string
@@ -254,7 +254,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.waterReplenishmentPumpValve=string
@@ -303,7 +303,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.turnOnHeating=string
@@ -352,7 +352,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.blowAirOn=string
@@ -401,7 +401,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.openTheColdEndValve=string
@@ -451,7 +451,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.openTheColdEndProportionalValve=string
@@ -502,7 +502,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     bytes2[6]= (d7!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_104,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.openTheProportionalValveAtTheHotEnd=string

@@ -19,6 +19,7 @@ import com.ijcsj.common_library.ui.IBaseView
 import com.ijcsj.common_library.util.Constant
 import com.ijcsj.common_library.util.DateUtil
 import com.ijcsj.common_library.util.ExcelChart
+import com.ijcsj.common_library.util.ExcelCharts
 import com.ijcsj.common_library.util.Hexs
 import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
@@ -92,15 +93,17 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
             WaitDialog.show("表格生成中...");
             var endTime: Date = Calendar.getInstance().time
             viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+                _dataTitle.postValue(false)
             }) {
-               var data= model.initDatas(startTime,endTime)
-                val excelChart = ExcelChart()
-              var a=  excelChart.CreateGraph(
-                    "/sdcard/2012halinfo",
-                    data
-                )
-                _dataTitle.postValue(a)
-
+                withContext(Dispatchers.IO){
+                    var data= model.initDatas(startTime,endTime)
+                    val excelChart = ExcelChart()
+                    var a=  excelChart.CreateGraph(
+                        "/sdcard/2012halinfo",
+                        data
+                    )
+                    _dataTitle.postValue(a)
+                }
             }
         }else{
             basePopupView= XPopup.Builder(it.context)
@@ -117,6 +120,23 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
                         LiveDataBus.get().with("onClickBut1", Boolean::class.java ).postValue(true)
                     }
                 })).show()
+        }
+    }
+    var onClickBut3 =  BindingCommand<BindingAction>{
+        WaitDialog.show("表格生成中...");
+        var endTime: Date = Calendar.getInstance().time
+        viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+            _dataTitle.postValue(false)
+        }) {
+            withContext(Dispatchers.IO){
+                var data= model.initDatass()
+                val excelChart = ExcelCharts()
+                var a=  excelChart.CreateGraph(
+                    "/sdcard/datac",
+                    data
+                )
+                _dataTitle.postValue(a)
+            }
         }
     }
     var onClickBut2 =  BindingCommand<BindingAction>{
@@ -157,7 +177,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
         bytes2[5]= (d4!!.toInt() and 0xff).toByte()
         bytes2[6]= (d5!!.toInt()and 0xff).toByte()
         bytes2[7]= (d6!!.toInt() and 0xff ).toByte()
-        var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+        var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
         ShuJuMMkV.getInstances()?.putString(a.SETTING_TEMPERATURE,"1200")
         ShuJuMMkV.getInstances()?.putString(a.FILLING_TIME,"4")
         ShuJuMMkV.getInstances()?.putString(a.PUMP_ON_TIME,"0")
@@ -194,7 +214,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
         ShuJuMMkV.getInstances()?.putString(a.TEMPERATURE_DEVIATION_TIME,"20")
         ShuJuMMkV.getInstances()?.putString(a.HEATING_TIMEOUT,"120")
         ShuJuMMkV.getInstances()?.putString(a.COOLING_TIMEOUT,"120")
-        var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+        var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
         Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
         if (ta>0){
           return true;
@@ -220,7 +240,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
         ShuJuMMkV.getInstances()?.putString(a.PID_D,"10")
         ShuJuMMkV.getInstances()?.putString(a.COAL_COMPENSATION,"0")
         ShuJuMMkV.getInstances()?.putString(a.COAL_RETURN_COMPENSATION,"0")
-        var a1=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_108,bytes2)
+        var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
         if (a1>0){
             return true
         }else{
@@ -251,7 +271,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
         ShuJuMMkV.getInstances()?.putString(a.MINIMUM_INLET_PRESSURE,"10")
         ShuJuMMkV.getInstances()?.putString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")
         ShuJuMMkV.getInstances()?.putString(a.MINIMUM_PUMP_PRESSURE,"5")
-        var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+        var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
         Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
         if (ta>0){
             return true

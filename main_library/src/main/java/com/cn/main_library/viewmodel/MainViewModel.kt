@@ -220,7 +220,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         bytes2[5]= (d4!!.toInt()and 0xff ).toByte()
         bytes2[6]= (d5!!.toInt()and 0xff).toByte()
         bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
-        var a=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+        var a=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
         Logger.w("onPasswordClick  $a   ${Socketcan.fd}");
 
     }
@@ -255,7 +255,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                         bytes2[6]= (d5!!.toInt()and 0xff).toByte()
                         bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
 
-                        var a1=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                        var a1=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                         if (a1>0){
                             ShuJuMMkV.getInstances()?.putString(a.SETTING_TEMPERATURE,(d111*10).toInt().toString())
                             mainBase.settingTemperature=(d111.toFloat()).toString()

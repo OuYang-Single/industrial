@@ -47,12 +47,13 @@ public class Socketcan {
         list.add(canId);
     }
 
-
+    static  Application app;
     /**
      * 开启循环任务
      * 0 开始延时时间 1000 每次间隔执行时间
      */
     public void timeLoop(Application app) {
+        this.app=app;
         list=new ArrayList<>();
         list.add("153");
         list.add("152");
@@ -83,14 +84,15 @@ public class Socketcan {
                             for (int i=0;i<canFrame.data.length;i++){
                                 string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
                             }
+                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
+                            if (!datasBases.isEmpty()){
+                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
+                                    addData( canFrame,app);
+                                }
+                            }else {
+                                addData( canFrame,app);
+                            }
 
-                            DatasBase datasBase=new DatasBase();
-                            datasBase.setData( Hexs.INSTANCE.encodeHexStr(canFrame.data));
-                            datasBase.setCanId( Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
-                            datasBase.setType(true);
-                            datasBase.setDateTime(new Date(System.currentTimeMillis()));
-                            datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm"));
-                            DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
                             Log.w("MainFragment","ObservableSource  "+canFrame.can_id+"  "+ Integer.toHexString(canFrame.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrame.data)+"  ");
                             for (String canId:list){
                                 if (Integer.parseInt(canId)==canFrame.can_id){
@@ -107,6 +109,16 @@ public class Socketcan {
                 .subscribe();
     }
 
+    public static void addData(CanFrame canFrame,Application app){
+        DatasBase datasBase=new DatasBase();
+        datasBase.setData( Hexs.INSTANCE.encodeHexStr(canFrame.data));
+        datasBase.setCanId( Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
+        datasBase.setType(true);
+        datasBase.setDateTime(new Date(System.currentTimeMillis()));
+        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm"));
+        DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
+        LiveDataBus.get().with("CanWrites", Boolean.class ).postValue(true);
+    }
   public static void down(){
 
       try {
@@ -178,6 +190,34 @@ public class Socketcan {
     }
     public static int fd;
 
+    public static int CanWrites (int fd,int canId, byte[] data){
+        int i=  CanWrite( fd, canId,  data);
+        Observable.just("")
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Function<String, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(String string) throws Throwable {
+
+                        DatasBase datasBase=new DatasBase();
+                        datasBase.setData( Hexs.INSTANCE.encodeHexStr(data));
+                        datasBase.setCanId( Integer.toHexString(canId & 0x1FFFFFFF));
+                        datasBase.setType(false);
+                        datasBase.setDateTime(new Date(System.currentTimeMillis()));
+                        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm"));
+                        if (i>0){
+                            DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
+                        }else{
+                            DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
+                        }
+                        LiveDataBus.get().with("CanWrites", Boolean.class ).postValue(true);
+                        return Observable.just("");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
+        return i;
+    }
     public native static  int OpenCan(String canx);
     public native static  int CanWrite(int fd,int canId, byte[] data);
     public native static CanFrame CanRead(CanFrame mcanFrame, int time);

@@ -1,11 +1,16 @@
 package com.ijcsj.common_library.viewadapter.view;
 
+import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import androidx.databinding.BindingAdapter;
@@ -14,6 +19,9 @@ import com.ijcsj.common_library.command.BindingCommand;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.orhanobut.logger.Logger;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
 import kotlin.Unit;
 
@@ -28,6 +36,7 @@ public class ViewAdapter {
     //防重复点击间隔(秒)
     public static final int CLICK_INTERVAL = 1;
 
+    static Map<View,BindingCommand> viewBindingCommandMap=new HashMap<>();
 
     /**
      * requireAll 是意思是是否需要绑定全部参数, false为否
@@ -35,18 +44,19 @@ public class ViewAdapter {
      * onClickCommand 绑定的命令,
      * isThrottleFirst 是否开启防止过快点击
      */
+
     @BindingAdapter(value = {"onClickCommand"}, requireAll = false)
-    public static void onClickCommand(View view, final BindingCommand clickCommand) {
-        RxView.clicks(view)
-                .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object object) throws Exception {
-                        if (clickCommand != null) {
-                            clickCommand.execute(view);
-                        }
-                    }
-                });
+    public static void onClickCommand(View view,  final BindingCommand clickCommand) {
+        Log.w("ouyang", "onClickCommand  onClickRight "+view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (clickCommand != null) {
+                    clickCommand.execute(view);
+                }
+            }
+        });
+
     }
 
     /**

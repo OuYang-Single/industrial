@@ -46,7 +46,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
 
-                    var a1=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_108,bytes2)
+                    var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
                     if (a1>0){
                         ShuJuMMkV.getInstances()?.putString(a.PID_P,(d111*100).toInt().toString())
                     }else{
@@ -78,7 +78,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                     bytes2[2]= (d2!!.toInt() and 0xff).toByte()
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
-                    var a1=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_108,bytes2)
+                    var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
                     if (a1>0){
                         ShuJuMMkV.getInstances()?.putString(a.PID_I,(d111*100).toInt().toString())
                     }else{
@@ -109,7 +109,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                     bytes2[2]= (d2!!.toInt() and 0xff).toByte()
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
-                    var a1=  Socketcan.CanWrite(Socketcan.fd, Socketcan.CAN_108,bytes2)
+                    var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
                     if (a1>0){
                         ShuJuMMkV.getInstances()?.putString(a.PID_D,(d111*100).toInt().toString())
                     }else{

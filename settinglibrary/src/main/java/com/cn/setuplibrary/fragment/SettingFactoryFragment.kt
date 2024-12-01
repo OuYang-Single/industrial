@@ -9,6 +9,7 @@ import com.cn.setuplibrary.viewmodel.SettingUserViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.MvvmBaseFragment
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.stUplibrary.R
 import com.ijcsj.stUplibrary.databinding.FragmentSettingFactoryBinding
@@ -23,6 +24,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
         viewDataBinding?.viewModel=viewModel
     }
     var boolean=false;
+    var booleans=true;
 
     override fun onAgainCreate() {
         observe()
@@ -33,6 +35,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
             tab.setText(viewModel.projectBaseList[p1]);
         }
         viewModel.initModel()
+        viewDataBinding?.viewPage2?.offscreenPageLimit=6
         // 监听页面切换事件
         viewDataBinding?.viewPage2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -41,6 +44,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                 // 获取当前页面和下一个页面的视图
                 when (position){
                     0->{
+                        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).postValue(false)
                         viewDataBinding?.tv1?.visibility= View.VISIBLE
                         viewDataBinding?.tv2?.visibility= View.INVISIBLE
                         viewDataBinding?.tv3?.visibility= View.INVISIBLE
@@ -48,6 +52,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                         viewDataBinding?.tv5?.visibility= View.INVISIBLE
                     }
                     1->{
+                        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).postValue(false)
                         viewDataBinding?.tv1?.visibility= View.INVISIBLE
                         viewDataBinding?.tv2?.visibility= View.VISIBLE
                         viewDataBinding?.tv3?.visibility= View.INVISIBLE
@@ -55,6 +60,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                         viewDataBinding?.tv5?.visibility= View.INVISIBLE
                     }
                     2->{
+                        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).postValue(false)
                         viewDataBinding?.tv1?.visibility= View.INVISIBLE
                         viewDataBinding?.tv2?.visibility= View.INVISIBLE
                         viewDataBinding?.tv3?.visibility= View.VISIBLE
@@ -62,6 +68,11 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                         viewDataBinding?.tv5?.visibility= View.INVISIBLE
                     }
                     3->{
+                        if (booleans){
+                            viewDataBinding?.viewPage2?.currentItem=3
+                            booleans=false
+                        }
+                        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).postValue(true)
                         viewDataBinding?.tv1?.visibility= View.INVISIBLE
                         viewDataBinding?.tv2?.visibility= View.INVISIBLE
                         viewDataBinding?.tv3?.visibility= View.INVISIBLE
@@ -69,6 +80,7 @@ class SettingFactoryFragment : MvvmBaseFragment<FragmentSettingFactoryBinding, S
                         viewDataBinding?.tv5?.visibility= View.INVISIBLE
                     }
                     4->{
+                        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).postValue(false)
                         var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
                         if (isEngineeringLogOn==false){
                             boolean=true;

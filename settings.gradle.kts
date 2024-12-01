@@ -2,7 +2,8 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-
+        mavenCentral()
+        jcenter() //demo中部分三方库还未迁移
         maven { url =
             uri("https://jitpack.io")}
         maven { url =
@@ -35,7 +36,7 @@ dependencyResolutionManagement {
         maven { url =
             uri("https://jitpack.io")}
         google()
-
+        jcenter() //demo中部分三方库还未迁移
         mavenCentral()
         maven { url =
             uri("https://raw.githubusercontent.com/martinloren/AabResGuard/mvn-repo")}

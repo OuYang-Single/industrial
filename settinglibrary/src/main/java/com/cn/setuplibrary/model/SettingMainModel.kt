@@ -13,7 +13,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.ijcsj.common_library.bean.BackFlowBase
 import com.ijcsj.common_library.bean.BackFlowBaseDatabase
+import com.ijcsj.common_library.bean.DataBaseDatabase
 import com.ijcsj.common_library.bean.DataTitle
+import com.ijcsj.common_library.bean.DatasBase
 import com.ijcsj.common_library.bean.HistoryBase
 import com.ijcsj.common_library.bean.HistoryBaseDatabase
 import com.ijcsj.common_library.bean.SetUpBaseDatabase
@@ -153,7 +155,18 @@ class SettingMainModel(private val repository: ApiRepository) : BaseModel() {
             lineDataSetList
         }
     }
-
+    suspend  fun initDatass(): ObservableList<DatasBase> {
+        return   withContext(Dispatchers.IO) {
+            val historyBaseList: ObservableList<DatasBase> = ObservableArrayList()
+            var list= AppGlobals.get()?.let {
+                DataBaseDatabase.getDatabase(it).backFlowBaseDao().getAllData()
+            }
+            if (list != null) {
+                historyBaseList.addAll(list)
+            }
+            historyBaseList
+        }
+    }
     suspend  fun dataDeletes() {
         withContext(Dispatchers.IO) {
             AppGlobals.get()?.let {

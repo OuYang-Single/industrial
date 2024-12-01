@@ -103,7 +103,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.temperatureMode=string
@@ -150,7 +150,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d4!!.toInt()and 0xff ).toByte()
                     bytes2[6]= (d5!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.FILLING_TIME,int.toString())
@@ -200,7 +200,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (int!!.toInt()and 0xff ).toByte()
                     bytes2[6]= (d5!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.IP_ADDRESS,int.toString())
@@ -249,7 +249,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d4!!.toInt()and 0xff ).toByte()
                     bytes2[6]= (d5!!.toInt()and 0xff).toByte()
                     bytes2[7]= (int!!.toInt()and 0xff ).toByte()
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.DELAY_PUMP_START_TIME,int.toString())
@@ -297,7 +297,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d4!!.toInt()and 0xff ).toByte()
                     bytes2[6]= (d5!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.PUMP_ON_TIME,int.toString())
@@ -347,7 +347,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d4!!.toInt()and 0xff ).toByte()
                     bytes2[6]= (int!!.toInt()and 0xff).toByte()
                     bytes2[7]= (d6!!.toInt()and 0xff ).toByte()
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_103,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.COOLING_TEMPERATURE,int.toString())
@@ -396,7 +396,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.highDeviation=string
@@ -442,7 +442,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.lowDeviation=string
@@ -489,7 +489,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.temperatureDifference=string
@@ -536,7 +536,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.temperatureDeviationTime=string
@@ -586,7 +586,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (int!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.heatingTimeOut=string
@@ -631,7 +631,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (int!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_105,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_105,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.coolingTimeOut=string
@@ -676,7 +676,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.exhaustPressure=string
@@ -721,7 +721,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.returnPressureDifference=string
@@ -766,7 +766,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.highPressureDeviation=string
@@ -811,7 +811,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.lowPressureDeviation=string
@@ -856,7 +856,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d5!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.minimumInletPressure=string
@@ -901,7 +901,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (int!!.toInt() and 0xff).toByte()
                     bytes2[6]= (d6!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.maximumReturnWaterPressure=string
@@ -946,7 +946,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[5]= (d6!!.toInt() and 0xff).toByte()
                     bytes2[6]= (int.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_106,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_106,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.minimumPumpPressure=string
@@ -982,7 +982,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[0]=(int.toInt()and 0xff).toByte()
                     bytes2[1]=(d2!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_107,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_107,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.minimumFlowValue=string
@@ -1018,7 +1018,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[0]=(d2!!.toInt()and 0xff).toByte()
                     bytes2[1]=(int.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_107,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_107,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.minimumTrafficDelayTime=string
@@ -1060,7 +1060,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[3]= (int!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_108,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_108,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.coalCompensation=string
@@ -1102,7 +1102,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
                     bytes2[4]= (int!!.toInt() and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_108,bytes2)
+                    var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_108,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.coalCompensation=string

@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":ui_library"))
     implementation(project(":service_library"))
     implementation(project(":common_library"))
+    implementation("com.github.li-xiaojun:EasyAdapter:1.2.8")
     implementation (libs.arouter.api){
         exclude(
             "com.android.support",

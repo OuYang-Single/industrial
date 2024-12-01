@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cn.setuplibrary.adapter.PageAdapter
 import com.cn.setuplibrary.viewmodel.SettingMainViewModel
 import com.ijcsj.common_library.ui.MvvmBaseFragment
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.stUplibrary.R
 import com.ijcsj.stUplibrary.databinding.FragmentSettingMainBinding
 import com.kongzue.dialogx.dialogs.WaitDialog
@@ -57,6 +58,7 @@ class SettingMainFragment: MvvmBaseFragment<FragmentSettingMainBinding, SettingM
                 if (it==0){
                     viewDataBinding?.tvBut1?.text="数据导出"
                     viewDataBinding?.tvBut1?.tag="1"
+                    viewDataBinding?.tvBut3?.visibility= View.GONE
                 }else{
                     viewDataBinding?.tvBut1?.text="参数初始化"
                     viewDataBinding?.tvBut1?.tag="2"
@@ -64,8 +66,16 @@ class SettingMainFragment: MvvmBaseFragment<FragmentSettingMainBinding, SettingM
                 viewDataBinding?.llOperate?.visibility= View.VISIBLE
             }
         }
+        LiveDataBus.get().with("onClickBut3", Boolean::class.java ).observe(this){
+            if (it){
+                viewDataBinding?.tvBut3?.visibility= View.VISIBLE
+            }else{
+                viewDataBinding?.tvBut3?.visibility= View.GONE
+            }
+
+        }
         viewModel.dataTitle.observe(this){
-            WaitDialog.dismiss()
+            WaitDialog.dismiss(600)
             if (it){
                 toastUtils("表格生成完成")
             }else{
