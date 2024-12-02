@@ -4,6 +4,7 @@ package com.cn.main_library.di
 
 import com.cn.main_library.adapter.PhoneMainAdapter
 import com.cn.main_library.adapter.ProjectAdapter
+import com.cn.main_library.adapter.ProjectsAdapter
 import com.cn.main_library.api.ApiRepository
 import com.cn.main_library.api.RequestService
 import com.cn.main_library.base.MainBase
@@ -15,13 +16,14 @@ import retrofit2.Retrofit
 
 val MainModule= module {
     viewModel {
-        MainViewModel(get(),get(),get(),get())
+        MainViewModel(get(),get(),get(),get(),get())
     }
 
     single { MainVideoModel(get()) }
     single { MainBase() }
     single { ProjectAdapter() }
     single { PhoneMainAdapter() }
+    single { ProjectsAdapter() }
     single { get<Retrofit>().create(RequestService::class.java) }
 
     single { ApiRepository(get()) }

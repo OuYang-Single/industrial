@@ -92,7 +92,7 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     override fun onAgainCreates() {
-
+        ( viewDataBinding?.rvProjectS?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false //取消刷新闪屏动画
     }
 
     override fun onDestroy() {
@@ -142,6 +142,12 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
             }
             viewModel.adapter.refresh(it)
             viewModel.projectBaseLists=it
+        }
+        viewModel.projectBaseListd.observe(this){
+            if (viewDataBinding?.rvProjectS?.adapter==null){
+                viewDataBinding?.rvProjectS?.adapter=viewModel.adapters
+            }
+            viewModel.adapters.refresh(it)
         }
         LiveDataBus.get().with(Socketcan.CAN_100, CanFrame::class.java).observe(this){
             if (it.can_id==256){

@@ -31,6 +31,9 @@ public class MainBase  extends BaseObservable {
     private boolean isHeat=false;
     private boolean isMoisturizing=false;
     private boolean isBurial=false;
+    private boolean isInIet=false;
+    private boolean isExhaust=false;
+    private boolean isDrainage=false;
 
     private boolean isSwitchOn;
     private int  istype;
@@ -241,5 +244,32 @@ public class MainBase  extends BaseObservable {
     public void setWarn1(boolean warn1) {
         isWarn1 = warn1;
         notifyPropertyChanged( BR.warn1);
+    }
+    @Bindable
+    public boolean isInIet() {
+        return isInIet;
+    }
+
+    public void setInIet(boolean inIet) {
+        isInIet = inIet;
+        notifyPropertyChanged( BR.inIet);
+    }
+    @Bindable
+    public boolean isExhaust() {
+        return isExhaust;
+    }
+
+    public void setExhaust(boolean exhaust) {
+        isExhaust = exhaust;
+        notifyPropertyChanged( BR.exhaust);
+    }
+    @Bindable
+    public boolean isDrainage() {
+        return isDrainage;
+    }
+
+    public void setDrainage(boolean drainage) {
+        isDrainage = drainage;
+        notifyPropertyChanged( BR.drainage);
     }
 }

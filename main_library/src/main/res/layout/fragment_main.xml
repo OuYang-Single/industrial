@@ -369,8 +369,18 @@
             </LinearLayout>
         </com.hjq.shape.layout.ShapeRelativeLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            app:spanCount="4"
+            android:id="@+id/rv_project_s"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="103dp"
+            app:layout_constraintLeft_toRightOf="@+id/sl_tabulation"
+            app:layout_constraintTop_toBottomOf="@+id/sp_dashboardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:id="@+id/ll_"
             android:layout_marginTop="39dp"
             android:layout_marginLeft="12dp"
@@ -399,7 +409,7 @@
             </LinearLayout>
             <LinearLayout
                 android:visibility="@{viewModel.mainBase.isHeat?View. VISIBLE:View.GONE}"
-                android:layout_marginLeft="22dp"
+                android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
@@ -437,7 +447,7 @@
             </LinearLayout>
             <LinearLayout
                 android:visibility="@{viewModel.mainBase.isBurial?View. VISIBLE:View.GONE}"
-                android:layout_marginLeft="32dp"
+                android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
@@ -454,8 +464,65 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"/>
             </LinearLayout>
+            <LinearLayout
+                android:visibility="@{viewModel.mainBase.isInIet?View. VISIBLE:View.GONE}"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="进水"
+                    android:textColor="#ffffffff"
+                    android:textSize="13sp"
+                    />
+                <ImageView
+                    android:layout_marginLeft="6dp"
+                    android:src="@mipmap/ic_in_iet"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="@{viewModel.mainBase.isExhaust?View. VISIBLE:View.GONE}"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="排气"
+                    android:textColor="#ffffffff"
+                    android:textSize="13sp"
+                    />
+                <ImageView
+                    android:layout_marginLeft="6dp"
+                    android:src="@mipmap/ic_exhaust"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="@{viewModel.mainBase.isDrainage?View. VISIBLE:View.GONE}"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
 
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="排水"
+                    android:textColor="#ffffffff"
+                    android:textSize="13sp"
+                    />
+                <ImageView
+                    android:layout_marginLeft="6dp"
+                    android:src="@mipmap/ic_drainage"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </LinearLayout>
+        </LinearLayout>-->
 
         <ImageView
             binding:onClickCommand="@{viewModel.onSwitchClick}"

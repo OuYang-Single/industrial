@@ -2,13 +2,27 @@ package com.cn.main_library.model
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
+import com.cn.main_library.R
 import com.cn.main_library.api.ApiRepository
 import com.cn.main_library.base.ProjectBase
+import com.cn.main_library.base.ProjectsBase
+import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.model.BaseModel
+import com.ijcsj.common_library.util.Hexs
+import com.lxj.xpopup.core.BasePopupView
 
 class MainVideoModel  (private val repository: ApiRepository) : BaseModel() {
-    fun initData(): ObservableList<ProjectBase> {
+    val dbString: ObservableList<ProjectsBase> = ObservableArrayList()
 
+    fun initData(): ObservableList<ProjectBase> {
+        dbString.clear()
+        dbString.add(ProjectsBase("水泵", R.mipmap.ic_water_pump))
+        dbString.add(ProjectsBase("冷却", R.mipmap.ic_burial))
+        dbString.add(ProjectsBase("加热", R.mipmap.ic_heat))
+        dbString.add(ProjectsBase("补水", R.mipmap.ic_moisturizing))
+        dbString.add(ProjectsBase("进水", R.mipmap.ic_in_iet))
+        dbString.add(ProjectsBase("排气", R.mipmap.ic_exhaust))
+        dbString.add(ProjectsBase("排水", R.mipmap.ic_drainage))
         val projectBaseList: ObservableList<ProjectBase> = ObservableArrayList()
         var projectBase1=ProjectBase("出煤温度","--","℃")
         var projectBase2=ProjectBase("进水压力","--","Bar")
@@ -44,6 +58,25 @@ class MainVideoModel  (private val repository: ApiRepository) : BaseModel() {
         projectBaseList.add(projectBase8)
         projectBaseList.add(projectBase9)
         return projectBaseList
+    }
+
+    fun setCan102Data(canFrame: CanFrame):ObservableList<ProjectsBase> {
+
+        val daata: ObservableList<ProjectsBase> = ObservableArrayList()
+        for (i in 0 until dbString.size) {
+            if (Hexs.getBitByByte( canFrame.data[0],i)==1){
+                daata.add(dbString[i])
+            }
+        }
+       /* var data2=    Hexs.getBitByByte( canFrame.data[0],1)==1
+        var data3=   Hexs.getBitByByte( canFrame.data[0],2)==1
+        var data4=    Hexs.getBitByByte( canFrame.data[0],3)==1
+        var data5=    Hexs.getBitByByte( canFrame.data[0],4)==1
+        var data6=    Hexs.getBitByByte( canFrame.data[0],5)==1
+        var data7=    Hexs.getBitByByte( canFrame.data[0],5)==1
+        daata.add(data1)
+        daata.add(data1)*/
+       return daata;
     }
 
 }

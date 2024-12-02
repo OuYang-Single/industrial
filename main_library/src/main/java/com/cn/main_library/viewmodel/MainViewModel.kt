@@ -14,8 +14,10 @@ import androidx.lifecycle.MutableLiveData
 import com.cn.main_library.R
 import com.cn.main_library.adapter.PhoneMainAdapter
 import com.cn.main_library.adapter.ProjectAdapter
+import com.cn.main_library.adapter.ProjectsAdapter
 import com.cn.main_library.base.MainBase
 import com.cn.main_library.base.ProjectBase
+import com.cn.main_library.base.ProjectsBase
 import com.cn.main_library.model.MainVideoModel
 import com.cn.main_library.popup.InputPopup
 import com.ijcsj.common_library.bean.CanFrame
@@ -33,12 +35,17 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.orhanobut.logger.Logger
 
-class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,var adapter: ProjectAdapter,var phoneMainAdapter: PhoneMainAdapter) : MvmBaseViewModel<IBaseView, MainVideoModel>() {
+class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,var adapter: ProjectAdapter,var phoneMainAdapter: PhoneMainAdapter,var adapters: ProjectsAdapter) : MvmBaseViewModel<IBaseView, MainVideoModel>() {
     private val _projectBaseList = MutableLiveData<ObservableList<ProjectBase>>()
     val projectBaseList: LiveData<ObservableList<ProjectBase>> get() = _projectBaseList
+
+    private val _projectBaseLists = MutableLiveData<ObservableList<ProjectsBase>>()
+    val projectBaseListd: LiveData<ObservableList<ProjectsBase>> get() = _projectBaseLists
     var projectBaseLists:  ObservableList<ProjectBase>?=null
+    var projectBaseListsd:  ObservableList<ProjectsBase>?=null
     var basePopupView: BasePopupView?=null;
     public override fun initModel() {
+
         AppGlobals.get()?.let {
             if ("com.cn.phoneapp"== it.packageName)  {
                 _projectBaseList.postValue( model.initPhoneData())
@@ -91,14 +98,19 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     }
 
     fun setCan102Data(it: CanFrame) {
-        var data1=   Hexs.getBitByByte( it.data[0],0)==1
-        var data2=    Hexs.getBitByByte( it.data[0],1)==1
-        var data3=   Hexs.getBitByByte( it.data[0],2)==1
-        var data4=    Hexs.getBitByByte( it.data[0],3)==1
-        mainBase.isWaterPump=data1
+        _projectBaseLists.postValue(  model.setCan102Data(it))
+
+      /*  mainBase.isWaterPump=data1
         mainBase.isHeat=data3
         mainBase.isMoisturizing=data4
-        mainBase.isBurial=data2
+        mainBase.isBurial=data2*/
+        mainBase.isWaterPump=true
+        mainBase.isHeat=true
+        mainBase.isMoisturizing=true
+        mainBase.isBurial=true
+        mainBase.isInIet=true
+        mainBase.isExhaust=true
+        mainBase.isDrainage=true
         var data5=  Hexs. getBitByByte(it.data[1],0,3)
         var stringData=   when(data5){
             0->{
