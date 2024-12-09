@@ -48,21 +48,21 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         var  datr1=gson.fromJson(gson.toJson(list[0]), DataTitle::class.java)
         var  datr2=gson.fromJson(gson.toJson(list[2]), DataTitle::class.java)
         var  datr4=gson.fromJson(gson.toJson(list[4]), DataTitle::class.java)
-        datr1.value=(it.data[0].toFloat()/(10).toFloat()).toString()+" A"
+        datr1.value=(it.data[0].toFloat()/(10).toFloat()).toString()+" "
         list[0]=datr1
-        datr2.value=(it.data[1].toFloat()/(10).toFloat()).toString()+" A"
+        datr2.value=(it.data[1].toFloat()/(10).toFloat()).toString()+" "
         list[2]=datr2
-        datr4.value=(it.data[2].toFloat()/(10).toFloat()).toString()+" A"
+        datr4.value=(it.data[2].toFloat()/(10).toFloat()).toString()+" "
         list[4]=datr4
 
         var  datr3=gson.fromJson(gson.toJson(list[3]), DataTitle::class.java)
         var  datr5=gson.fromJson(gson.toJson(list[5]), DataTitle::class.java)
         var  datr7=gson.fromJson(gson.toJson(list[6]), DataTitle::class.java)
-        datr3.value=(it.data[5].toFloat()/(10).toFloat()).toString()+" bar"
+        datr3.value=(it.data[5].toFloat()/(10).toFloat()).toString()+" "
         list[3]=datr3
-        datr5.value=(it.data[6].toFloat()/(10).toFloat()).toString()+" bar"
+        datr5.value=(it.data[6].toFloat()/(10).toFloat()).toString()+" "
         list[5]=datr5
-        datr7.value=(it.data[7].toFloat()/(10).toFloat()).toString()+" bar"
+        datr7.value=(it.data[7].toFloat()/(10).toFloat()).toString()+" "
         list[6]=datr7
     }
 
@@ -70,18 +70,14 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         var  lsit1=gson.fromJson(gson.toJson(list[9]), DataTitle::class.java)
         var  lsit4=gson.fromJson(gson.toJson(list[8]), DataTitle::class.java)
         var  lsit3=gson.fromJson(gson.toJson(list[10]), DataTitle::class.java)
-        var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
-        if (data1>=0){
-            lsit1.value= "$data1 L/min"
-            list[9]=lsit1
-        }else{
-            lsit1.value= "0.0 L/min"
-            list[9]=lsit1
-        }
+
+        var data1= ( it.data[0].toFloat()/(10).toFloat()).toFloat()
+        lsit1.value= "${Math.abs(data1)} "
+        list[9]=lsit1
 
         var  lsit2=gson.fromJson(gson.toJson(list[7]), DataTitle::class.java)
         var data2= (it.data[7].toFloat()/(10).toFloat()).toString()
-        lsit2.value="$data2 bar"
+        lsit2.value="$data2 "
         list[7]=lsit2
 
         var data3=  ( Hexs.pinJie2ByteToInt(it.data[4],it.data[3]).toFloat()/(10).toFloat()).toString()

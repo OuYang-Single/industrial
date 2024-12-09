@@ -109,6 +109,7 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
     val projectBaseList: ArrayList<Int?> = ArrayList()
     var headers: HashMap<String, String> = HashMap()
     var headerd: HashMap<String, String> = HashMap()
+
     suspend  fun addHistoryBase(canFrame: CanFrame,list:ArrayList<String>):Int {
       return  withContext(Dispatchers.IO) {
           var ints=0
@@ -149,27 +150,25 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                 projectBaseList.add(data14)
                 projectBaseList.add(data15)
                 projectBaseList.add(data16)
+
+
                 for (i in 0 until projectBaseList.size) {
                     if (projectBaseList[i]==1){
-                        var value=    headerd[i.toString()]
-                        if (value!=null){
-                            if (value!=projectBaseList[i].toString()){
-                                list.add(getString(i))
-                                ints++;
-                            }
-                        }else{
-                            list.add(getString(i))
-                            ints++;
-                        }
+                        list.add(getString(i))
+                        ints++;
                     }else if (projectBaseList[i]==2){
                         list.add(getStrings(i))
+                        ints++;
                     }else if (projectBaseList[i]==3){
                         list.add(getStrings2(i))
+                        ints++;
                     }
                     headerd[i.toString()]=projectBaseList[i].toString()
                 }
                 for (i in 0 until projectBaseList.size) {
                     if (projectBaseList[i]==1){
+                        updateHistoryBase(it,getStrings(i))
+                        updateHistoryBase(it,getStrings2(i))
                       var a1=   ShuJuMMkV.getInstances()?.getString("addHistoryBase$i")
                       var value=    headers[i.toString()]
                        if (value!=null){
@@ -189,6 +188,8 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                            }
                      }
                     }else if (projectBaseList[i]==2){
+                        updateHistoryBase(it,getString(i))
+                        updateHistoryBase(it,getStrings2(i))
                         var a1=   ShuJuMMkV.getInstances()?.getString("addHistoryBase$i")
                         var value=    headers[i.toString()]
                         if (value!=null){
@@ -208,6 +209,8 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                             }
                         }
                     }else if (projectBaseList[i]==3){
+                        updateHistoryBase(it,getString(i))
+                        updateHistoryBase(it,getStrings(i))
                         var a1=   ShuJuMMkV.getInstances()?.getString("addHistoryBase$i")
                         var value=    headers[i.toString()]
                         if (value!=null){
@@ -228,10 +231,14 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                         }
                     }else{
                         updateHistoryBase(it,getString(i))
+                        updateHistoryBase(it,getStrings(i))
+                        updateHistoryBase(it,getStrings2(i))
                     }
+
                     ShuJuMMkV.getInstances()?.putString("addHistoryBase$i", projectBaseList[i].toString())
                   //  headers[i.toString()] = projectBaseList[i].toString()
                 }
+
             }
           ints
         }
@@ -253,8 +260,8 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                 10->"填充水状态错误"
                 11->"24V电压状态错误"
                 12->"水泵状态错误"
-                13->"冷却超时"
-                14->"加热超时"
+                13->"加热超时"
+                14->"冷却超时"
                 15->"回媒压力状态错误"
                 else -> {""}
       }

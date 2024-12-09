@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.alibaba.android.arouter.launcher.ARouter
 import com.cn.setuplibrary.adapter.DataTitleAdapter
 import com.cn.setuplibrary.model.SettingMainModel
 import com.cn.setuplibrary.popup.ConfirmPopup
@@ -60,6 +61,20 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
         }*/
         _dataFragmentList.postValue( model.initDataFragment())
         adapter.setOnItemClickListener { v, vdb, position ->
+            if (position==1){
+                var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+                if (isEngineeringLogOn==false){
+                    ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
+                    return@setOnItemClickListener
+                }
+            }
+            if (position==2){
+                var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
+                if (isEngineeringLogOn==false){
+                    ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",2).navigation()
+                    return@setOnItemClickListener
+                }
+            }
             var data: DataTitle?=null
             var positions=0;
             for (i in 0 until adapter.datas.size) {
@@ -161,7 +176,7 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
 
     fun CAN_103():Boolean{
         var bytes2=ByteArray(8)
-        var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+        var d0=  5
         var d1=  1200
         var d2=  4
         var d3= 0

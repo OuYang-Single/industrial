@@ -21,8 +21,7 @@ public class TestByteToBin {
 	public static Integer getBitByByte(byte b, int index) {
 		if(index >= 8) { return null; }
 		Integer val = null;
-		String binStr = byteToBin(b);
-		val = Integer.parseInt(String.valueOf(binStr.charAt(index)));
+		val = (b >> index) & 0x1;
 		return val;
 	}
 	

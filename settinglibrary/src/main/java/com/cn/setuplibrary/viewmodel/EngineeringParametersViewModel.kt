@@ -30,33 +30,33 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         var pidD=  ShuJuMMkV.getInstances()?.getString(a.PID_D,"10")
         var tempMode=  ShuJuMMkV.getInstances()?.getString(a.TEMP_MODE,"0")?.toInt()
         engineerIngBean.pinP=(pidP!!.toFloat()/100.toFloat()).toString()
-        engineerIngBean.pinI=(pidI!!.toFloat()/100.toFloat()).toString()
+        engineerIngBean.pinI=(pidI!!.toFloat()/1000.toFloat()).toString()
         engineerIngBean.pinD=(pidD!!.toFloat()/100.toFloat()).toString()
         if (tempMode==0){
             engineerIngBean.temperatureMode="出媒"
         }else{
             engineerIngBean.temperatureMode="回媒"
         }
-        engineerIngBean.fillingTime=ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")+" s"
+        engineerIngBean.fillingTime=ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")+" min"
         engineerIngBean.pumpJammingTime=ShuJuMMkV.getInstances()?.getString(a.DELAY_PUMP_START_TIME,"10")+" S"
         engineerIngBean.emptyingTime=ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")+" S"
-        engineerIngBean.ipAddress= ShuJuMMkV.getInstances()?.getString(a.IP_ADDRESS,"0")+" S"
-        engineerIngBean.coolingTemperature=ShuJuMMkV.getInstances()?.getString(a.COOLING_TEMPERATURE,"60")+" S"
+        engineerIngBean.ipAddress= ShuJuMMkV.getInstances()?.getString(a.IP_ADDRESS,"0")+" "
+        engineerIngBean.coolingTemperature=ShuJuMMkV.getInstances()?.getString(a.COOLING_TEMPERATURE,"60")+" °C"
         engineerIngBean.highDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_DEVIATION,"50")!!.toFloat()/10.toFloat()).toString()+" ℃"
         engineerIngBean.lowDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_DEVIATION,"50")!!.toFloat()/10.toFloat()).toString()+" ℃"
         engineerIngBean.temperatureDifference= ( ShuJuMMkV.getInstances()?.getString(a.TEMPERATURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" ℃"
-        engineerIngBean.temperatureDeviationTime= ShuJuMMkV.getInstances()?.getString(a.TEMPERATURE_DEVIATION_TIME,"20")+" S"
+        engineerIngBean.temperatureDeviationTime= ShuJuMMkV.getInstances()?.getString(a.TEMPERATURE_DEVIATION_TIME,"20")+" min"
         engineerIngBean.heatingTimeOut= ShuJuMMkV.getInstances()?.getString(a.HEATING_TIMEOUT,"120")+" min"
         engineerIngBean.coolingTimeOut= ShuJuMMkV.getInstances()?.getString(a.COOLING_TIMEOUT,"120")+" min"
 
-        engineerIngBean.exhaustPressure= ( ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.returnPressureDifference= ( ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.highPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.lowPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.minimumInletPressure= (  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.maximumReturnWaterPressure= (ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.minimumPumpPressure= ( ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")!!.toFloat()/10.toFloat()).toString()+" bar"
-        engineerIngBean.minimumFlowValue= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")!!.toFloat()/10.toFloat()).toString()+" L/min"
+        engineerIngBean.exhaustPressure= ( ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.returnPressureDifference= ( ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.highPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.lowPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.minimumInletPressure= (  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.maximumReturnWaterPressure= (ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.minimumPumpPressure= ( ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")!!.toFloat()/10.toFloat()).toString()+" "
+        engineerIngBean.minimumFlowValue= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")!!.toFloat()/10.toFloat()).toString()+" min"
         engineerIngBean.minimumTrafficDelayTime= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_12,"0")).toString()+" S"
 
         engineerIngBean.coalCompensation= (ShuJuMMkV.getInstances()?.getString(a.COAL_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" 度"
@@ -123,7 +123,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-                list.add("$i s")
+                list.add("$i min")
         }
 
         basePopupView=XPopup.Builder(it.context)
@@ -135,7 +135,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                 StyleAdapter.OnClickListeners{
                 override fun onClick(string: String?,int: Int) {
                     var bytes2=ByteArray(8)
-                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"5")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                     var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
                     var d4=  ShuJuMMkV.getInstances()?.getString(a.IP_ADDRESS,"0")
@@ -173,7 +173,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("$i s")
+            list.add("$i ")
         }
 
         basePopupView=XPopup.Builder(it.context)
@@ -185,7 +185,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                 StyleAdapter.OnClickListeners{
                 override fun onClick(string: String?,int: Int) {
                     var bytes2=ByteArray(8)
-                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"5")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                     var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
                     var d4=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
@@ -233,7 +233,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                 StyleAdapter.OnClickListeners{
                 override fun onClick(string: String?,int: Int) {
                     var bytes2=ByteArray(8)
-                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"5")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                     var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
                     var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
@@ -281,7 +281,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                 StyleAdapter.OnClickListeners{
                 override fun onClick(string: String?,int: Int) {
                     var bytes2=ByteArray(8)
-                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"5")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                     var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
 
@@ -319,7 +319,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("$i s")
+            list.add("$i °C")
         }
 
         basePopupView=XPopup.Builder(it.context)
@@ -331,7 +331,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                 StyleAdapter.OnClickListeners{
                 override fun onClick(string: String?,int: Int) {
                     var bytes2=ByteArray(8)
-                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"0")
+                    var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,"5")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                     var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
                     var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
@@ -509,7 +509,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i).toString() } S")
+            list.add("${(i).toString() } min")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -651,7 +651,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -696,7 +696,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -741,7 +741,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -786,7 +786,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -831,7 +831,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -876,7 +876,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -921,7 +921,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -966,7 +966,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } L/min")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } min")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -1038,7 +1038,13 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
             return@BindingCommand
         }
         var list= mutableListOf<String>()
-        for (i in 0 until 256) {
+        var lists= mutableListOf<Int>()
+        for (i in -127 until  0) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            lists.add(i)
+        }
+        for (i in 0 until 128) {
+            lists.add(i)
             list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
         }
         basePopupView=XPopup.Builder(it.context)
@@ -1057,14 +1063,15 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[0]= (d0!!.toInt() and 0xff).toByte()
                     bytes2[1]= (d1!!.toInt() and 0xff).toByte()
                     bytes2[2]= (d2!!.toInt() and 0xff).toByte()
-                    bytes2[3]= (int!!.toInt() and 0xff).toByte()
+
+                    bytes2[3]= (    lists[int]!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
 
                     var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_108,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         engineerIngBean.coalCompensation=string
-                        ShuJuMMkV.getInstances()?.putString(a.COAL_COMPENSATION,  int.toString())
+                        ShuJuMMkV.getInstances()?.putString(a.COAL_COMPENSATION,      lists[int].toString())
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
@@ -1080,7 +1087,13 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
             return@BindingCommand
         }
         var list= mutableListOf<String>()
-        for (i in 0 until 256) {
+        var lists= mutableListOf<Int>()
+        for (i in -127 until  0) {
+            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            lists.add(i)
+        }
+        for (i in 0 until 128) {
+            lists.add(i)
             list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
         }
         basePopupView=XPopup.Builder(it.context)
@@ -1100,13 +1113,13 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     bytes2[1]= (d1!!.toInt() and 0xff).toByte()
                     bytes2[2]= (d2!!.toInt() and 0xff).toByte()
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
-                    bytes2[4]= (int!!.toInt() and 0xff).toByte()
+                    bytes2[4]= (lists[int]!!.toInt() and 0xff).toByte()
 
                     var ta=  Socketcan.CanWrites(Socketcan.fd,Socketcan.CAN_108,bytes2)
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
-                        engineerIngBean.coalCompensation=string
-                        ShuJuMMkV.getInstances()?.putString(a.COAL_RETURN_COMPENSATION,  int.toString())
+                        engineerIngBean.coalReturnCompensation=string
+                        ShuJuMMkV.getInstances()?.putString(a.COAL_RETURN_COMPENSATION,  lists[int].toString())
                     }else{
                         _message.postValue("发送失败，请重试")
                     }

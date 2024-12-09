@@ -13,13 +13,13 @@ class OutputVideoModel  (private val repository: ApiRepository,var gson: Gson) :
 
     fun initData(): ObservableList<DataTitle> {
         val projectBaseList: ObservableList<DataTitle> = ObservableArrayList()
-        var projectBase1= DataTitle("进水阀 :","",false)
-        var projectBase2= DataTitle("排水阀 :",false)
-        var projectBase3= DataTitle("出气阀 :","",false)
-        var projectBase4= DataTitle("冷却阀 :",false)
-        var projectBase5= DataTitle("泵运行 :",false)
-        var projectBase6= DataTitle("增压泵 :",false)
-        var projectBase7= DataTitle("加热器 :",false)
+        var projectBase1= DataTitle("泵运行 :","",false)
+        var projectBase2= DataTitle("冷却阀 :",false)
+        var projectBase3= DataTitle("加热器 :","",false)
+        var projectBase4= DataTitle("增压泵 :",false)
+        var projectBase5= DataTitle("进水阀 :",false)
+        var projectBase6= DataTitle("出气阀 :",false)
+        var projectBase7= DataTitle("排水阀 :",false)
         var projectBase8= DataTitle("故障报警 :",false)
 
         projectBaseList.add(projectBase1)
@@ -51,32 +51,32 @@ class OutputVideoModel  (private val repository: ApiRepository,var gson: Gson) :
         var  lsit6=gson.fromJson(gson.toJson(list[5]), DataTitle::class.java)
         var  lsit7=gson.fromJson(gson.toJson(list[6]), DataTitle::class.java)
 
-        if (lsit1.value!=data5){
-            lsit1.value=data5
+        if (lsit1.value!=data1){
+            lsit1.value=data1
             list[0]=lsit1
         }
-      if (lsit2.value!=data7){
-            lsit2.value=data7
+      if (lsit2.value!=data2){
+            lsit2.value=data2
             list[1]=lsit2
         }
-        if (lsit3.value!=data6){
-            lsit3.value=data6
+        if (lsit3.value!=data3){
+            lsit3.value=data3
             list[2]=lsit3
         }
-        if (lsit4.value!=data2){
-            lsit4.value=data2
+        if (lsit4.value!=data4){
+            lsit4.value=data4
             list[3]=lsit4
         }
-        if (lsit5.value!=data1){
-            lsit5.value=data1
+        if (lsit5.value!=data5){
+            lsit5.value=data5
             list[4]=lsit5
         }
-        if (lsit6.value!=data4){
-            lsit6.value=data4
+        if (lsit6.value!=data6){
+            lsit6.value=data6
             list[5]=lsit6
         }
-        if (lsit7.value!=data3){
-            lsit7.value=data3
+        if (lsit7.value!=data7){
+            lsit7.value=data7
             list[6]=lsit7
         }
     }

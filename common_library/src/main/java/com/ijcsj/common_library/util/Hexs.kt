@@ -200,13 +200,8 @@ object Hexs {
      * 获取字节在内存中某一位的值,采用字符取值方式
      */
     fun getBitByByte(b: Byte, index: Int): Int? {
-        if (index >= 8) {
-            return null
-        }
-        var `val`: Int? = null
-        val binStr = byteToBin(b)
-        `val` = binStr[index].toString().toInt()
-        return `val`
+
+        return TestByteToBin.getBitByByte(b,index)
     }
 
     /**

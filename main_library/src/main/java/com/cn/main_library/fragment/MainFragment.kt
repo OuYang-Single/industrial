@@ -148,6 +148,7 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
                 viewDataBinding?.rvProjectS?.adapter=viewModel.adapters
             }
             viewModel.adapters.refresh(it)
+            viewModel.projectBaseListsd=it
         }
         LiveDataBus.get().with(Socketcan.CAN_100, CanFrame::class.java).observe(this){
             if (it.can_id==256){

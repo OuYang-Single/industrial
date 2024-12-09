@@ -1115,7 +1115,7 @@
                     android:id="@+id/tv_coal_return_compensation_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="回煤温度补偿"
+                    android:text="回媒温度补偿"
                     android:textColor="#ffffffff"
                     android:textSize="11sp"
                     />

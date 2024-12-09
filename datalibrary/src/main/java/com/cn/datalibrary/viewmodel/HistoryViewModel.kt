@@ -57,6 +57,24 @@ class HistoryViewModel  (override val model: HistoryVideoModel,var adapter: Hist
         _historyBaseBgList.postValue(model.initDataBg())
     }
 
+    public fun dataC(){
+        if (dataHistoryBase.startTime=="请选择开始日期"||dataHistoryBase.endTime=="请选择开始日期"){
+            endTime=Calendar.getInstance().time
+            viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+            }) {
+                modifyPage(startTime, endTime)
+                _historyBaseList.postValue(model.initData(currentPage, startTime, endTime))
+            }
+        }else{
+            viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+            }) {
+                modifyPage(startTime, endTime)
+                _historyBaseList.postValue(model.initData(currentPage, startTime, endTime))
+            }
+        }
+
+    }
+
 
     var startTimePicker: TimePickerView?=null
 

@@ -19,6 +19,7 @@ class OutputViewModel (override val model: OutputVideoModel, public var adapter:
     val dataTitleList: LiveData<ObservableList<DataTitle>> get() = _dataTitleList
     var list:ObservableList<DataTitle>?=null
     public override fun initModel() {
+
         _dataTitleList.postValue(model.initData())
     }
 

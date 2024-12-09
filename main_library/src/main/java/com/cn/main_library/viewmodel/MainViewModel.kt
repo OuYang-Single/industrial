@@ -1,9 +1,7 @@
 package com.cn.main_library.viewmodel
 
 import android.graphics.Color
-import android.os.Build
-import android.view.View
-import android.view.Window
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -34,6 +32,7 @@ import com.ijcsj.ui_library.widget.dashboardview.view.DashboardView
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.orhanobut.logger.Logger
+import kotlinx.coroutines.InternalCoroutinesApi
 
 class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,var adapter: ProjectAdapter,var phoneMainAdapter: PhoneMainAdapter,var adapters: ProjectsAdapter) : MvmBaseViewModel<IBaseView, MainVideoModel>() {
     private val _projectBaseList = MutableLiveData<ObservableList<ProjectBase>>()
@@ -44,8 +43,16 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     var projectBaseLists:  ObservableList<ProjectBase>?=null
     var projectBaseListsd:  ObservableList<ProjectsBase>?=null
     var basePopupView: BasePopupView?=null;
-    public override fun initModel() {
+    val dbString: ObservableList<ProjectsBase> = ObservableArrayList()
 
+    public override fun initModel() {
+        dbString.clear()
+        dbString.add(ProjectsBase("水泵", R.mipmap.ic_water_pump))
+        dbString.add(ProjectsBase("冷却", R.mipmap.ic_burial))
+        dbString.add(ProjectsBase("加热", R.mipmap.ic_heat))
+        dbString.add(ProjectsBase("补水", R.mipmap.ic_moisturizing))
+        var list= model.setCan102Data(ddd,dbString);
+        _projectBaseLists.postValue(list )
         AppGlobals.get()?.let {
             if ("com.cn.phoneapp"== it.packageName)  {
                 _projectBaseList.postValue( model.initPhoneData())
@@ -58,13 +65,10 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
 
     fun setCan100Data(it: CanFrame) {
       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
-        if (data1>=0){
-            mainBase.flow=(it.data[0].toFloat()/(10).toFloat()).toInt()
-            mainBase.flowString=(it.data[0].toFloat()/(10).toFloat()).toString()
-        }else{
-            mainBase.flow=0
-            mainBase.flowString=0.0.toString()
-        }
+
+        mainBase.flow= Math.abs((it.data[0].toFloat()/(10).toFloat())).toInt()
+        mainBase.flowString=Math.abs((it.data[0].toFloat()/(10).toFloat())).toString()
+
 
         mainBase.pressure= (it.data[7].toFloat()/(10).toFloat()).toInt()
         mainBase.pressureString= (it.data[7].toFloat()/(10).toFloat()).toString()
@@ -81,7 +85,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     fun setCan099Data(it: CanFrame, data: ObservableList<ProjectBase>) {
        var data1= (it.data[5].toFloat()/(10).toFloat()).toString()
        var data2= (it.data[4].toFloat()/(10).toFloat()).toString()
-       var data3= (it.data[3].toFloat()/(10).toFloat()).toString()
+       var data3= (it.data[3].toFloat()).toString()
        var data4= (it.data[7].toFloat()/(10).toFloat()).toString()
         if ( data1!=   data[1].value){
             data[1] =ProjectBase( data[1].name, data1, data[1].unit)
@@ -97,20 +101,49 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         }
     }
 
+    var  ddd:Byte=0;
+    @OptIn(InternalCoroutinesApi::class)
     fun setCan102Data(it: CanFrame) {
-        _projectBaseLists.postValue(  model.setCan102Data(it))
+
+        if (ddd!=it.data[0]){
+            ddd=it.data[0]
+
+
+        }
+
+
+        var list= model.setCan102Data(ddd,dbString);
+        Log.w("ouyang", "setCan102Data   $ddd   "+list.size);
+        projectBaseListsd?.let {
+            if (list.size>=it.size){
+                for (i in 0 until it.size) {
+                    it[i]=list[i]
+                }
+                for (i in it.size until list.size) {
+                    it.add(list[i])
+                }
+            }else{
+                for (i in 0 until list.size) {
+                    it[i]=list[i]
+                }
+                for (i in it.size-1 downTo list.size) { // 包含1和5
+                    it.remove(it[i])
+                }
+            }
+        }
+
 
       /*  mainBase.isWaterPump=data1
         mainBase.isHeat=data3
         mainBase.isMoisturizing=data4
         mainBase.isBurial=data2*/
-        mainBase.isWaterPump=true
+     /*   mainBase.isWaterPump=true
         mainBase.isHeat=true
         mainBase.isMoisturizing=true
         mainBase.isBurial=true
         mainBase.isInIet=true
         mainBase.isExhaust=true
-        mainBase.isDrainage=true
+        mainBase.isDrainage=true*/
         var data5=  Hexs. getBitByByte(it.data[1],0,3)
         var stringData=   when(data5){
             0->{
@@ -138,11 +171,14 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                 "--"
             }
         }
-        var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 0.toString())
-        mainBase.istype=  when(type?.toInt()){
-          0-> { 0 }
+     //   var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())
+        mainBase.istype=  when(data5.toInt()){
+          0-> {
+              ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
+              0
+          }
           1, 2,3,5,6->{ 1 }
-          4->{ 2 }else -> {2}
+          4->{ 4 }else -> {4}
         }
 
 
@@ -204,7 +240,17 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         mainBase.isWarn2=valueData2
         mainBase.isWarn3=valueData3
     }
-
+    val maxValue = Int.MAX_VALUE // 获取 int 类型的最大值
+    fun increment(number: Int): Int {
+        val MAX_VALUE = 11
+        val MIN_VALUE = 0
+        var result = (number + 1) % (MAX_VALUE - MIN_VALUE + 1)
+        if (result < 0) {
+            result += MAX_VALUE - MIN_VALUE + 1
+        }
+        return result
+    }
+    val minValue = Int.MIN_VALUE // 获取 int 类型的最小值
     var onSwitchClick=  BindingCommand<BindingAction>{
         Logger.w("onPasswordClick");
         var bytes2=ByteArray(8)
@@ -216,7 +262,8 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                 bytes2[0]= a.from10To2sd(0)
             }
         }
-        mainBase.istype= bytes2[0].toInt()
+       // Socketcan.idd=increment(Socketcan.idd)
+       // mainBase.istype= bytes2[0].toInt()
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
         var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
@@ -251,7 +298,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                             return
                         }
                         var bytes2=ByteArray(8)
-                        var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,  "0")
+                        var d0=  ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE,  "5")
                         var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
                         var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
                         var d4=  ShuJuMMkV.getInstances()?.getString(a.IP_ADDRESS,"0")

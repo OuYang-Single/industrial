@@ -67,6 +67,7 @@
 
                     <com.ijcsj.ui_library.widget.marqueeview.MarqueeView
                         android:id="@+id/marqueeView"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
@@ -75,7 +76,21 @@
                         app:mvDirection="bottom_to_top"
                         app:mvInterval="3000"
                         app:mvSingleLine="true" />
-
+                    <com.gongwen.marqueen.SimpleMarqueeView
+                        android:paddingLeft="20dp"
+                        android:paddingRight="25dp"
+                        android:id="@+id/simpleMarqueeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:flipInterval="2500"
+                        android:inAnimation="@anim/anim_bottom_in"
+                        android:outAnimation="@anim/anim_top_out"
+                        app:marqueeAnimDuration="2000"
+                        app:smvTextColor="#ffff2222"
+                        app:smvTextEllipsize="start"
+                        app:smvTextGravity="center_vertical"
+                        app:smvTextSingleLine="true"
+                        app:smvTextSize="9sp" />
                 </LinearLayout>
 
             </com.hjq.shape.layout.ShapeRelativeLayout>

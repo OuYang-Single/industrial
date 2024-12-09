@@ -68,6 +68,7 @@ public class Socketcan {
         loop(app);
     }
 
+  public static int idd=0;
     public void loop(Application app){
         Observable.interval(0, 80, TimeUnit.MILLISECONDS)
                 .map((mTimer -> mTimer + 1))
@@ -78,7 +79,43 @@ public class Socketcan {
                         try {
                             Log.w("MainFragment","ObservableSource apply -111 "+canFrame.can_id+"  ");
                             Socketcan.CanRead(canFrame,fd);
-
+                    /*        if ( canFrame.can_id==0x101){
+                                switch (idd){
+                                    case 0:
+                                        canFrame.data=new byte[]{0x56,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 1:
+                                        canFrame.data=new byte[]{0x52,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 2:
+                                        canFrame.data=new byte[]{0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 3:
+                                        canFrame.data=new byte[]{0x02,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 4:
+                                        canFrame.data=new byte[]{0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 5:
+                                        canFrame.data=new byte[]{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 6:
+                                        canFrame.data=new byte[]{0x03,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 7:
+                                        canFrame.data=new byte[]{0x0C,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 8:
+                                        canFrame.data=new byte[]{0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 9:
+                                        canFrame.data=new byte[]{0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                    case 10:
+                                        canFrame.data=new byte[]{0x40,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        break;
+                                }
+                            }*/
 
                             StringBuilder string= new StringBuilder();
                             for (int i=0;i<canFrame.data.length;i++){

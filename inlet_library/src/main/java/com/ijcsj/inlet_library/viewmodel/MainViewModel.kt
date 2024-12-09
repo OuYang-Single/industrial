@@ -13,6 +13,7 @@ import com.allenliu.versionchecklib.v2.builder.UIData
 import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.ui.IBaseView
 import com.ijcsj.common_library.util.Hexs
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.viewmodel.MvmBaseViewModel
 import com.ijcsj.inlet_library.R
 import com.ijcsj.inlet_library.base.MainBases
@@ -39,7 +40,7 @@ class MainViewModel (override val model: MainModel,var mainBase: MainBases) : Mv
 
     var basePopupView: BasePopupView?=null;
 
-
+    var dddMessages: List<String> = ArrayList()
     public override fun initModel() {
         //getFaceSdkSign()
         //tximInit()
@@ -204,7 +205,7 @@ class MainViewModel (override val model: MainModel,var mainBase: MainBases) : Mv
         data.add(data16)
         var valueData=false;
         for (i in 0 until data.size) {
-            if (data[i]==1){
+            if (data[i]==1||data[i]==2||data[i]==3){
                 valueData=true
                 break
             }
@@ -212,6 +213,11 @@ class MainViewModel (override val model: MainModel,var mainBase: MainBases) : Mv
         mainBase.isWarn=valueData
 
     }
+    var dat1:Byte=0
+    var dat2:Byte=0
+    var dat3:Byte=0
+    var dat4:Byte=0
+    var  canFrames: CanFrame?=null;
     fun setCan101Data(it: CanFrame) {
         setCan101Datas(it)
         viewModelScope.launch(CoroutineExceptionHandler { _, e ->

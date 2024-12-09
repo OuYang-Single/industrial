@@ -2,28 +2,34 @@ package com.ijcsj.inlet_library.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.gongwen.marqueen.SimpleMF
 import com.google.gson.Gson
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.can.Socketcan
+import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.MvvmBaseActivity
 import com.ijcsj.common_library.util.LiveDataBus
+import com.ijcsj.common_library.util.a
 import com.ijcsj.inlet_library.R
 import com.ijcsj.inlet_library.databinding.ActivityMainBinding
 import com.ijcsj.inlet_library.servicel.VersionsServices
 import com.ijcsj.inlet_library.viewmodel.MainViewModel
 import com.ijcsj.ui_library.anko.countDownCoroutines
 import com.ijcsj.ui_library.utils.immersive
-import com.ijcsj.ui_library.widget.marqueeview.MarqueeView
 import com.ijcsj.ui_library.widget.tab.top.HiTabViewAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.system.exitProcess
-
 
 
 @Route(path = "/Inlet/MainActivity")
@@ -38,6 +44,15 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onBinding() {
         viewDataBinding?.viewModel=viewModel
     }
+    var handler: Handler = object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            if (msg.what == 0) {
+                viewDataBinding?. simpleMarqueeView?.visibility=View.VISIBLE
+            }
+        }
+    }
+
 
     override fun onAgainCreate(savedInstanceState: Bundle?) {
         immersive(darkMode = false)
@@ -50,6 +65,12 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
         }
         viewDataBinding?.tabBottomLayout?.addTabSelectedChangeListener { index, prevInfo, nextInfo ->
             viewDataBinding?.fragmentTabView?.currentItem = index
+            if (index==2){
+                var isUserLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.USER_LOG_ON,false)
+                if (isUserLogOn==false){
+                    ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",0).navigation()
+                }
+            }
             LiveDataBus.get().with("tabBottomLayout", Int::class.java ).postValue(index)
             this@MainActivity.currentItemIndex = index
         }
@@ -100,15 +121,50 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
         viewModel.messages.observe(this){
-           var a= viewDataBinding?. marqueeView as  MarqueeView
-            a ?.startWithList(it);
+           var marqueeView= viewDataBinding?. simpleMarqueeView
+            val marqueeFactory: SimpleMF<String?> = SimpleMF<String?>(this)
+            marqueeFactory.setData(it)
+          var   list=    viewModel.dddMessages
+            var boolean=false;
+            for (i in 0 until list.size){
+                if (list[i] in  it) {} else {
+                    boolean=true;
+                    break
+                }
+            }
+            if (list.size<=0){
+                boolean=true
+            }
+           if (boolean){
+               LiveDataBus.get().with("HistoryFragment.CAN_101",Boolean::class.java).postValue(true)
+               viewModel.dddMessages=it
+               viewDataBinding?. simpleMarqueeView?.visibility=View.INVISIBLE
+               viewDataBinding?. simpleMarqueeView?.setMarqueeFactory(marqueeFactory)
+               viewDataBinding?. simpleMarqueeView?.startFlipping()
+               handler.removeMessages(0)
+               handler.sendEmptyMessageDelayed(0, 700)
+           }
         }
+    }
+    var rRunnable=Runnable{
+        Log.w("ouyang","rRunnable  ")
+
+
     }
 
     override fun onRestart() {
         super.onRestart()
+        var isUserLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.USER_LOG_ON,false)
+        if (isUserLogOn==false){
+            viewDataBinding?.fragmentTabView?.currentItem = 0
+            viewDataBinding?.tabBottomLayout?.defaultSelected( viewModel.infoList.value!![0])
+        }
     }
 
+    public override fun onStart() {
+        super.onStart()
+
+    }
 
     override fun onResume() {
         super.onResume()

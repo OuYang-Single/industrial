@@ -2,8 +2,6 @@ package com.cn.setuplibrary.fragment
 
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import com.alibaba.android.arouter.launcher.ARouter
 import com.cn.setuplibrary.viewmodel.EngineeringParametersViewModel
 import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
@@ -13,6 +11,8 @@ import com.ijcsj.common_library.util.a
 import com.ijcsj.stUplibrary.R
 import com.ijcsj.stUplibrary.databinding.FragmentEngineeringParametersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParametersBinding, EngineeringParametersViewModel>() {
@@ -28,12 +28,18 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
         observe()
         viewDataBinding?.etPicP?.setOnEditorActionListener { p0, p1, p2 ->
             if (p1 === EditorInfo.IME_ACTION_DONE) {
+
                 try {
                     var d111=p0.text.toString().toFloat()
-                    if (d111<0|| d111>1){
+                    if (d111<0|| d111>2.55){
                         toastUtils("加热比例超出范围")
                         return@setOnEditorActionListener true
                     }
+                    val df = DecimalFormat("#.00")
+                    df.roundingMode = RoundingMode.UNNECESSARY;
+                    val formattedValue: String = df.format(d111)
+                    d111=formattedValue.toFloat()
+                    viewModel.engineerIngBean.pinP=d111.toString()
                     var bytes2=ByteArray(8)
                     var d0=  (d111*100).toInt()
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.PID_I,"1")
@@ -53,7 +59,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                         toastUtils("发送失败，请重试")
                     }
                 }catch (e:Exception){
-                    toastUtils("请输入加热比例")
+                    toastUtils("请输入正确格式")
                 }
 
             }
@@ -63,13 +69,19 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
             if (p1 === EditorInfo.IME_ACTION_DONE) {
                 try {
                     var d111=p0.text.toString().toFloat()
-                    if (d111<0|| d111>1){
+                    if (d111<0|| d111>0.255){
                         toastUtils("加热积分超出范围")
                         return@setOnEditorActionListener true
                     }
+                    var d12=0f
+                    val decimalFormat = DecimalFormat("#.###")
+                    decimalFormat.roundingMode = RoundingMode.UNNECESSARY;
+                    val formattedNumber: String = decimalFormat.format(d111)
+                    d12=formattedNumber.toFloat()
+                    viewModel.engineerIngBean.pinI=d12.toString()
                     var bytes2=ByteArray(8)
                     var d0=    ShuJuMMkV.getInstances()?.getString(a.PID_P,"100")
-                    var d1=  (d111*100).toInt()
+                    var d1=  (d12*1000).toInt()
                     var d2=  ShuJuMMkV.getInstances()?.getString(a.PID_D,"10")
                     var d3=  ShuJuMMkV.getInstances()?.getString(a.COAL_COMPENSATION,"0")
                     var d4=  ShuJuMMkV.getInstances()?.getString(a.COAL_RETURN_COMPENSATION,"0")
@@ -80,7 +92,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
                     var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
                     if (a1>0){
-                        ShuJuMMkV.getInstances()?.putString(a.PID_I,(d111*100).toInt().toString())
+                        ShuJuMMkV.getInstances()?.putString(a.PID_I,(d12*1000).toInt().toString())
                     }else{
                         toastUtils("发送失败，请重试")
                     }
@@ -94,10 +106,15 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
             if (p1 === EditorInfo.IME_ACTION_DONE) {
                 try {
                     var d111=p0.text.toString().toFloat()
-                    if (d111<0|| d111>2){
+                    if (d111<0|| d111>2.55){
                         toastUtils("加热微分超出范围")
                         return@setOnEditorActionListener true
                     }
+                    val df = DecimalFormat("#.00")
+                    df.roundingMode = RoundingMode.UNNECESSARY;
+                    val formattedValue: String = df.format(d111)
+                    d111=formattedValue.toFloat()
+                    viewModel.engineerIngBean.pinD=d111.toString()
                     var bytes2=ByteArray(8)
                     var d0=    ShuJuMMkV.getInstances()?.getString(a.PID_P,"100")
                     var d1=  ShuJuMMkV.getInstances()?.getString(a.PID_I,"1")
@@ -109,6 +126,7 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                     bytes2[2]= (d2!!.toInt() and 0xff).toByte()
                     bytes2[3]= (d3!!.toInt() and 0xff).toByte()
                     bytes2[4]= (d4!!.toInt() and 0xff).toByte()
+
                     var a1=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_108,bytes2)
                     if (a1>0){
                         ShuJuMMkV.getInstances()?.putString(a.PID_D,(d111*100).toInt().toString())

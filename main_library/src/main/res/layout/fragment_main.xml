@@ -325,7 +325,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bar"
+                    android:text="  "
                     android:textColor="#ffa1a1a1"
                     android:textSize="10sp"
                     />
@@ -362,7 +362,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L/min"
+                    android:text=" "
                     android:textColor="#ffa1a1a1"
                     android:textSize="10sp"
                     />

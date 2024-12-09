@@ -3,6 +3,7 @@ package com.ijcsj.common_library.bean;
 public class DataTitle {
     private String name;
     private String value;
+    private String values;
     private boolean isSelect;
 
     public DataTitle(){
@@ -39,5 +40,13 @@ public class DataTitle {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getValues() {
+        return values;
+    }
+
+    public void setValues(String values) {
+        this.values = values;
     }
 }

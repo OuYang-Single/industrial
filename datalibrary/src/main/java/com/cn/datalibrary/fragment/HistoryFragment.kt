@@ -5,7 +5,10 @@ import com.cn.datalibrary.databinding.FragmentHistoryBinding
 import com.cn.datalibrary.databinding.FragmentVersionBinding
 import com.cn.datalibrary.viewmodel.HistoryViewModel
 import com.cn.datalibrary.viewmodel.VersionViewModel
+import com.ijcsj.common_library.bean.CanFrame
+import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.ui.MvvmBaseFragment
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.ui_library.stateview.StateView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,6 +47,9 @@ class HistoryFragment: MvvmBaseFragment<FragmentHistoryBinding, HistoryViewModel
                 viewDataBinding?.rvHistorys?.adapter=viewModel.adapterBg
             }
             viewModel.adapterBg.refresh(it)
+        }
+        LiveDataBus.get().with("HistoryFragment.CAN_101",Boolean::class.java).observe(this){
+            viewModel. dataC()
         }
     }
 

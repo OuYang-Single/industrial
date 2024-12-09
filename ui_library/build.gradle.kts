@@ -105,5 +105,5 @@ dependencies {
     api("com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2")
     api ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     api ("com.github.li-xiaojun:XPopup:2.9.19")
-
+    api ("com.gongwen:marqueelibrary:1.1.3")
 }
