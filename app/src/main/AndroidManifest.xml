@@ -10,6 +10,9 @@
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -134,6 +137,15 @@
                 android:value="android.startup" />
         </provider>
         <service
+            android:name=".PowerService"
+            android:foregroundServiceType="mediaPlayback"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gwm.car.PowerService"/>
+            </intent-filter>
+        </service>
+        <service
             android:name="com.ijcsj.inlet_library.servicel.VersionsServices"
             android:foregroundServiceType="dataSync"
             android:exported="false"
@@ -159,6 +171,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="design_width_in_dp"
             android:value="640"/>
