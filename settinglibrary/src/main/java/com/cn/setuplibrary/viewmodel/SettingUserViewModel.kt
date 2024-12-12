@@ -145,7 +145,11 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                         var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
                         Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                         if (ta>0){
-                            ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
+                            if (settingUserBean.burial=="关"){
+
+                            }else{
+                                ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
+                            }
                             settingUserBean.startMode=""
                             settingUserBean.burial=string
                             settingUserBean.drain="关"
@@ -202,7 +206,12 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                         var ta=  Socketcan.CanWrite(Socketcan.fd,Socketcan.CAN_103,bytes2)
                         Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                         if (ta>0){
-                            ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
+                            if (settingUserBean.drain=="关"){
+                              //  bytes2[0]=  a.from10To2sd( ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())!!.toInt())
+                            }else{
+                                ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
+                            }
+
                             settingUserBean.startMode=""
                             settingUserBean.burial="关"
                             settingUserBean.drain=string

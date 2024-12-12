@@ -174,10 +174,17 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             }
         }
      //   var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())
+       when(data5.toInt()){
+         5,6->{
+
+         }
+         else->{
+             ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
+             LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
+         }
+        }
         mainBase.istype=  when(data5.toInt()){
           0-> {
-              ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
-              LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
               0
           }
           1, 2,3->{ 1 }
@@ -225,6 +232,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         var valueData1=false;
         var valueData2=false;
         var valueData3=false;
+
         for (i in 0 until data.size) {
            if (data[i]>=1){
                if (i==4){
@@ -266,7 +274,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                 bytes2[0]= a.from10To2sd(0)
             }
         }
-        https://github.com/MrX-Andy/SerialPortHelper?tab=readme-ov-file#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E
+    /*    https://github.com/MrX-Andy/SerialPortHelper?tab=readme-ov-file#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E*/
        // Socketcan.idd=increment(Socketcan.idd)
        // mainBase.istype= bytes2[0].toInt()
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())

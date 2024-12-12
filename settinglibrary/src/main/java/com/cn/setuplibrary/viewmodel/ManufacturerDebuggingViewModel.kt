@@ -63,7 +63,11 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
             bean.openTheColdEndValve="关闭"
         }
         var d8=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_8,"0")
-        bean.openTheColdEndProportionalValve=d8
+        if (d8?.toInt()==100){
+            bean.openTheColdEndProportionalValve="开启"
+        }else{
+            bean.openTheColdEndProportionalValve="关闭"
+        }
         var d9=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_9,"0")
         bean.openTheProportionalValveAtTheHotEnd=d9
     }
