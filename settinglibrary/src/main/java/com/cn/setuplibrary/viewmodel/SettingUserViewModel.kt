@@ -119,9 +119,13 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                     override fun onClick(string: String?,int: Int) {
                         var bytes2=ByteArray(8)
                         if (int==0){
-                            bytes2[0]= a.from10To2sd(3)
+                            bytes2[0]= a.from10To2sd(2)
                         }else{
-                            bytes2[0]= a.from10To2sd(1)
+                            if (settingUserBean.burial=="关"){
+                                bytes2[0]=  a.from10To2sd( ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())!!.toInt())
+                            }else{
+                                bytes2[0]= a.from10To2sd(5)
+                            }
                         }
 
                         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
@@ -171,9 +175,14 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                     override fun onClick(string: String?,int: Int) {
                         var bytes2=ByteArray(8)
                         if (int==0){
-                            bytes2[0]= a.from10To2sd(2)
+                            bytes2[0]= a.from10To2sd(3)
                         }else{
-                            bytes2[0]= a.from10To2sd(1)
+
+                            if (settingUserBean.drain=="关"){
+                                bytes2[0]=  a.from10To2sd( ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())!!.toInt())
+                            }else{
+                                bytes2[0]= a.from10To2sd(5)
+                            }
                         }
                         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
                         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")

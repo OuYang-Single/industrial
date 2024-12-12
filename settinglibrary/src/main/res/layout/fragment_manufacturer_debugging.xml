@@ -319,7 +319,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.hjq.shape.layout.ShapeRelativeLayout
-                binding:onClickCommand="@{viewModel.onClickOpenTheColdEndValve}"
+                binding:onClickCommand="@{viewModel.onClickOpenTheColdEndProportionalValve}"
                 android:layout_marginRight="9dp"
                 android:id="@+id/rv_set_open_the_cold_end_valve"
                 android:layout_width="0dp"
@@ -336,7 +336,7 @@
                     android:id="@+id/tv_set_open_the_cold_end_valve_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="开冷端阀门"
+                    android:text="冷端阀"
                     android:textColor="#ffffffff"
                     android:textSize="11sp"
                     />
@@ -356,14 +356,14 @@
                     android:layout_toLeftOf="@+id/img_set_open_the_cold_end_valve_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.bean.openTheColdEndValve}"
+                    android:text="@{viewModel.bean.openTheColdEndProportionalValve}"
                     android:textColor="#ff909090"
                     android:textSize="11sp"
                     />
             </com.hjq.shape.layout.ShapeRelativeLayout>
             <com.hjq.shape.layout.ShapeRelativeLayout
                 android:id="@+id/rv_open_the_cold_end_proportional_valve"
-                binding:onClickCommand="@{viewModel.onClickOpenTheColdEndProportionalValve}"
+                binding:onClickCommand="@{viewModel. onClickOpenTheProportionalValveAtTheHotEnd}"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="34dp"
@@ -378,7 +378,7 @@
                     android:id="@+id/tv_open_the_cold_end_proportional_valve_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="开冷端比例阀"
+                    android:text="热端比例阀"
                     android:textColor="#ffffffff"
                     android:textSize="11sp"
                     />
@@ -398,7 +398,7 @@
                     android:layout_toLeftOf="@+id/img_open_the_cold_end_proportional_valve_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.bean.openTheColdEndProportionalValve}"
+                    android:text="@{viewModel.bean.openTheProportionalValveAtTheHotEnd}"
                     android:textColor="#ff909090"
                     android:textSize="11sp"
                     />
@@ -406,6 +406,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_set_open_s"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/ll_set_open"
@@ -429,7 +430,7 @@
                     android:id="@+id/tv_set_open_the_cold_end_valve_names"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="开热端比例阀"
+                    android:text="热端比例阀"
                     android:textColor="#ffffffff"
                     android:textSize="11sp"
                     />

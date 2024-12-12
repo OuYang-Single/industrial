@@ -11,6 +11,7 @@ import com.ijcsj.common_library.util.a
 import com.ijcsj.stUplibrary.R
 import com.ijcsj.stUplibrary.databinding.FragmentEngineeringParametersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -35,9 +36,9 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                         toastUtils("加热比例超出范围")
                         return@setOnEditorActionListener true
                     }
-                    val df = DecimalFormat("#.00")
-                    df.roundingMode = RoundingMode.UNNECESSARY;
-                    val formattedValue: String = df.format(d111)
+
+                    val bigDecimal = BigDecimal(d111.toString())
+                    val formattedValue: String =   bigDecimal.setScale(2, BigDecimal.ROUND_DOWN).toString()
                     d111=formattedValue.toFloat()
                     viewModel.engineerIngBean.pinP=d111.toString()
                     var bytes2=ByteArray(8)
@@ -74,10 +75,9 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                         return@setOnEditorActionListener true
                     }
                     var d12=0f
-                    val decimalFormat = DecimalFormat("#.###")
-                    decimalFormat.roundingMode = RoundingMode.UNNECESSARY;
-                    val formattedNumber: String = decimalFormat.format(d111)
-                    d12=formattedNumber.toFloat()
+                    val bigDecimal = BigDecimal(d111.toString())
+                    val formattedValue: String =   bigDecimal.setScale(3, BigDecimal.ROUND_DOWN).toString()
+                    d12=formattedValue.toFloat()
                     viewModel.engineerIngBean.pinI=d12.toString()
                     var bytes2=ByteArray(8)
                     var d0=    ShuJuMMkV.getInstances()?.getString(a.PID_P,"100")
@@ -110,9 +110,8 @@ class EngineeringParametersFragment: MvvmBaseFragment<FragmentEngineeringParamet
                         toastUtils("加热微分超出范围")
                         return@setOnEditorActionListener true
                     }
-                    val df = DecimalFormat("#.00")
-                    df.roundingMode = RoundingMode.UNNECESSARY;
-                    val formattedValue: String = df.format(d111)
+                    val bigDecimal = BigDecimal(d111.toString())
+                    val formattedValue: String =   bigDecimal.setScale(2, BigDecimal.ROUND_DOWN).toString()
                     d111=formattedValue.toFloat()
                     viewModel.engineerIngBean.pinD=d111.toString()
                     var bytes2=ByteArray(8)

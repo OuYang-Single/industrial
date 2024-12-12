@@ -420,9 +420,8 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
             return@BindingCommand
         }
         var list= mutableListOf<String>()
-        for (i in 0 until 101) {
-            list.add("$i ")
-        }
+        list.add("开启")
+        list.add("关闭")
         basePopupView= XPopup.Builder(it.context)
             .enableDrag(false)
             .autoDismiss(false)
@@ -439,7 +438,12 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     var d4=   ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_5,"0")
                     var d5=   ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_6,"0")
                     var d6=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_7,"0")
-                    var d7= int
+
+                    var d7=  if (int==0){
+                        100
+                    }else{
+                        0
+                    }
                     var d8=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_9,"0")
                     var da1=  "0$d6$d5$d4$d3$d2$d1$d0".toInt(2)
                     bytes2[0]=(da1 and 0xff).toByte()

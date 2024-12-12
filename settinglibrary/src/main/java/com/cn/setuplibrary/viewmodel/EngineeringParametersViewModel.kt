@@ -49,18 +49,18 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         engineerIngBean.heatingTimeOut= ShuJuMMkV.getInstances()?.getString(a.HEATING_TIMEOUT,"120")+" min"
         engineerIngBean.coolingTimeOut= ShuJuMMkV.getInstances()?.getString(a.COOLING_TIMEOUT,"120")+" min"
 
-        engineerIngBean.exhaustPressure= ( ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.returnPressureDifference= ( ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.highPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.lowPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.minimumInletPressure= (  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.maximumReturnWaterPressure= (ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.minimumPumpPressure= ( ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")!!.toFloat()/10.toFloat()).toString()+" "
-        engineerIngBean.minimumFlowValue= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")!!.toFloat()/10.toFloat()).toString()+" min"
-        engineerIngBean.minimumTrafficDelayTime= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_12,"0")).toString()+" S"
+        engineerIngBean.exhaustPressure= ( ShuJuMMkV.getInstances()?.getString(a.EXHAUST_PRESSURE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.returnPressureDifference= ( ShuJuMMkV.getInstances()?.getString(a.RETURN_PRESSURE_DIFFERENCE,"50")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.highPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.HIGH_PRESSURE_DEVIATION,"130")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.lowPressureDeviation= ( ShuJuMMkV.getInstances()?.getString(a.LOW_PRESSURE_DEVIATION,"20")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumInletPressure= (  ShuJuMMkV.getInstances()?.getString(a.MINIMUM_INLET_PRESSURE,"10")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.maximumReturnWaterPressure= (ShuJuMMkV.getInstances()?.getString(a.MAXIMUM_RETURN_WATER_PRESSURE,"25")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumPumpPressure= ( ShuJuMMkV.getInstances()?.getString(a.MINIMUM_PUMP_PRESSURE,"5")!!.toFloat()/10.toFloat()).toString()+" bar"
+        engineerIngBean.minimumFlowValue= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_11,"0")!!.toFloat()/10.toFloat()).toString()+" L/min"
+        engineerIngBean.minimumTrafficDelayTime= (  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_12,"0")).toString()+" min"
 
-        engineerIngBean.coalCompensation= (ShuJuMMkV.getInstances()?.getString(a.COAL_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" 度"
-        engineerIngBean.coalReturnCompensation= ( ShuJuMMkV.getInstances()?.getString(a.COAL_RETURN_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" 度"
+        engineerIngBean.coalCompensation= (ShuJuMMkV.getInstances()?.getString(a.COAL_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" °C"
+        engineerIngBean.coalReturnCompensation= ( ShuJuMMkV.getInstances()?.getString(a.COAL_RETURN_COMPENSATION,"0")!!.toFloat()/10.toFloat()).toString()+" °C"
     }
 
     var onClickPinP=  BindingCommand<BindingAction>{
@@ -651,7 +651,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -696,7 +696,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -741,7 +741,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -786,7 +786,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -831,7 +831,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -876,7 +876,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -921,7 +921,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } ")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } bar")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -966,7 +966,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } min")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } L/min")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -1002,7 +1002,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("${(i.toFloat()).toString() } S")
+            list.add("${(i.toFloat()).toString() } min")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -1040,12 +1040,12 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         var list= mutableListOf<String>()
         var lists= mutableListOf<Int>()
         for (i in -127 until  0) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } °C")
             lists.add(i)
         }
         for (i in 0 until 128) {
             lists.add(i)
-            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } °C")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)
@@ -1089,12 +1089,12 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         var list= mutableListOf<String>()
         var lists= mutableListOf<Int>()
         for (i in -127 until  0) {
-            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } °C")
             lists.add(i)
         }
         for (i in 0 until 128) {
             lists.add(i)
-            list.add("${(i.toFloat()/10.toFloat()).toString() } 度")
+            list.add("${(i.toFloat()/10.toFloat()).toString() } °C")
         }
         basePopupView=XPopup.Builder(it.context)
             .enableDrag(false)

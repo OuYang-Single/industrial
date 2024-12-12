@@ -6,6 +6,7 @@ import com.cn.setuplibrary.viewmodel.SettingUserViewModel
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.MvvmBaseFragment
 import com.ijcsj.common_library.util.BacklightController
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.stUplibrary.R
 import com.ijcsj.stUplibrary.databinding.FragmentSettingUserBinding
@@ -36,6 +37,9 @@ class SettingUserFragment : MvvmBaseFragment<FragmentSettingUserBinding, Setting
     fun observe(){
         viewModel.message.observe(this){
             toastUtils(it)
+        }
+        LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).observe(this){
+            viewModel.initModel()
         }
     }
 }

@@ -217,7 +217,7 @@
             app:tikeStrArray="@array/meter"
             app:tikeStrColor="#F2A141"
             app:tikeStrSize="7dp"
-            app:maxNumber="20"
+            app:maxNumber="30"
             app:centerCircleColor="#00FFFFFF"/>
         <TextView
             android:layout_marginLeft="54dp"
@@ -325,7 +325,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="  "
+                    android:text="Bar"
                     android:textColor="#ffa1a1a1"
                     android:textSize="10sp"
                     />
@@ -358,14 +358,14 @@
                     tv_color="@{viewModel.mainBase.warn3}"
                     android:textSize="24sp"
                     />
+
                 <TextView
-                    android:layout_marginLeft="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" "
+                    android:layout_marginLeft="7dp"
+                    android:text="L/min"
                     android:textColor="#ffa1a1a1"
-                    android:textSize="10sp"
-                    />
+                    android:textSize="10sp" />
             </LinearLayout>
         </com.hjq.shape.layout.ShapeRelativeLayout>
 

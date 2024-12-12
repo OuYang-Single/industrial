@@ -25,6 +25,7 @@ import com.ijcsj.common_library.command.BindingCommand
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.IBaseView
 import com.ijcsj.common_library.util.Hexs
+import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.common_library.viewmodel.MvmBaseViewModel
 import com.ijcsj.ui_library.utils.AppGlobals
@@ -33,6 +34,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.InternalCoroutinesApi
+import okhttp3.internal.and
 
 class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,var adapter: ProjectAdapter,var phoneMainAdapter: PhoneMainAdapter,var adapters: ProjectsAdapter) : MvmBaseViewModel<IBaseView, MainVideoModel>() {
     private val _projectBaseList = MutableLiveData<ObservableList<ProjectBase>>()
@@ -65,13 +67,13 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
 
     fun setCan100Data(it: CanFrame) {
       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
+        (it.data[0] and 0xff)
+        mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()/(10).toFloat())).toInt()
+        mainBase.flowString=Math.abs(((it.data[0] and 0xff).toFloat()/(10).toFloat())).toString()
 
-        mainBase.flow= Math.abs((it.data[0].toFloat()/(10).toFloat())).toInt()
-        mainBase.flowString=Math.abs((it.data[0].toFloat()/(10).toFloat())).toString()
 
-
-        mainBase.pressure= (it.data[7].toFloat()/(10).toFloat()).toInt()
-        mainBase.pressureString= (it.data[7].toFloat()/(10).toFloat()).toString()
+        mainBase.pressure= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toInt()
+        mainBase.pressureString= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toString()
         mainBase.temperature= ( Hexs.pinJie2ByteToInt(it.data[4],it.data[3]).toFloat()/(10).toFloat()).toInt()
         mainBase.temperatureString=   ( Hexs.pinJie2ByteToInt(it.data[4],it.data[3]).toFloat()/(10).toFloat()).toString()
         projectBaseLists?.let {data->
@@ -83,10 +85,10 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     }
 
     fun setCan099Data(it: CanFrame, data: ObservableList<ProjectBase>) {
-       var data1= (it.data[5].toFloat()/(10).toFloat()).toString()
-       var data2= (it.data[4].toFloat()/(10).toFloat()).toString()
-       var data3= (it.data[3].toFloat()).toString()
-       var data4= (it.data[7].toFloat()/(10).toFloat()).toString()
+       var data1= ((it.data[5] and 0xff).toFloat()/(10).toFloat()).toString()
+       var data2= ((it.data[4] and 0xff).toFloat()/(10).toFloat()).toString()
+       var data3= ((it.data[3] ).toFloat()).toString()
+       var data4= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toString()
         if ( data1!=   data[1].value){
             data[1] =ProjectBase( data[1].name, data1, data[1].unit)
         }
@@ -175,9 +177,11 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         mainBase.istype=  when(data5.toInt()){
           0-> {
               ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
+              LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
               0
           }
-          1, 2,3,5,6->{ 1 }
+          1, 2,3->{ 1 }
+          5,6->3
           4->{ 4 }else -> {4}
         }
 
@@ -255,16 +259,18 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         Logger.w("onPasswordClick");
         var bytes2=ByteArray(8)
         when( mainBase.istype){
-            0,4->{
+            0,4,5,6->{
                 bytes2[0]= a.from10To2sd(1)
             }
             else -> {
                 bytes2[0]= a.from10To2sd(0)
             }
         }
+        https://github.com/MrX-Andy/SerialPortHelper?tab=readme-ov-file#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E
        // Socketcan.idd=increment(Socketcan.idd)
        // mainBase.istype= bytes2[0].toInt()
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
+        LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
         var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
         var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
@@ -351,7 +357,9 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
                 4->{
                     R.drawable.ic_switch//
                 }
-
+                3->{
+                    R.drawable.ic_switch_on//
+                }
                 else -> {
                     R.drawable.ic_switch_on
                 }

@@ -20,10 +20,10 @@ class MainVideoModel  (private val repository: ApiRepository) : BaseModel() {
         dbString.add(ProjectsBase("排水", R.mipmap.ic_drainage))*/
         val projectBaseList: ObservableList<ProjectBase> = ObservableArrayList()
         var projectBase1=ProjectBase("出煤温度","--","℃")
-        var projectBase2=ProjectBase("进水压力","--"," ")
-        var projectBase3=ProjectBase("功率","--"," ")
+        var projectBase2=ProjectBase("进水压力","--","Bar")
+        var projectBase3=ProjectBase("功率","--","kW")
         var projectBase4=ProjectBase("比率","--","%")
-        var projectBase5=ProjectBase("出煤压力","--"," ")
+        var projectBase5=ProjectBase("出煤压力","--","Bar")
         projectBaseList.add(projectBase1)
         projectBaseList.add(projectBase2)
         projectBaseList.add(projectBase3)
