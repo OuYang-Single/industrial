@@ -68,8 +68,8 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     fun setCan100Data(it: CanFrame) {
       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
         (it.data[0] and 0xff)
-        mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()/(10).toFloat())).toInt()
-        mainBase.flowString=Math.abs(((it.data[0] and 0xff).toFloat()/(10).toFloat())).toString()
+        mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toInt()
+        mainBase.flowString=Math.abs(((it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toString()
 
 
         mainBase.pressure= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toInt()

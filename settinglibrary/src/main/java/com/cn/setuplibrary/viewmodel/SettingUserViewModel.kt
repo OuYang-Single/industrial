@@ -212,7 +212,7 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                                 ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
                             }
 
-                            settingUserBean.startMode=""
+                        /*    settingUserBean.startMode=""*/
                             settingUserBean.burial="关"
                             settingUserBean.drain=string
                         }else{

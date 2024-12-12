@@ -46,9 +46,9 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
     }
 
     fun setCan099Data(it: CanFrame, list: ObservableList<DataTitle>) {
-        var  datr1=gson.fromJson(gson.toJson(list[0]), DataTitle::class.java)
-        var  datr2=gson.fromJson(gson.toJson(list[2]), DataTitle::class.java)
-        var  datr4=gson.fromJson(gson.toJson(list[4]), DataTitle::class.java)
+        val datr1=gson.fromJson(gson.toJson(list[0]), DataTitle::class.java)
+        val datr2=gson.fromJson(gson.toJson(list[2]), DataTitle::class.java)
+        val datr4=gson.fromJson(gson.toJson(list[4]), DataTitle::class.java)
         datr1.value=((it.data[0] and 0xff).toFloat()/(10).toFloat()).toString()+" A"
         list[0]=datr1
         datr2.value=((it.data[1] and 0xff).toFloat()/(10).toFloat()).toString()+" A"
@@ -72,7 +72,7 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         var  lsit4=gson.fromJson(gson.toJson(list[8]), DataTitle::class.java)
         var  lsit3=gson.fromJson(gson.toJson(list[10]), DataTitle::class.java)
 
-        var data1= ( (it.data[0] and 0xff).toFloat()/(10).toFloat()).toFloat()
+        var data1= ( (it.data[0] and 0xff).toFloat()*(0.2).toFloat()).toFloat()
         lsit1.value= "${Math.abs(data1)} L/min"
         list[9]=lsit1
 
