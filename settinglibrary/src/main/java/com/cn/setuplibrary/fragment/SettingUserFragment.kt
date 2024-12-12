@@ -38,7 +38,7 @@ class SettingUserFragment : MvvmBaseFragment<FragmentSettingUserBinding, Setting
         viewModel.message.observe(this){
             toastUtils(it)
         }
-        LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).observe(this){
+        LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).observe(this){
             viewModel.initModel()
         }
     }

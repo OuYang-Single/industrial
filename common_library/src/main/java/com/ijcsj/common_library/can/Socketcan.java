@@ -152,7 +152,7 @@ public class Socketcan {
         datasBase.setCanId( Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
         datasBase.setType(true);
         datasBase.setDateTime(new Date(System.currentTimeMillis()));
-        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm"));
+        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm:ss"));
         DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
         LiveDataBus.get().with("CanWrites", Boolean.class ).postValue(true);
     }
@@ -240,7 +240,7 @@ public class Socketcan {
                         datasBase.setCanId( Integer.toHexString(canId & 0x1FFFFFFF));
                         datasBase.setType(false);
                         datasBase.setDateTime(new Date(System.currentTimeMillis()));
-                        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm"));
+                        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm:ss"));
                         if (i>0){
                             DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
                         }else{

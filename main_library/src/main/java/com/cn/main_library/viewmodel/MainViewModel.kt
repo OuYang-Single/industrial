@@ -180,7 +180,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
          }
          else->{
              ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
-             LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
+             LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
          }
         }
         mainBase.istype=  when(data5.toInt()){
@@ -278,7 +278,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
        // Socketcan.idd=increment(Socketcan.idd)
        // mainBase.istype= bytes2[0].toInt()
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
-        LiveDataBus.get().with("WORKING_MODE", Boolean::class.java).postValue(true)
+        LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
         var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
         var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")
