@@ -28,7 +28,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Socketcan {
     static {
-       // System.loadLibrary("android_socketcan");
+        System.loadLibrary("android_socketcan");
     }
     public static String CAN_099="CAN_"+153;
     public static String CAN_100="CAN_"+256;
@@ -78,7 +78,7 @@ public class Socketcan {
                     public ObservableSource<CanFrame> apply(Long aLong) throws Throwable {
                         try {
                             Log.w("MainFragment","ObservableSource apply -111 "+canFrame.can_id+"  ");
-                           // Socketcan.CanRead(canFrame,fd);
+                            Socketcan.CanRead(canFrame,fd);
                     /*        if ( canFrame.can_id==0x101){
                                 switch (idd){
                                     case 0:
