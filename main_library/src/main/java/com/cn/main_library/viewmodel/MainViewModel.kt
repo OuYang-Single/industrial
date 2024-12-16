@@ -33,6 +33,7 @@ import com.ijcsj.ui_library.widget.dashboardview.view.DashboardView
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.orhanobut.logger.Logger
+import com.tencent.bugly.crashreport.CrashReport
 import kotlinx.coroutines.InternalCoroutinesApi
 import okhttp3.internal.and
 
@@ -174,6 +175,13 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             }
         }
      //   var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())
+        Log.i("ouyang", "postCatchedException   WORKING_MODE  ${ data5.toInt()}   "+"  "+it.can_id)
+        try {
+            val d: String? = null
+            d!!.length
+        } catch (thr: Exception) {
+            CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+        }
        when(data5.toInt()){
          5,6->{
 
@@ -277,6 +285,13 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     /*    https://github.com/MrX-Andy/SerialPortHelper?tab=readme-ov-file#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E*/
        // Socketcan.idd=increment(Socketcan.idd)
        // mainBase.istype= bytes2[0].toInt()
+        Log.i("ouyang", "onSwitchClick  ")
+        try {
+            val d: String? = null
+            d!!.length
+        } catch (thr: Exception) {
+            CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+        }
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
         LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")

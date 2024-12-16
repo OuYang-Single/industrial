@@ -82,7 +82,7 @@ public class Socketcan {
                     /*        if ( canFrame.can_id==0x101){
                                 switch (idd){
                                     case 0:
-                                        canFrame.data=new byte[]{0x56,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+                                        byte[] a=new byte[]{0x56,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
                                         break;
                                     case 1:
                                         canFrame.data=new byte[]{0x52,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -125,17 +125,19 @@ public class Socketcan {
                             if (!datasBases.isEmpty()){
                                 if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
                                     addData( canFrame,app);
+
                                 }
                             }else {
                                 addData( canFrame,app);
-                            }
 
-                            Log.w("MainFragment","ObservableSource  "+canFrame.can_id+"  "+ Integer.toHexString(canFrame.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrame.data)+"  ");
+                            }
                             for (String canId:list){
                                 if (Integer.parseInt(canId)==canFrame.can_id){
                                     LiveDataBus.get().with("CAN_"+canId, CanFrame.class ).postValue(canFrame);
                                 }
                             }
+                            Log.w("MainFragment","ObservableSource  "+canFrame.can_id+"  "+ Integer.toHexString(canFrame.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrame.data)+"  ");
+
                             Log.w("MainFragment","ObservableSource apply -000 "+canFrame.can_id+"  ");
                         }catch (Exception e){
                             Log.w("MainFragment","ObservableSource apply 11"+canFrame.can_id+"  "+e.toString());

@@ -154,7 +154,7 @@ dependencies {
 /*    api("com.amap.api:3dmap:6.4.3")
     api("com.amap.api:search:6.4.3")*/
 
-
+    api("com.tencent.bugly:crashreport:latest.release") //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的
     api("com.github.AlexLiuSheng:CheckVersionLib:2.4.2")
     api("me.jessyan:retrofit-url-manager:1.4.0")
     api("org.nanohttpd:nanohttpd:2.3.1")

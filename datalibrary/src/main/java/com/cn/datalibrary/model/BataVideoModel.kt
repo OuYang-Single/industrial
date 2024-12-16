@@ -1,15 +1,15 @@
 package com.cn.datalibrary.model
 
+import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
-import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.launcher.ARouter
 import com.cn.datalibrary.api.ApiRepository
 import com.google.gson.Gson
+import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.bean.DataTitle
 import com.ijcsj.common_library.model.BaseModel
-import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.util.Hexs
+import com.tencent.bugly.crashreport.CrashReport
 import okhttp3.internal.and
 
 class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : BaseModel() {
@@ -55,7 +55,13 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         list[2]=datr2
         datr4.value=((it.data[2] and 0xff).toFloat()/(10).toFloat()).toString()+" A"
         list[4]=datr4
-
+        Log.i("ouyang", "hierarchy view0    ${ datr1.value}   "+it.data[0]+"  "+it.can_id)
+        try {
+            val d: String? = null
+            d!!.length
+        } catch (thr: Exception) {
+            CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+        }
         var  datr3=gson.fromJson(gson.toJson(list[3]), DataTitle::class.java)
         var  datr5=gson.fromJson(gson.toJson(list[5]), DataTitle::class.java)
         var  datr7=gson.fromJson(gson.toJson(list[6]), DataTitle::class.java)

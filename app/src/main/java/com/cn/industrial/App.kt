@@ -13,6 +13,7 @@ import com.ijcsj.common_library.util.ActivityManager
 import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.orhanobut.logger.Logger
+import com.tencent.bugly.crashreport.CrashReport
 
 
 class App : Application() {
@@ -20,6 +21,7 @@ class App : Application() {
    var socketcan: Socketcan?=null;
     override fun onCreate() {
         super.onCreate()
+        CrashReport.initCrashReport(this, "123a7f1ca3", false);
         instance = this
         socketcan= Socketcan();
         Socketcan.fd=Socketcan.OpenCan("can0")
