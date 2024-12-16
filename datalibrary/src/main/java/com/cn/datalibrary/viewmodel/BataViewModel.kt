@@ -25,7 +25,9 @@ class BataViewModel (override val model: BataVideoModel ,public var adapter: Dat
 
     fun setCan099Data(its: CanFrame) {
         list?.let {
-            model.setCan099Data(its,it)
+            if (its.can_id==153){
+                model.setCan099Data(its,it)
+            }
         }
 
     }

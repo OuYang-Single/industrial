@@ -67,6 +67,9 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     }
 
     fun setCan100Data(it: CanFrame) {
+        if (it.can_id!=256){
+            return
+        }
       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
         (it.data[0] and 0xff)
         mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toInt()
@@ -86,6 +89,9 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     }
 
     fun setCan099Data(it: CanFrame, data: ObservableList<ProjectBase>) {
+        if (it.can_id!=153){
+            return
+        }
        var data1= ((it.data[5] and 0xff).toFloat()/(10).toFloat()).toString()
        var data2= ((it.data[4] and 0xff).toFloat()/(10).toFloat()).toString()
        var data3= ((it.data[3] ).toFloat()).toString()
@@ -176,12 +182,15 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         }
      //   var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())
         Log.i("ouyang", "postCatchedException   WORKING_MODE  ${ data5.toInt()}   "+"  "+it.can_id)
+
+
         try {
-            val d: String? = null
-            d!!.length
+            val d: CanFrame? = null
+            d!!.can_id
         } catch (thr: Exception) {
             CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
         }
+
        when(data5.toInt()){
          5,6->{
 

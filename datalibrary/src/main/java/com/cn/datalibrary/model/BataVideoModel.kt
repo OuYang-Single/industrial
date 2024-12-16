@@ -46,6 +46,9 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
     }
 
     fun setCan099Data(it: CanFrame, list: ObservableList<DataTitle>) {
+        if (it.can_id!=153){
+            return
+        }
         val datr1=gson.fromJson(gson.toJson(list[0]), DataTitle::class.java)
         val datr2=gson.fromJson(gson.toJson(list[2]), DataTitle::class.java)
         val datr4=gson.fromJson(gson.toJson(list[4]), DataTitle::class.java)
@@ -55,12 +58,14 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         list[2]=datr2
         datr4.value=((it.data[2] and 0xff).toFloat()/(10).toFloat()).toString()+" A"
         list[4]=datr4
-        Log.i("ouyang", "hierarchy view0    ${ datr1.value}   "+it.data[0]+"  "+it.can_id)
-        try {
-            val d: String? = null
-            d!!.length
-        } catch (thr: Exception) {
-            CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+        if (it.data[0].toInt() ==0||it.data[1].toInt() ==0||it.data[2].toInt() ==0){
+            Log.i("ouyang", "hierarchy view0    ${ datr1.value}   "+it.data[0]+"  "+it.can_id)
+            try {
+                val d: Gson? = null
+                d!!.toJson("")
+            } catch (thr: Exception) {
+                CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+            }
         }
         var  datr3=gson.fromJson(gson.toJson(list[3]), DataTitle::class.java)
         var  datr5=gson.fromJson(gson.toJson(list[5]), DataTitle::class.java)
@@ -74,11 +79,14 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
     }
 
     fun setCan100Data(it: CanFrame, list: ObservableList<DataTitle>) {
+        if (it.can_id!=256){
+            return
+        }
         var  lsit1=gson.fromJson(gson.toJson(list[9]), DataTitle::class.java)
         var  lsit4=gson.fromJson(gson.toJson(list[8]), DataTitle::class.java)
         var  lsit3=gson.fromJson(gson.toJson(list[10]), DataTitle::class.java)
 
-        var data1= ( (it.data[0] and 0xff).toFloat()*(0.2).toFloat()).toFloat()
+        var data1= ((it.data[0] and 0xff).toFloat()*(0.2).toFloat()).toFloat()
         lsit1.value= "${Math.abs(data1)} L/min"
         list[9]=lsit1
 

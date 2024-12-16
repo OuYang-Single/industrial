@@ -1,9 +1,12 @@
 package com.ijcsj.common_library.can;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.google.gson.Gson;
 import com.ijcsj.common_library.bean.CanFrame;
 import com.ijcsj.common_library.bean.DataBaseDatabase;
 import com.ijcsj.common_library.bean.DatasBase;
@@ -16,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +46,10 @@ public class Socketcan {
     public static int CAN_106=0x106;
     public static int CAN_107=0x107;
    private  List<String>list;
-    CanFrame canFrame=new CanFrame();
+   private HashMap<String,CanFrame> listdd;
+   Gson gson=new Gson();
+   Handler handler;
+
     public void add(String canId){
         list.add(canId);
     }
@@ -55,6 +62,7 @@ public class Socketcan {
     public void timeLoop(Application app) {
         this.app=app;
         list=new ArrayList<>();
+        listdd=new HashMap<>();
         list.add("153");
         list.add("152");
         list.add("85");
@@ -67,86 +75,70 @@ public class Socketcan {
         up();*/
         loop(app);
     }
-
+    CanFrame canFrame=new CanFrame();
   public static int idd=0;
     public void loop(Application app){
-        Observable.interval(0, 80, TimeUnit.MILLISECONDS)
+
+        Observable.interval(0, 5, TimeUnit.MILLISECONDS)
                 .map((mTimer -> mTimer + 1))
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<Long, ObservableSource<CanFrame>>() {
+                .map(new Function<Long, CanFrame>() {
                     @Override
-                    public ObservableSource<CanFrame> apply(Long aLong) throws Throwable {
-                        try {
-                            Log.w("MainFragment","ObservableSource apply -111 "+canFrame.can_id+"  ");
-                            Socketcan.CanRead(canFrame,fd);
-                    /*        if ( canFrame.can_id==0x101){
-                                switch (idd){
-                                    case 0:
-                                        byte[] a=new byte[]{0x56,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 1:
-                                        canFrame.data=new byte[]{0x52,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 2:
-                                        canFrame.data=new byte[]{0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 3:
-                                        canFrame.data=new byte[]{0x02,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 4:
-                                        canFrame.data=new byte[]{0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 5:
-                                        canFrame.data=new byte[]{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 6:
-                                        canFrame.data=new byte[]{0x03,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 7:
-                                        canFrame.data=new byte[]{0x0C,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 8:
-                                        canFrame.data=new byte[]{0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 9:
-                                        canFrame.data=new byte[]{0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                    case 10:
-                                        canFrame.data=new byte[]{0x40,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-                                        break;
-                                }
-                            }*/
-
-                            StringBuilder string= new StringBuilder();
-                            for (int i=0;i<canFrame.data.length;i++){
-                                string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
-                            }
-                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
-                            if (!datasBases.isEmpty()){
-                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
-                                    addData( canFrame,app);
-
-                                }
-                            }else {
-                                addData( canFrame,app);
-
-                            }
-                            for (String canId:list){
-                                if (Integer.parseInt(canId)==canFrame.can_id){
-                                    LiveDataBus.get().with("CAN_"+canId, CanFrame.class ).postValue(canFrame);
-                                }
-                            }
-                            Log.w("MainFragment","ObservableSource  "+canFrame.can_id+"  "+ Integer.toHexString(canFrame.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrame.data)+"  ");
-
-                            Log.w("MainFragment","ObservableSource apply -000 "+canFrame.can_id+"  ");
-                        }catch (Exception e){
-                            Log.w("MainFragment","ObservableSource apply 11"+canFrame.can_id+"  "+e.toString());
+                    public CanFrame apply(Long aLong) throws Throwable {
+                        CanFrame canFrames;
+                        Socketcan.CanRead(canFrame,fd);
+                        if (listdd.get(canFrame.can_id+"")!=null){
+                            canFrames=listdd.get(canFrame.can_id+"");
+                            canFrames.data=canFrame.data;
+                            canFrames.can_id=canFrame.can_id;
+                            canFrames.can_dlc=canFrame.can_dlc;
+                        }else {
+                             canFrames=gson.fromJson(gson.toJson(canFrame),CanFrame.class) ;
+                             listdd.put(canFrame.can_id+"",canFrames);
                         }
-                        return  Observable.just(canFrame);
+                        return canFrames;
+                    }
+                })
+                .flatMap(new Function<CanFrame, ObservableSource<CanFrame>>() {
+                    @Override
+                    public ObservableSource<CanFrame> apply(CanFrame canFrames) throws Throwable {
+                        try {
+                            Log.w("MainFragment","ObservableSource apply -111 "+canFrames.can_id+"  ");
+                            Observable.just(canFrames).subscribeOn(Schedulers.io())
+                                    .flatMap(new Function<CanFrame, ObservableSource<?>>() {
+                                        @Override
+                                        public ObservableSource<?> apply(CanFrame canFrame) throws Throwable {
+                                            StringBuilder string= new StringBuilder();
+                                            for (int i=0;i<canFrame.data.length;i++){
+                                                string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
+                                            }
+                                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
+                                            if (!datasBases.isEmpty()){
+                                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
+                                                    addData( canFrame,app);
+                                                }
+                                            }else {
+                                                addData( canFrame,app);
+                                            }
+                                            return Observable.just(canFrame);
+                                        }
+                                    })
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+
+                            LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);
+                            Log.w("MainFragment","ObservableSource  "+canFrames.can_id+"  "+ Integer.toHexString(canFrames.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrames.data)+"  ");
+
+                            Log.w("MainFragment","ObservableSource apply -000 "+canFrames.can_id+"  ");
+                        }catch (Exception e){
+                            Log.w("MainFragment","ObservableSource apply 11"+canFrames.can_id+"  "+e.toString());
+                        }
+                        return  Observable.just(canFrames);
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
 
     public static void addData(CanFrame canFrame,Application app){
         DatasBase datasBase=new DatasBase();
