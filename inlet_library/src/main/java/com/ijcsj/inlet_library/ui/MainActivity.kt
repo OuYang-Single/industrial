@@ -27,6 +27,7 @@ import com.ijcsj.inlet_library.servicel.VersionsServices
 import com.ijcsj.inlet_library.viewmodel.MainViewModel
 import com.ijcsj.ui_library.anko.countDownCoroutines
 import com.ijcsj.ui_library.utils.immersive
+import com.ijcsj.ui_library.widget.marqueeview.MarqueeView
 import com.ijcsj.ui_library.widget.tab.top.HiTabViewAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.system.exitProcess
@@ -48,7 +49,8 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if (msg.what == 0) {
-                viewDataBinding?. simpleMarqueeView?.visibility=View.VISIBLE
+
+                viewDataBinding?. marqueeView?.visibility=View.VISIBLE
             }
         }
     }
@@ -121,28 +123,45 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
         viewModel.messages.observe(this){
-           var marqueeView= viewDataBinding?. simpleMarqueeView
-            val marqueeFactory: SimpleMF<String?> = SimpleMF<String?>(this)
-            marqueeFactory.setData(it)
+            var a= viewDataBinding?. marqueeView as MarqueeView
+
           var   list=    viewModel.dddMessages
             var boolean=false;
-            for (i in 0 until list.size){
-                if (list[i] in  it) {} else {
-                    boolean=true;
-                    break
+            if (list.size!=it.size){
+                boolean=true
+            }else{
+                for (element in list){
+                    if (element in  it) { } else {
+                        boolean=true;
+                        break
+                    }
+                }
+                if (!boolean){
+                    for (i in list.indices) {
+                        if (list[i]!=it[i]){
+                            boolean=true;
+                            break
+                        }
+                    }
                 }
             }
-            if (list.size<=0){
+
+
+          if (list.size!=it.size){
+              boolean=true
+          }
+            if (list.isEmpty()){
                 boolean=true
             }
            if (boolean){
                LiveDataBus.get().with("HistoryFragment.CAN_101",Boolean::class.java).postValue(true)
                viewModel.dddMessages=it
-               viewDataBinding?. simpleMarqueeView?.visibility=View.INVISIBLE
-               viewDataBinding?. simpleMarqueeView?.setMarqueeFactory(marqueeFactory)
-               viewDataBinding?. simpleMarqueeView?.startFlipping()
+
+               viewDataBinding?. marqueeView?.removeAllViews();
+               viewDataBinding?. marqueeView?.visibility=View.INVISIBLE
+               viewDataBinding?. marqueeView?.startWithList( viewModel.dddMessages);
                handler.removeMessages(0)
-               handler.sendEmptyMessageDelayed(0, 700)
+               handler.sendEmptyMessageDelayed(0, 1000)
            }
         }
     }

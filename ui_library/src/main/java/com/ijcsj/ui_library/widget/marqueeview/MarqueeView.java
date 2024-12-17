@@ -198,6 +198,10 @@ public class MarqueeView<T> extends ViewFlipper {
      * @param messages 字符串列表
      */
     public void startWithList(List<T> messages) {
+        this.messages.clear();
+        if (getInAnimation()!=null){
+            getInAnimation().cancel();
+        }
         startWithList(messages, inAnimResId, outAnimResId);
     }
 

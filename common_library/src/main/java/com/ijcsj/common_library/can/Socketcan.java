@@ -107,16 +107,16 @@ public class Socketcan {
                     public ObservableSource<CanFrame> apply(CanFrame canFrames) throws Throwable {
                         try {
                             StringBuilder string= new StringBuilder();
-                            for (int i=0;i<canFrame.data.length;i++){
-                                string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
+                            for (int i=0;i<canFrames.data.length;i++){
+                                string.append(" ").append( Integer.toHexString(canFrames.data[i]  & 0x1FFFFFFF));
                             }
-                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
+                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrames.can_id & 0x1FFFFFFF));
                             if (!datasBases.isEmpty()){
-                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
-                                    addData( canFrame,app);
+                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrames.data))){
+                                    addData( canFrames,app);
                                 }
                             }else {
-                                addData( canFrame,app);
+                                addData( canFrames,app);
                             }
 
                             LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);

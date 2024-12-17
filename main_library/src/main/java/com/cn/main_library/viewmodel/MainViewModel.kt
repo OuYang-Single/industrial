@@ -298,7 +298,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             }
         }
     /*    https://github.com/MrX-Andy/SerialPortHelper?tab=readme-ov-file#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E*/
-       // Socketcan.idd=increment(Socketcan.idd)
+        Socketcan.idd=increment(Socketcan.idd)
        // mainBase.istype= bytes2[0].toInt()
         Log.i("ouyang", "onSwitchClick  ")
         try {
