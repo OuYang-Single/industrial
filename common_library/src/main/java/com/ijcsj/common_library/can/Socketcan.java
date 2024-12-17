@@ -24,8 +24,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -104,27 +107,18 @@ public class Socketcan {
                     public ObservableSource<CanFrame> apply(CanFrame canFrames) throws Throwable {
                         try {
                             Log.w("MainFragment","ObservableSource apply -111 "+canFrames.can_id+"  ");
-                            Observable.just(canFrames).subscribeOn(Schedulers.io())
-                                    .flatMap(new Function<CanFrame, ObservableSource<?>>() {
-                                        @Override
-                                        public ObservableSource<?> apply(CanFrame canFrame) throws Throwable {
-                                            StringBuilder string= new StringBuilder();
-                                            for (int i=0;i<canFrame.data.length;i++){
-                                                string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
-                                            }
-                                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
-                                            if (!datasBases.isEmpty()){
-                                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
-                                                    addData( canFrame,app);
-                                                }
-                                            }else {
-                                                addData( canFrame,app);
-                                            }
-                                            return Observable.just(canFrame);
-                                        }
-                                    })
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe();
+                            StringBuilder string= new StringBuilder();
+                            for (int i=0;i<canFrame.data.length;i++){
+                                string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
+                            }
+                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
+                            if (!datasBases.isEmpty()){
+                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrame.data))){
+                                    addData( canFrame,app);
+                                }
+                            }else {
+                                addData( canFrame,app);
+                            }
 
                             LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);
                             Log.w("MainFragment","ObservableSource  "+canFrames.can_id+"  "+ Integer.toHexString(canFrames.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrames.data)+"  ");
@@ -136,7 +130,27 @@ public class Socketcan {
                         return  Observable.just(canFrames);
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Object o) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 
