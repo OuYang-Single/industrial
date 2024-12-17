@@ -26,6 +26,9 @@ class App : Application() {
         socketcan= Socketcan();
         Socketcan.fd=Socketcan.OpenCan("can0")
         LiveDataBus.get().with("Socketcan_Data", Socketcan::class.java ).postValue(socketcan)
+        ShuJuMMkV.getInstances()?.putBoolean(a.USER_LOG_ON,false)
+        ShuJuMMkV.getInstances()?.putBoolean(a.ENGINEERING_LOG_ON,false)
+        ShuJuMMkV.getInstances()?.putBoolean(a.MANUFACTOR_LOG_ON,false)
         socketcan?.timeLoop(this)
         CAN_105()
         CAN_106()

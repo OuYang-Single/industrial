@@ -36,6 +36,7 @@ import com.orhanobut.logger.Logger
 import com.tencent.bugly.crashreport.CrashReport
 import kotlinx.coroutines.InternalCoroutinesApi
 import okhttp3.internal.and
+import java.math.BigDecimal
 
 class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,var adapter: ProjectAdapter,var phoneMainAdapter: PhoneMainAdapter,var adapters: ProjectsAdapter) : MvmBaseViewModel<IBaseView, MainVideoModel>() {
     private val _projectBaseList = MutableLiveData<ObservableList<ProjectBase>>()
@@ -73,9 +74,10 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
         (it.data[0] and 0xff)
         mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toInt()
-        mainBase.flowString=Math.abs(((it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toString()
-
-
+        var flow=Math.abs(((it.data[0] and 0xff).toFloat()*(0.2).toFloat()))
+        val bigDecimal = BigDecimal(flow.toString())
+        val formattedValue: String =   bigDecimal.setScale(1, BigDecimal.ROUND_DOWN).toString()
+        mainBase.flowString=formattedValue
         mainBase.pressure= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toInt()
         mainBase.pressureString= ((it.data[7] and 0xff).toFloat()/(10).toFloat()).toString()
         mainBase.temperature= ( Hexs.pinJie2ByteToInt(it.data[4],it.data[3]).toFloat()/(10).toFloat()).toInt()
@@ -111,13 +113,13 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
     }
 
     var  ddd:Byte=0;
+    var  ddd1:Int=0;
+
     @OptIn(InternalCoroutinesApi::class)
     fun setCan102Data(it: CanFrame) {
 
         if (ddd!=it.data[0]){
             ddd=it.data[0]
-
-
         }
 
 
@@ -190,16 +192,20 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         } catch (thr: Exception) {
             CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
         }
+        if (ddd1!=data5.toInt()){
+            ddd1=data5.toInt()
+            when(data5.toInt()){
+                5,6->{
 
-       when(data5.toInt()){
-         5,6->{
-
-         }
-         else->{
-             ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
-             LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
-         }
+                }
+                else->{
+                    ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
+                    LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
+                }
+            }
         }
+
+
         mainBase.istype=  when(data5.toInt()){
           0-> {
               0
@@ -284,7 +290,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         Logger.w("onPasswordClick");
         var bytes2=ByteArray(8)
         when( mainBase.istype){
-            0,4,5,6->{
+            0,4,3->{
                 bytes2[0]= a.from10To2sd(1)
             }
             else -> {

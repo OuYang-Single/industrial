@@ -9,8 +9,10 @@ import com.ijcsj.common_library.bean.CanFrame
 import com.ijcsj.common_library.bean.DataTitle
 import com.ijcsj.common_library.model.BaseModel
 import com.ijcsj.common_library.util.Hexs
+import com.ijcsj.common_library.util.Hexs.encodeHexStr
 import com.tencent.bugly.crashreport.CrashReport
 import okhttp3.internal.and
+import java.math.BigDecimal
 
 class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : BaseModel() {
 
@@ -58,8 +60,9 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         list[2]=datr2
         datr4.value=((it.data[2] and 0xff).toFloat()/(10).toFloat()).toString()+" A"
         list[4]=datr4
+        Log.i("ouyang", "setCan099Data   ${encodeHexStr(it.data)}   "+"  "+it.can_id)
         if (it.data[0].toInt() ==0||it.data[1].toInt() ==0||it.data[2].toInt() ==0){
-            Log.i("ouyang", "hierarchy view0    ${ datr1.value}   "+it.data[0]+"  "+it.can_id)
+           // Log.i("ouyang", "hierarchy view0    ${ datr1.value}   "+it.data[0]+"  "+it.can_id)
             try {
                 val d: Gson? = null
                 d!!.toJson("")
@@ -82,12 +85,15 @@ class BataVideoModel  (private val repository: ApiRepository,var gson:Gson) : Ba
         if (it.can_id!=256){
             return
         }
+        Log.i("ouyang", "setCan100Data   ${encodeHexStr(it.data)}   "+"  "+it.can_id)
         var  lsit1=gson.fromJson(gson.toJson(list[9]), DataTitle::class.java)
         var  lsit4=gson.fromJson(gson.toJson(list[8]), DataTitle::class.java)
         var  lsit3=gson.fromJson(gson.toJson(list[10]), DataTitle::class.java)
 
-        var data1= ((it.data[0] and 0xff).toFloat()*(0.2).toFloat()).toFloat()
-        lsit1.value= "${Math.abs(data1)} L/min"
+        var data1= ((it.data[0] and 0xff).toFloat()*(0.2).toFloat())
+        val bigDecimal = BigDecimal(data1.toString())
+        val formattedValue: String =   bigDecimal.setScale(1, BigDecimal.ROUND_DOWN).toString()
+        lsit1.value= "${formattedValue} L/min"
         list[9]=lsit1
 
         var  lsit2=gson.fromJson(gson.toJson(list[7]), DataTitle::class.java)

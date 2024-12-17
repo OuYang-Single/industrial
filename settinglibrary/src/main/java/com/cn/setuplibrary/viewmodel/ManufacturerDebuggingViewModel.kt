@@ -368,55 +368,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                 }
             }))).show()
     }
-    var   onClickOpenTheColdEndValve=  BindingCommand<BindingAction>{
-        var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
-        if (isEngineeringLogOn==false){
-            ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",2).navigation()
-            return@BindingCommand
-        }
-        var list= mutableListOf<String>()
-        list.add("关闭")
-        list.add("开启")
-        basePopupView= XPopup.Builder(it.context)
-            .enableDrag(false)
-            .autoDismiss(false)
-            .dismissOnTouchOutside(false)
-            .positionByWindowCenter(true)
-            .asCustom(StylePopup(it.context,list, StyleAdapter(object :
-                StyleAdapter.OnClickListeners{
-                override fun onClick(string: String?,int: Int) {
-                    var bytes2=ByteArray(8)
-                    var d0= ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_1,"0")
-                    var d1= ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_2,"0")
-                    var d2=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_3,"0")
-                    var d3=   ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_4,"0")
-                    var d4=   ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_5,"0")
-                    var d5=   ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_6,"0")
-                    var d6=  int
-                    var d7=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_8,"0")
-                    var d8=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_9,"0")
-                    var da1=  "0$d6$d5$d4$d3$d2$d1$d0".toInt(2)
-                    bytes2[0]=(da1 and 0xff).toByte()
-                    bytes2[1]=0x00
-                    bytes2[2]=0x00
-                    bytes2[3]= 0x00
-                    bytes2[4]= 0x00
-                    bytes2[5]= 0x00
-                    bytes2[6]= (d7!!.toInt()and 0xff).toByte()
-                    bytes2[7]= (d8!!.toInt()and 0xff).toByte()
 
-                    var ta=  Socketcan.CanWrites(Socketcan.fd, Socketcan.CAN_104,bytes2)
-                    Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
-                    if (ta>0){
-                        bean.openTheColdEndValve=string
-                        ShuJuMMkV.getInstances()?.putString(a.INLETVALVE_7,  int.toString())
-                    }else{
-                        _message.postValue("发送失败，请重试")
-                    }
-                    basePopupView?.dismiss()
-                }
-            }))).show()
-    }
     var   onClickOpenTheColdEndProportionalValve=  BindingCommand<BindingAction>{
         var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
         if (isEngineeringLogOn==false){
@@ -424,8 +376,8 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
             return@BindingCommand
         }
         var list= mutableListOf<String>()
-        list.add("开启")
         list.add("关闭")
+        list.add("开启")
         basePopupView= XPopup.Builder(it.context)
             .enableDrag(false)
             .autoDismiss(false)
@@ -444,9 +396,9 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     var d6=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_7,"0")
 
                     var d7=  if (int==0){
-                        100
+                         0
                     }else{
-                        0
+                        100
                     }
                     var d8=  ShuJuMMkV.getInstances()?.getString(a.INLETVALVE_9,"0")
                     var da1=  "0$d6$d5$d4$d3$d2$d1$d0".toInt(2)
@@ -463,7 +415,7 @@ class ManufacturerDebuggingViewModel (override val model: ManufacturerDebuggingM
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         bean.openTheColdEndProportionalValve=string
-                        ShuJuMMkV.getInstances()?.putString(a.INLETVALVE_8,  int.toString())
+                        ShuJuMMkV.getInstances()?.putString(a.INLETVALVE_8,  d7.toString())
                     }else{
                         _message.postValue("发送失败，请重试")
                     }

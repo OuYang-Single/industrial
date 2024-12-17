@@ -106,7 +106,6 @@ public class Socketcan {
                     @Override
                     public ObservableSource<CanFrame> apply(CanFrame canFrames) throws Throwable {
                         try {
-                            Log.w("MainFragment","ObservableSource apply -111 "+canFrames.can_id+"  ");
                             StringBuilder string= new StringBuilder();
                             for (int i=0;i<canFrame.data.length;i++){
                                 string.append(" ").append( Integer.toHexString(canFrame.data[i]  & 0x1FFFFFFF));
@@ -123,7 +122,6 @@ public class Socketcan {
                             LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);
                             Log.w("MainFragment","ObservableSource  "+canFrames.can_id+"  "+ Integer.toHexString(canFrames.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrames.data)+"  ");
 
-                            Log.w("MainFragment","ObservableSource apply -000 "+canFrames.can_id+"  ");
                         }catch (Exception e){
                             Log.w("MainFragment","ObservableSource apply 11"+canFrames.can_id+"  "+e.toString());
                         }

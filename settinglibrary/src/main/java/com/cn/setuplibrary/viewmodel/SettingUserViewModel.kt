@@ -151,7 +151,6 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                                 ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
                             }
                             settingUserBean.burial=string
-                            settingUserBean.drain="关"
                         }else{
                             _message.postValue("发送失败，请重试")
                         }
@@ -180,7 +179,6 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                         if (int==0){
                             bytes2[0]= a.from10To2sd(3)
                         }else{
-
                             if (settingUserBean.drain=="关"){
                                 bytes2[0]=  a.from10To2sd( ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())!!.toInt())
                             }else{
@@ -210,7 +208,6 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                             }else{
                                 ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
                             }
-                            settingUserBean.burial="关"
                             settingUserBean.drain=string
                         }else{
                             _message.postValue("发送失败，请重试")

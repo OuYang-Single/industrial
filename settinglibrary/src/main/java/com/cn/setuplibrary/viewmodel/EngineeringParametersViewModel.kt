@@ -154,7 +154,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.FILLING_TIME,int.toString())
-                        engineerIngBean.fillingTime=ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")+" s"
+                        engineerIngBean.fillingTime=string
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
@@ -253,7 +253,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.DELAY_PUMP_START_TIME,int.toString())
-                        engineerIngBean.pumpJammingTime=ShuJuMMkV.getInstances()?.getString(a.DELAY_PUMP_START_TIME,"10")+" s"
+                        engineerIngBean.pumpJammingTime=string
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
@@ -301,7 +301,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.PUMP_ON_TIME,int.toString())
-                        engineerIngBean.emptyingTime=ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")+" s"
+                        engineerIngBean.emptyingTime=string
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
@@ -351,7 +351,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
                     Logger.w("onPasswordClick  $ta   ${Socketcan.fd}");
                     if (ta>0){
                         ShuJuMMkV.getInstances()?.putString(a.COOLING_TEMPERATURE,int.toString())
-                        engineerIngBean.coolingTemperature=ShuJuMMkV.getInstances()?.getString(a.COOLING_TEMPERATURE,"60")+" s"
+                        engineerIngBean.coolingTemperature=string
                     }else{
                         _message.postValue("发送失败，请重试")
                     }
