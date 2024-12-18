@@ -221,7 +221,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("$i s")
+            list.add("$i S")
         }
 
         basePopupView=XPopup.Builder(it.context)
@@ -269,7 +269,7 @@ class EngineeringParametersViewModel  (override val model: EngineeringParameters
         }
         var list= mutableListOf<String>()
         for (i in 0 until 256) {
-            list.add("$i s")
+            list.add("$i S")
         }
 
         basePopupView=XPopup.Builder(it.context)

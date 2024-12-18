@@ -72,6 +72,10 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
                 if (isUserLogOn==false){
                     ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",0).navigation()
                 }
+            }else{
+                ShuJuMMkV.getInstances()?.putBoolean(a.USER_LOG_ON,false)
+                ShuJuMMkV.getInstances()?.putBoolean(a.ENGINEERING_LOG_ON,false)
+                ShuJuMMkV.getInstances()?.putBoolean(a.MANUFACTOR_LOG_ON,false)
             }
             LiveDataBus.get().with("tabBottomLayout", Int::class.java ).postValue(index)
             this@MainActivity.currentItemIndex = index

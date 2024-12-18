@@ -178,6 +178,12 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             6->{
                 "强制冷却状态"
             }
+            7->{
+                "错误报警"
+            }
+            8->{
+                "机器清洗"
+            }
             else -> {
                 "--"
             }
@@ -196,11 +202,13 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             ddd1=data5.toInt()
             when(data5.toInt()){
                 5,6->{
-
+                    LiveDataBus.get().with("WORKING_MODEDD", Int::class.java).postValue(data5)
                 }
                 else->{
-                    ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
-                    LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
+                    if (data5==0){
+                        ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE, 5.toString())
+                    }
+                    LiveDataBus.get().with("WORKING_MODEDD", Int::class.java).postValue(data5)
                 }
             }
         }
@@ -308,7 +316,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
         }
         ShuJuMMkV.getInstances()?.putString(a.WORKING_MODE,  bytes2[0].toString())
-        LiveDataBus.get().with("WORKING_MODEDD", Boolean::class.java).postValue(true)
+        LiveDataBus.get().with("WORKING_MODEDD", Int::class.java).postValue(bytes2[0].toInt())
         var d1=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
         var d2=  ShuJuMMkV.getInstances()?.getString(a.FILLING_TIME,"4")
         var d3=  ShuJuMMkV.getInstances()?.getString(a.PUMP_ON_TIME,"0")

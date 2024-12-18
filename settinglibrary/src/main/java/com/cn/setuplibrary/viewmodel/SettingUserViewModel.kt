@@ -25,9 +25,12 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
     var basePopupView: BasePopupView?=null
 
     public override fun initModel() {
-     var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 0.toString())
+       var type=   ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 0.toString())
+        settingUserBean.startMode= "本地启动"
+        settingUserBean.burial="关"
+        settingUserBean.drain="关"
         when(type){
-            4.toString()->{
+       /*     4.toString()->{
                 settingUserBean.startMode= "本地启动"
                 settingUserBean.burial="关"
                 settingUserBean.drain="关"
@@ -46,11 +49,29 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                 settingUserBean.startMode= "本地启动"
                 settingUserBean.burial="关"
                 settingUserBean.drain="关"
-            }
+            }*/
         }
 
     }
+    public  fun initModels(type:String) {
 
+        when(type){
+            6.toString()->{
+                settingUserBean.burial="开"
+                settingUserBean.drain="关"
+            }
+            5.toString()->{
+                settingUserBean.burial="关"
+                settingUserBean.drain="开"
+            }
+            else->{
+                settingUserBean.burial="关"
+                settingUserBean.drain="关"
+            }
+        }
+    }
+    var boolean1=false;
+    var boolean2=false;
     var onStartModeClick=  BindingCommand<BindingAction>{
         var isUserLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.USER_LOG_ON,false)
         if (isUserLogOn==true){
@@ -124,6 +145,7 @@ class SettingUserViewModel  (override val model: SettingUserModel,var settingUse
                             if (settingUserBean.burial=="关"){
                                 bytes2[0]=  a.from10To2sd( ShuJuMMkV.getInstances()?.getString(a.WORKING_MODE, 5.toString())!!.toInt())
                             }else{
+                                boolean1=true
                                 bytes2[0]= a.from10To2sd(5)
                             }
                         }

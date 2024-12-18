@@ -15,7 +15,7 @@ public class ShutdownBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
        Log.w("ouyang","关机");
        try {
-           ShuJuMMkV.Companion.getInstance().putString(a.WORKING_MODE,"5");
+
            ShuJuMMkV.Companion.getInstance().putString(a.INLETVALVE_1,"0");
            ShuJuMMkV.Companion.getInstance().putString(a.INLETVALVE_2,"0");
            ShuJuMMkV.Companion.getInstance().putString(a.INLETVALVE_3,"0");
