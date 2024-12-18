@@ -178,7 +178,9 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onRestart() {
         super.onRestart()
         var isUserLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.USER_LOG_ON,false)
-        if (isUserLogOn==false){
+        var isUserLogOns=  ShuJuMMkV.getInstances()?.getBoolean(a.ENGINEERING_LOG_ON,false)
+        var isUserLogOns2=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
+        if (isUserLogOn==false&&isUserLogOns==false&&isUserLogOns2==false){
             viewDataBinding?.fragmentTabView?.currentItem = 0
             viewDataBinding?.tabBottomLayout?.defaultSelected( viewModel.infoList.value!![0])
         }

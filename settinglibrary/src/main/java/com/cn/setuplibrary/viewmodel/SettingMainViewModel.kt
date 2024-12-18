@@ -67,6 +67,8 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
                     ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",1).navigation()
                     return@setOnItemClickListener
                 }
+                ShuJuMMkV.getInstances()?.putBoolean(a.USER_LOG_ON,false)
+                ShuJuMMkV.getInstances()?.putBoolean(a.MANUFACTOR_LOG_ON,false)
             }
             if (position==2){
                 var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.MANUFACTOR_LOG_ON,false)
@@ -74,6 +76,17 @@ class SettingMainViewModel (override val model: SettingMainModel,var adapter: Da
                     ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",2).navigation()
                     return@setOnItemClickListener
                 }
+                ShuJuMMkV.getInstances()?.putBoolean(a.USER_LOG_ON,false)
+                ShuJuMMkV.getInstances()?.putBoolean(a.ENGINEERING_LOG_ON,false)
+            }
+            if (position==0){
+                var isEngineeringLogOn=  ShuJuMMkV.getInstances()?.getBoolean(a.USER_LOG_ON,false)
+                if (isEngineeringLogOn==false){
+                    ARouter.getInstance().build("/LogIn/Machine/LogInActivity").withInt("type",0).navigation()
+                    return@setOnItemClickListener
+                }
+                ShuJuMMkV.getInstances()?.putBoolean(a.MANUFACTOR_LOG_ON,false)
+                ShuJuMMkV.getInstances()?.putBoolean(a.ENGINEERING_LOG_ON,false)
             }
             var data: DataTitle?=null
             var positions=0;
