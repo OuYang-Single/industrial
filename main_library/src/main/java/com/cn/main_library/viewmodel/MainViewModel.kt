@@ -25,6 +25,7 @@ import com.ijcsj.common_library.command.BindingCommand
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.IBaseView
 import com.ijcsj.common_library.util.Hexs
+import com.ijcsj.common_library.util.Hexs.encodeHexStr
 import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.common_library.viewmodel.MvmBaseViewModel
@@ -94,6 +95,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         if (it.can_id!=153){
             return
         }
+        Log.i("MainFragment", "setCan099Data   ${encodeHexStr(it.data)}   "+"  "+it.can_id)
        var data1= ((it.data[5] and 0xff).toFloat()/(10).toFloat()).toString()
        var data2= ((it.data[4] and 0xff).toFloat()/(10).toFloat()).toString()
        var data3= ((it.data[3] ).toFloat()).toString()
@@ -178,12 +180,12 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
             6->{
                 "强制冷却状态"
             }
-            7->{
+         /*   7->{
                 "错误报警"
             }
             8->{
                 "机器清洗"
-            }
+            }*/
             else -> {
                 "--"
             }

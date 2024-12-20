@@ -31,6 +31,8 @@ import com.ijcsj.common_library.util.a
 import com.ijcsj.ui_library.stateview.StateView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -79,16 +81,21 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
             .map<Long> { mTimer: Long -> mTimer + 1 }
             .subscribeOn(Schedulers.io())
             .map {
-                context?.let {
-                    val wifiManager = it.getSystemService(Context.WIFI_SERVICE) as WifiManager
-                    val rssi = wifiManager.connectionInfo.rssi
-                    Log.w("WifiStrengthReceiver", "rssi  $rssi")
-                   var s=    NetworkStrengthUtil.getSignalLevel(rssi)
-                   viewModel.mainBase.signalStrength="信号强度: $s %"
+                try {
+                    context?.let {
+                        val wifiManager = it.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                        val rssi = wifiManager.connectionInfo.rssi
+                        Log.w("WifiStrengthReceiver", "rssi  $rssi")
+                        var s=    NetworkStrengthUtil.getSignalLevel(rssi)
+                        viewModel.mainBase.signalStrength="信号强度: $s %"
+                    }
+                }catch (e:Exception){
+
                 }
+
             }
            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .subscribe({},{})
     }
 
     override fun onAgainCreates() {

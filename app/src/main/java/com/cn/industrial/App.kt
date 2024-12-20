@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.util.ActivityManager
@@ -23,9 +24,8 @@ class App : Application() {
         super.onCreate()
         CrashReport.initCrashReport(this, "123a7f1ca3", false);
         instance = this
-        socketcan= Socketcan();
-        Socketcan.fd=Socketcan.OpenCan("can0")
-        LiveDataBus.get().with("Socketcan_Data", Socketcan::class.java ).postValue(socketcan)
+
+
         ShuJuMMkV.getInstances()?.putBoolean(a.USER_LOG_ON,false)
         ShuJuMMkV.getInstances()?.putBoolean(a.ENGINEERING_LOG_ON,false)
         ShuJuMMkV.getInstances()?.putBoolean(a.MANUFACTOR_LOG_ON,false)
@@ -36,12 +36,7 @@ class App : Application() {
         ShuJuMMkV.instance?.putString(a.INLETVALVE_5, "0")
         ShuJuMMkV.instance?.putString(a.INLETVALVE_6, "0")
         ShuJuMMkV.instance?.putString(a.INLETVALVE_7, "0")
-        socketcan?.timeLoop(this)
-        CAN_105()
-        CAN_106()
-        CAN_107()
-        CAN_108()
-        Logger.w("App onCreate ${ Socketcan.fd}");
+
         registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Logger.w("App $activity");

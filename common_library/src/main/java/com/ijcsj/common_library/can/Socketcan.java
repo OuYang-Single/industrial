@@ -79,9 +79,9 @@ public class Socketcan {
         loop(app);
     }
     CanFrame canFrame=new CanFrame();
+  public static   Disposable d;
   public static int idd=0;
     public void loop(Application app){
-
         Observable.interval(0, 5, TimeUnit.MILLISECONDS)
                 .map((mTimer -> mTimer + 1))
                 .subscribeOn(Schedulers.io())
@@ -131,7 +131,7 @@ public class Socketcan {
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        Socketcan.this.d=d;
                     }
 
                     @Override
@@ -141,6 +141,8 @@ public class Socketcan {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Log.w("MainFragment","ObservableSource apply 11"+"  "+e.toString());
+                        loop( app);
 
                     }
 
@@ -240,7 +242,6 @@ public class Socketcan {
                 .flatMap(new Function<String, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(String string) throws Throwable {
-
                         DatasBase datasBase=new DatasBase();
                         datasBase.setData( Hexs.INSTANCE.encodeHexStr(data));
                         datasBase.setCanId( Integer.toHexString(canId & 0x1FFFFFFF));
@@ -257,7 +258,27 @@ public class Socketcan {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Object o) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
         return i;
     }
