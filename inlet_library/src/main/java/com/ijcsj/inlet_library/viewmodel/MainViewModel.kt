@@ -233,5 +233,14 @@ class MainViewModel (override val model: MainModel,var mainBase: MainBases) : Mv
         }
     }
 
+    fun CAN_LiveDataBus(it: CanFrame) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+        }) {
+            withContext(Dispatchers.IO){
+                 model.CAN_LiveDataBus(it)
+            }
+        }
+    }
+
 
 }

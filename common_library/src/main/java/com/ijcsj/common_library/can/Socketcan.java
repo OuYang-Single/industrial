@@ -78,9 +78,11 @@ public class Socketcan {
         up();*/
         loop(app);
     }
-    CanFrame canFrame=new CanFrame();
+    final   CanFrame canFrame=new CanFrame();
   public static   Disposable d;
   public static int idd=0;
+    Long dd= (long) 0L;
+   final byte[] datas=  new byte[]{(byte) (0x93&0xff),(byte) (0x73&0xff),(byte) (0x00&0xff),(byte) (0x6d&0xff),0x00,0x00,0x00,0x00};;
     public void loop(Application app){
         Observable.interval(0, 5, TimeUnit.MILLISECONDS)
                 .map((mTimer -> mTimer + 1))
@@ -88,55 +90,35 @@ public class Socketcan {
                 .map(new Function<Long, CanFrame>() {
                     @Override
                     public CanFrame apply(Long aLong) throws Throwable {
-                        CanFrame canFrames;
+                        CanFrame canFrames = null;
+                        final   Long dd= (long) canFrame.dd+1;
+                        canFrame.dd=dd;
                         Socketcan.CanRead(canFrame,fd);
                         if (listdd.get(canFrame.can_id+"")!=null){
                             canFrames=listdd.get(canFrame.can_id+"");
                             canFrames.data=canFrame.data;
                             canFrames.can_id=canFrame.can_id;
                             canFrames.can_dlc=canFrame.can_dlc;
+                            canFrames.dd=dd;
                         }else {
-                             canFrames=gson.fromJson(gson.toJson(canFrame),CanFrame.class) ;
+                             canFrames=gson.fromJson(gson.toJson(canFrame),CanFrame.class);
+                             canFrames.dd=dd;
                              listdd.put(canFrame.can_id+"",canFrames);
                         }
                         return canFrames;
                     }
-                })
-                .flatMap(new Function<CanFrame, ObservableSource<CanFrame>>() {
-                    @Override
-                    public ObservableSource<CanFrame> apply(CanFrame canFrames) throws Throwable {
-                        try {
-                            StringBuilder string= new StringBuilder();
-                            for (int i=0;i<canFrames.data.length;i++){
-                                string.append(" ").append( Integer.toHexString(canFrames.data[i]  & 0x1FFFFFFF));
-                            }
-                            List<DatasBase> datasBases=   DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().getCanId(Integer.toHexString(canFrames.can_id & 0x1FFFFFFF));
-                            if (!datasBases.isEmpty()){
-                                if (!datasBases.get(datasBases.size()-1).getData().equals(Hexs.INSTANCE.encodeHexStr(canFrames.data))){
-                                    addData( canFrames,app);
-                                }
-                            }else {
-                                addData( canFrames,app);
-                            }
-
-                            LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);
-                            Log.w("MainFragment","ObservableSource  "+canFrames.can_id+"  "+ Integer.toHexString(canFrames.can_id & 0x1FFFFFFF)+" data:  "+  Hexs.INSTANCE.encodeHexStr(canFrames.data)+"  ");
-
-                        }catch (Exception e){
-                            Log.w("MainFragment","ObservableSource apply 11"+canFrames.can_id+"  "+e.toString());
-                        }
-                        return  Observable.just(canFrames);
-                    }
                 }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Object>() {
+                .subscribe(new Observer<CanFrame>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Socketcan.this.d=d;
                     }
 
                     @Override
-                    public void onNext(@NonNull Object o) {
-
+                    public void onNext(@NonNull CanFrame canFrames) {
+                        Log.w("MainFragment","ObservableSource apply  "+canFrames.can_id+"  "+canFrames.can_id);
+                        LiveDataBus.get().with("CAN_"+canFrames.can_id, CanFrame.class ).postValue(canFrames);
+                        LiveDataBus.get().with("CAN_LiveDataBus", CanFrame.class ).postValue(canFrames);
                     }
 
                     @Override
@@ -154,16 +136,7 @@ public class Socketcan {
     }
 
 
-    public static void addData(CanFrame canFrame,Application app){
-        DatasBase datasBase=new DatasBase();
-        datasBase.setData( Hexs.INSTANCE.encodeHexStr(canFrame.data));
-        datasBase.setCanId( Integer.toHexString(canFrame.can_id & 0x1FFFFFFF));
-        datasBase.setType(true);
-        datasBase.setDateTime(new Date(System.currentTimeMillis()));
-        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm:ss"));
-        DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
-        LiveDataBus.get().with("CanWrites", Boolean.class ).postValue(true);
-    }
+
   public static void down(){
 
       try {
@@ -236,18 +209,19 @@ public class Socketcan {
     public static int fd;
 
     public static int CanWrites (int fd,int canId, byte[] data){
-        int i=  CanWrite( fd, canId,  data);
+       int i=  CanWrite( fd, canId,  data);
         Observable.just("")
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Function<String, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(String string) throws Throwable {
-                        DatasBase datasBase=new DatasBase();
+                        final Date date=  new Date(System.currentTimeMillis());
+                        final DatasBase datasBase=new DatasBase();
                         datasBase.setData( Hexs.INSTANCE.encodeHexStr(data));
                         datasBase.setCanId( Integer.toHexString(canId & 0x1FFFFFFF));
                         datasBase.setType(false);
-                        datasBase.setDateTime(new Date(System.currentTimeMillis()));
-                        datasBase.setTime(DateUtil.formatTime(new Date(System.currentTimeMillis()),"YYYY-MM-dd HH:mm:ss"));
+                        datasBase.setDateTime(date);
+                        datasBase.setTime(DateUtil.formatTime(date, "YYYY-MM-dd HH:mm:ss"));
                         if (i>0){
                             DataBaseDatabase.Companion.getDatabase(app).backFlowBaseDao().insert(datasBase);
                         }else{

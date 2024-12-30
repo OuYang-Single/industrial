@@ -85,7 +85,7 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
                     context?.let {
                         val wifiManager = it.getSystemService(Context.WIFI_SERVICE) as WifiManager
                         val rssi = wifiManager.connectionInfo.rssi
-                        Log.w("WifiStrengthReceiver", "rssi  $rssi")
+                        Log.w("WifiStrengthReceiver", "rssi  $rssi   "+wifiManager)
                         var s=    NetworkStrengthUtil.getSignalLevel(rssi)
                         viewModel.mainBase.signalStrength="信号强度: $s %"
                     }
@@ -129,12 +129,10 @@ class MainFragment : MvvmBaseFragment<FragmentMainBinding, MainViewModel>() {
      fun updateTime() {
         viewModel.mainBase.time=DateUtil.formatTime(DateUtil.getCurrentTime(), "yyyy-MM-dd HH:mm:ss")
         if (null != secondHandler) {
-            val message = Message()
+            val message =secondHandler.obtainMessage(1)
             message.what = 1
             secondHandler!!.sendMessageDelayed(message, 1000)
         }
-         ( viewDataBinding?.rvProject?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false //取消刷新闪屏动画
-
      }
 
     fun observe(){

@@ -266,7 +266,7 @@ object Hexs {
         }*/
 
     //int转为2位byte
-    private fun Int2Byte(a: Int): ByteArray? {
+    public fun Int2Byte(a: Int): ByteArray {
         val b = ByteArray(2)
         b[0] = (a shr 8).toByte()
         b[1] = a.toByte()

@@ -64,10 +64,7 @@ class App : Application() {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-                ActivityManager.getInstance().removeActivity(activity)
-                if ( ActivityManager.getInstance().activityList.size<=0){
-                    Socketcan.CloseCan(Socketcan.fd)
-                }
+
             }
 
         });

@@ -2,6 +2,7 @@ package com.ijcsj.common_library.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.net.ParseException;
 
@@ -111,12 +112,12 @@ public class DateUtil {
      * @return 格式化后的时间字符串
      */
     public static String formatTime(Date date, String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+       final SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }
     public static String formatTimes(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat sdfd = new SimpleDateFormat("MM-dd");
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        final SimpleDateFormat sdfd = new SimpleDateFormat("MM-dd");
         return sdf.format(date) + "\n" +sdfd.format(date);
     }
     /**
@@ -128,7 +129,7 @@ public class DateUtil {
      * @throws ParseException 解析异常
      */
     public static Date parseTime(String time, String pattern) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        final  SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
             return sdf.parse(time);
         } catch (java.text.ParseException e) {

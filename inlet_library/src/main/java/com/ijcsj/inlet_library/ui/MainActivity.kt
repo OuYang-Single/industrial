@@ -10,15 +10,16 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.gongwen.marqueen.SimpleMF
 import com.google.gson.Gson
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.ijcsj.common_library.bean.CanFrame
+import com.ijcsj.common_library.bean.DataBaseDatabase.Companion.getDatabase
 import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.ui.MvvmBaseActivity
+import com.ijcsj.common_library.util.Hexs.encodeHexStr
 import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.inlet_library.R
@@ -83,7 +84,8 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
 
         LiveDataBus.get().with(Socketcan.CAN_100, CanFrame::class.java).observe(this){
             if (it.can_id==256){
-                viewModel.addFormData(it)
+                Log.w("ouyang", "CAN_100 " + it.can_id + "  " + " data:  " + encodeHexStr(it.data) + "  "+it.dd)
+               viewModel.addFormData(it)
             }
         }
         LiveDataBus.get().with(Socketcan.CAN_101, CanFrame::class.java).observe(this){
@@ -167,6 +169,11 @@ class MainActivity : MvvmBaseActivity<ActivityMainBinding, MainViewModel>() {
                handler.removeMessages(0)
                handler.sendEmptyMessageDelayed(0, 1000)
            }
+        }
+        LiveDataBus.get().with("CAN_LiveDataBus", CanFrame::class.java ).observe(this){
+            it?.let {
+               viewModel.CAN_LiveDataBus(it)
+            }
         }
     }
     var rRunnable=Runnable{

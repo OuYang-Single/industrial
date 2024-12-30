@@ -1,5 +1,6 @@
 package com.ijcsj.inlet_library.model
 
+import android.app.Application
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
@@ -7,6 +8,9 @@ import com.ijcsj.common_library.bean.ApiResult
 import com.ijcsj.common_library.bean.BackFlowBase
 import com.ijcsj.common_library.bean.BackFlowBaseDatabase
 import com.ijcsj.common_library.bean.CanFrame
+import com.ijcsj.common_library.bean.DataBaseDatabase
+import com.ijcsj.common_library.bean.DataBaseDatabase.Companion.getDatabase
+import com.ijcsj.common_library.bean.DatasBase
 import com.ijcsj.common_library.bean.FaceInit
 import com.ijcsj.common_library.bean.HistoryBase
 import com.ijcsj.common_library.bean.HistoryBaseDatabase
@@ -15,10 +19,13 @@ import com.ijcsj.common_library.bean.SetUpBaseDatabase
 import com.ijcsj.common_library.bean.SetUpBean
 import com.ijcsj.common_library.bean.TemperatureBase
 import com.ijcsj.common_library.bean.TemperatureBaseDatabase
+import com.ijcsj.common_library.can.Socketcan
 import com.ijcsj.common_library.mmkv.ShuJuMMkV
 import com.ijcsj.common_library.model.BaseModel
 import com.ijcsj.common_library.util.DateUtil
 import com.ijcsj.common_library.util.Hexs
+import com.ijcsj.common_library.util.Hexs.Int2Byte
+import com.ijcsj.common_library.util.Hexs.encodeHexStr
 import com.ijcsj.common_library.util.LiveDataBus
 import com.ijcsj.common_library.util.a
 import com.ijcsj.inlet_library.api.ApiRepository
@@ -49,32 +56,35 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
     suspend   fun  getRealStatus(): ApiResult<RealStatus>  {
         return   repository.getRealStatus();
     }
-
+    val te=   TemperatureBase()
+    val ted=   BackFlowBase()
+    val tedd=   SetUpBean()
     suspend  fun addFormData(canFrame: CanFrame){
         withContext(Dispatchers.IO) {
             AppGlobals.get()?.let {
                 if (canFrame.can_id!=256){
                     return@let
                 }
-                var te=   TemperatureBase()
+
                 te.dateTime=  Date(System.currentTimeMillis())
                 te.time=DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH")
                 te.temperature=   ( Hexs.pinJie2ByteToInt(canFrame.data[2],canFrame.data[1]).toFloat()/(10).toFloat()).toInt()
 
-                var ted=   BackFlowBase()
+
                 ted.dateTime=  Date(System.currentTimeMillis())
                 ted.time=DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH")
                 ted.temperature=   ( Hexs.pinJie2ByteToInt(canFrame.data[4],canFrame.data[3]).toFloat()/(10).toFloat()).toInt()
 
-                var tedd=   SetUpBean()
+
                 tedd.dateTime=  Date(System.currentTimeMillis())
                 tedd.time=DateUtil.formatTime( Date(System.currentTimeMillis()),"YYYY-MM-dd HH")
-                var d=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
+                val d=  ShuJuMMkV.getInstances()?.getString(a.SETTING_TEMPERATURE,"1200")
                 tedd.temperature =d!!.toInt()
 
-                var setUpBean=  SetUpBaseDatabase.getDatabase(it).backFlowBaseDao().getUsersWithName( tedd.time)
+                val setUpBean=  SetUpBaseDatabase.getDatabase(it).backFlowBaseDao().getUsersWithName( tedd.time)
+                Logger.w("添加成功1"+ te.temperature+" setUpBean  "+tedd)
                 if (setUpBean==null){
-                    Logger.w("添加成功1"+ te.temperature)
+
                     var s=SetUpBaseDatabase.getDatabase(it).backFlowBaseDao().getAllData()
                     if (s.size>=48){
                         SetUpBaseDatabase.getDatabase(it).backFlowBaseDao().delete(s[0])
@@ -82,16 +92,16 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
                     SetUpBaseDatabase.getDatabase(it).backFlowBaseDao().insert(tedd)
                 }
 
-                var backFlowBase=  BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().getUsersWithName( ted.time)
+                val backFlowBase=  BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().getUsersWithName( ted.time)
                 if (backFlowBase==null){
                     Logger.w("添加成功2"+ te.temperature)
-                    var s=BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().getAllData()
+                    val s=BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().getAllData()
                     if (s.size>=48){
                         BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().delete(s[0])
                     }
                     BackFlowBaseDatabase.getDatabase(it).backFlowBaseDao().insert(ted)
                 }
-                var temperatureBase=  TemperatureBaseDatabase.getDatabase(it).temperatureBaseDao().getUsersWithName( te.time)
+                val temperatureBase=  TemperatureBaseDatabase.getDatabase(it).temperatureBaseDao().getUsersWithName( te.time)
                 if (temperatureBase==null){
                     Logger.w("添加成功3"+ te.temperature)
                     var s=TemperatureBaseDatabase.getDatabase(it).temperatureBaseDao().getAllData()
@@ -109,7 +119,42 @@ class MainModel(private val repository: ApiRepository): BaseModel() {
     val projectBaseList: ArrayList<Int?> = ArrayList()
     var headers: HashMap<String, String> = HashMap()
     var headerd: HashMap<String, String> = HashMap()
-
+    val string = StringBuilder()
+    suspend  fun CAN_LiveDataBus(canFrames: CanFrame) {
+        synchronized(string){
+            string.setLength(0)
+        for (i in canFrames.data.indices) {
+            string.append(" ")
+                .append(Integer.toHexString(canFrames.data.get(i).toInt() and 0x1FFFFFFF))
+        }
+         Log.w("CAN_LiveDataBus",""+string)
+        AppGlobals.get()?.let {
+            val datasBases = DataBaseDatabase.getDatabase(it).backFlowBaseDao()
+                .getCanId(Integer.toHexString(canFrames.can_id and 0x1FFFFFFF))
+            if (datasBases.isNotEmpty()) {
+                if (datasBases[datasBases.size - 1].data != Hexs.encodeHexStr(canFrames.data)) {
+                    addData(canFrames, it)
+                }
+            } else {
+                addData(canFrames, it)
+            }
+        }
+        }
+    }
+    val datasBase = DatasBase()
+    fun addData(canFrame: CanFrame, app: Application) {
+        synchronized(datasBase){
+        Log.w("ouyang", "CAN_100 " + "添加  "+ datasBase)
+        datasBase.data = encodeHexStr(canFrame.data)
+        datasBase.canId = Integer.toHexString(canFrame.can_id and 0x1FFFFFFF)
+        datasBase.isType = true
+        datasBase.dateTime = DateUtil.getCurrentTime()
+        datasBase.time =
+            DateUtil.formatTime(Date(System.currentTimeMillis()), "YYYY-MM-dd HH:mm:ss")
+        getDatabase(app).backFlowBaseDao().insert(datasBase)
+        LiveDataBus.get().with("CanWrites", Boolean::class.java).postValue(true)
+        }
+    }
     suspend  fun addHistoryBase(canFrame: CanFrame,list:ArrayList<String>):Int {
       return  withContext(Dispatchers.IO) {
           var ints=0

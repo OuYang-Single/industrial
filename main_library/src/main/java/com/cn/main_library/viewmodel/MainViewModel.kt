@@ -72,7 +72,7 @@ class MainViewModel (override val model: MainVideoModel,var mainBase: MainBase,v
         if (it.can_id!=256){
             return
         }
-      var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
+       var data1= ( it.data[0].toFloat()/(10).toFloat()).toInt()
         (it.data[0] and 0xff)
         mainBase.flow= Math.abs(( (it.data[0] and 0xff).toFloat()*(0.2).toFloat())).toInt()
         var flow=Math.abs(((it.data[0] and 0xff).toFloat()*(0.2).toFloat()))
